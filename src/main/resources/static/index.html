@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="1721923.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heldenverwaltung</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-left">
+            <img src="oie_91221183fDov5el.png" alt="Logo" class="logo">
+            <h1 class="nav-title">Heldenverwaltung</h1>
+        </div>
+        <div class="nav-center">
+            <div class="nav-buttons">
+                <button id="create-profiles-button" class="but">
+                    <i class="fas fa-user-plus"></i> Standard Heros Generieren
+                </button>
+                <button onclick="window.location.href='heroshow.html'" class="but">
+                    <i class="fas fa-list-alt"></i> Heros anzeigen
+                </button>
+                <button onclick="window.location.href='game.html'" class="but">
+                    <i class="fas fa-gamepad"></i> Spielen!
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+<br><br><br>
+<main>
+    <form id="hero-form" class="form-container">
+        <div class="input-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="input-group">
+            <label for="HP">HP:</label>
+            <input type="number" id="HP" name="HP" min="0" max="15" value="0">
+        </div>
+        <div class="input-group">
+            <label for="Damage">Schaden:</label>
+            <input type="number" id="Damage" name="Damage" min="0" max="15" value="0">
+        </div>
+        <div class="input-group">
+            <label for="type">Element:</label>
+            <select id="type" name="type" required>
+                <option value="Feuer">Feuer</option>
+                <option value="Wasser">Wasser</option>
+                <option value="Pflanze">Pflanze</option>
+                <option value="Elektro">Elektro</option>
+                <option value="Erde">Erde</option>
+                <option value="Eis">Eis</option>
+                <option value="Luft">Luft</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="extra">Extra:</label>
+            <input type="text" id="extra" name="extra">
+        </div>
+        <button type="submit" class="but">Helden erstellen</button>
+    </form>
+
+    <script src="script.js"></script>
+</main>
+</body>
+</html>

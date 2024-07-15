@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="1721923.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heldenliste</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="overlay"></div>
+<header>
+    <nav>
+        <div class="nav-left">
+            <img src="oie_91221183fDov5el.png" alt="Logo" class="logo">
+            <h1 class="nav-title">Heldenverwaltung</h1>
+        </div>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='index.html'" id="button" class="but">
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-users"></i> Zurück zur Heldenverwaltung
+            </button>
+        </div>
+    </nav>
+</header>
+<main>
+    <div id="hero-list">
+        <h2>Heldenliste</h2>
+        <button id="delete-all-button" class="but">Alles Löschen & Zurücksetzten</button>
+        <label for="search-bar"></label><input type="text" id="search-bar" placeholder="Suche Helden...">
+        <ul id="heroes"></ul>
+    </div>
+</main>
+<script src="heroshow.js"></script>
+</body>
+</html>

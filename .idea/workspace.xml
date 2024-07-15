@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="39e58791-12f3-4491-8c65-efbdec4ae57e" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Haragucci&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Haragucci/Element-Battle.git&quot;,
+    &quot;accountId&quot;: &quot;78bd25d2-c366-426a-9a44-d792f3a990ed&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2hLFlfNuUGTGm9MbdKOHC8VYQHf" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Gradle.Build Element-Battle-main-public.executor": "Run",
+    "Gradle.Build Element-Battle-main.executor": "Run",
+    "Gradle.Element-Battle-main [assemble].executor": "Run",
+    "Gradle.Element-Battle-main [bootBuildImage].executor": "Run",
+    "Gradle.Element-Battle-main [bootJar].executor": "Run",
+    "Gradle.Element-Battle-main [buildDependents].executor": "Run",
+    "Gradle.Element-Battle-main [buildEnvironment].executor": "Run",
+    "Gradle.Element-Battle-main [buildNeeded].executor": "Run",
+    "Gradle.Element-Battle-main [build].executor": "Run",
+    "Gradle.Element-Battle-main [check].executor": "Run",
+    "Gradle.Element-Battle-main [classes].executor": "Run",
+    "Gradle.Element-Battle-main [clean].executor": "Run",
+    "Gradle.Element-Battle-main [compileJava].executor": "Run",
+    "Gradle.Element-Battle-main [compileTestJava].executor": "Run",
+    "Gradle.Element-Battle-main [components].executor": "Run",
+    "Gradle.Element-Battle-main [dependencies].executor": "Run",
+    "Gradle.Element-Battle-main [dependencyInsight].executor": "Run",
+    "Gradle.Element-Battle-main [dependencyManagement].executor": "Run",
+    "Gradle.Element-Battle-main [dependentComponents].executor": "Run",
+    "Gradle.Element-Battle-main [help].executor": "Run",
+    "Gradle.Element-Battle-main [init].executor": "Run",
+    "Gradle.Element-Battle-main [jar].executor": "Run",
+    "Gradle.Element-Battle-main [javaToolchains].executor": "Run",
+    "Gradle.Element-Battle-main [javadoc].executor": "Run",
+    "Gradle.Element-Battle-main [model].executor": "Run",
+    "Gradle.Element-Battle-main [outgoingVariants].executor": "Run",
+    "Gradle.Element-Battle-main [prepareKotlinBuildScriptModel].executor": "Run",
+    "Gradle.Element-Battle-main [processResources].executor": "Run",
+    "Gradle.Element-Battle-main [processTestResources].executor": "Run",
+    "Gradle.Element-Battle-main [projects].executor": "Run",
+    "Gradle.Element-Battle-main [properties].executor": "Run",
+    "Gradle.Element-Battle-main [resolvableConfigurations].executor": "Run",
+    "Gradle.Element-Battle-main [resolveMainClassName].executor": "Run",
+    "Gradle.Element-Battle-main [resolveTestMainClassName].executor": "Run",
+    "Gradle.Element-Battle-main [tasks].executor": "Run",
+    "Gradle.Element-Battle-main [testClasses].executor": "Run",
+    "Gradle.Element-Battle-main [test].executor": "Run",
+    "Gradle.Element-Battle-main [wrapper].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Demo1Application.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tillj/Downloads/Element-Battle-main-public",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main\fonts\fontawesome" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main\fonts\fontawesome\css" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main\css" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Demo1Application">
+    <configuration name="Element-Battle-main [check]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="check" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Element-Battle-main [prepareKotlinBuildScriptModel]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="prepareKotlinBuildScriptModel" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Element-Battle-main [processResources]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="processResources" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Element-Battle-main [processTestResources]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="processTestResources" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Element-Battle-main [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Demo1Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="demo1.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.Demo1Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Element-Battle-main [test]" />
+        <item itemvalue="Gradle.Element-Battle-main [check]" />
+        <item itemvalue="Gradle.Element-Battle-main [processTestResources]" />
+        <item itemvalue="Gradle.Element-Battle-main [processResources]" />
+        <item itemvalue="Gradle.Element-Battle-main [prepareKotlinBuildScriptModel]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="39e58791-12f3-4491-8c65-efbdec4ae57e" name="Changes" comment="" />
+      <created>1717365603719</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717365603719</updated>
+      <workItem from="1717365605812" duration="24000" />
+      <workItem from="1717365637422" duration="131000" />
+      <workItem from="1717365613375" duration="13461000" />
+      <workItem from="1717365620890" duration="1850000" />
+      <workItem from="1717365624875" duration="76000" />
+      <workItem from="1717365608562" duration="479000" />
+      <workItem from="1720763735321" duration="6000" />
+      <workItem from="1717365607562" duration="8064000" />
+      <workItem from="1717365610437" duration="24429000" />
+      <workItem from="1717365616484" duration="15619000" />
+      <workItem from="1717365615266" duration="5529000" />
+      <workItem from="1717365610672" duration="2862000" />
+      <workItem from="1717368701125" duration="705000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

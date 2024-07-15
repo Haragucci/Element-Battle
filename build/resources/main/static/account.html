@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="1721923.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Element Battle</title>
+    <link rel="stylesheet" href="account.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-left">
+            <img src="3104645.png" alt="Logo" class="logo">
+            <h1 class="nav-title">Account Management Element Battle</h1>
+        </div>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='game.html'" class="but back-btn">
+               <i class="fa fa-arrow-left"></i>
+                <i class="fas fa-gamepad"></i> Zurück zum Spiel
+            </button>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="form-container account-container">
+        <h2>Konto Informationen</h2>
+        <form id="accountForm">
+            <div class="input-group">
+                <label for="username">Benutzername</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" name="username" readonly>
+                    <button type="button" class="edit-btn" data-target="username">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="password">Passwort</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" readonly>
+                    <button type="button" class="edit-btn" data-target="password">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="toggle-password" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="but save-btn" disabled>Änderungen speichern</button>
+        </form>
+    </div>
+</main>
+
+<script src="account.js"></script>
+</body>
+</html>
