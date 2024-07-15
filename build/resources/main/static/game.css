@@ -259,11 +259,43 @@ main {
     flex: 1;
 }
 
+@keyframes borderGradient {
+    0% {
+        border-color: #ff0000;
+        box-shadow: 0 0 10px #ff0000;
+    }
+    25% {
+        border-color: #00ff00;
+        box-shadow: 0 0 10px #00ff00;
+    }
+    50% {
+        border-color: #0000ff;
+        box-shadow: 0 0 10px #0000ff;
+    }
+    75% {
+        border-color: #ff00ff;
+        box-shadow: 0 0 10px #ff00ff;
+    }
+    100% {
+        border-color: #ff0000;
+        box-shadow: 0 0 10px #ff0000;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        border-image: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff00ff) 1;
+    }
+    100% {
+        border-image: linear-gradient(45deg, #ff00ff, #0000ff, #00ff00, #ff0000) 1;
+    }
+}
+
 .player-field, .computer-field {
     width: 45%;
     height: 250px;
     background-color: #fff;
-    border: 2px solid #333;
+    border: 2px solid;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -271,6 +303,8 @@ main {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    animation: borderGradient 3s infinite, shimmer 6s infinite linear;
+    border-image-slice: 1;
 }
 
 .card {
@@ -455,13 +489,15 @@ main {
 .card.eis { background-color: #00c9ff; color: #000; }
 .card.luft { background-color: #87cefa; color: #000; }
 
-.card.premium-design-1.feuer { background: linear-gradient(135deg, #ff6b6b, #ff1e56); color: #fff5f5; }
-.card.premium-design-1.wasser { background: linear-gradient(135deg, #0077be, #001f3f); color: #f0f8ff; }
-.card.premium-design-1.pflanze { background: linear-gradient(135deg, #00ff87, #009245); color: #e0ffe0; }
-.card.premium-design-1.elektro { background: linear-gradient(135deg, #ffeb3b, #f4d03f); color: #804000; }
-.card.premium-design-1.erde { background: linear-gradient(135deg, #a77979, #4b3832); color: #ffcccb; }
-.card.premium-design-1.eis { background: linear-gradient(135deg, #00c9ff, #92fe9d); color: #1e3d59; }
-.card.premium-design-1.luft { background: linear-gradient(135deg, #87cefa, #f0f8ff); color: #4169e1; }
+.card.premium-design-1.feuer { background: radial-gradient(circle at top left, #ff5f6d, transparent), linear-gradient(135deg, #ff512f, #dd2476); color: #ffebeb; }
+.card.premium-design-1.wasser { background: radial-gradient(circle at bottom right, #00bfff, transparent), linear-gradient(135deg, #0077be, #001f3f); color: #e6f7ff; }
+.card.premium-design-1.pflanze { background: radial-gradient(circle at top right, #00e676, transparent), linear-gradient(135deg, #00ff87, #009245); color: #d0ffd0; }
+.card.premium-design-1.elektro { background: radial-gradient(circle at center, #ffef9f, transparent), linear-gradient(135deg, #ffd700, #f4c542); color: #805000; }
+.card.premium-design-1.erde { background: radial-gradient(circle at bottom left, #b5651d, transparent), linear-gradient(135deg, #a77979, #4b3832); color: #ffedcc; }
+.card.premium-design-1.eis { background: radial-gradient(circle at center, #00d4ff, transparent), linear-gradient(135deg, #00d4ff, #92fe9d); color: #1e3d59; }
+.card.premium-design-1.luft { background: radial-gradient(circle at top left, #87cefa, transparent), linear-gradient(135deg, #87cefa, #f0f8ff); color: #3a5fcd; }
+
+
 
 .card.premium-design-2.feuer { background: radial-gradient(circle, #ff6b6b, #ff1e56); color: #fff5f5; }
 .card.premium-design-2.wasser { background: radial-gradient(circle, #0077be, #001f3f); color: #f0f8ff; }

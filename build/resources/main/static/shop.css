@@ -454,8 +454,8 @@ main {
 .preview-card.feuer { background-color: #ff6b6b; color: #fff; }
 .preview-card.eis { background-color: #00c9ff; color: #000; }
 
-.preview-card.premium-design-1.feuer { background: linear-gradient(135deg, #ff6b6b, #ff1e56); color: #fff5f5; }
-.preview-card.premium-design-1.eis { background: linear-gradient(135deg, #00c9ff, #92fe9d); color: #1e3d59; }
+.preview-card.premium-design-1.feuer { background: radial-gradient(circle at top left, #ff5f6d, transparent), linear-gradient(135deg, #ff512f, #dd2476); color: #ffebeb; }
+.preview-card.premium-design-1.eis { background: radial-gradient(circle at center, #00d4ff, transparent), linear-gradient(135deg, #00d4ff, #92fe9d); color: #1e3d59; }
 
 .preview-card.premium-design-2.feuer { background: radial-gradient(circle, #ff6b6b, #ff1e56); color: #fff5f5; }
 .preview-card.premium-design-2.eis { background: radial-gradient(circle, #00c9ff, #92fe9d); color: #1e3d59; }

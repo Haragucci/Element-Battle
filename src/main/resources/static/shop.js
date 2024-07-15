@@ -188,7 +188,7 @@ function toggleBackground(backgroundId) {
                 if (data.isActive) {
                     button.innerHTML = '<i class="fas fa-toggle-on"></i> Deaktivieren';
                 } else {
-                    button.textContent = 'Aktivieren';
+                    button.innerHTML = '<i class="fas fa-toggle-off"></i> Aktivieren';
                 }
             } else {
                 console.error('Fehler beim Ändern des Hintergrunds:', data.message);

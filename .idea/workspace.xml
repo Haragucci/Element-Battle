@@ -4,7 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39e58791-12f3-4491-8c65-efbdec4ae57e" name="Changes" comment="" />
+    <list default="true" id="39e58791-12f3-4491-8c65-efbdec4ae57e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/acc.json" beforeDir="false" afterPath="$PROJECT_DIR$/acc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back.json" beforeDir="false" afterPath="$PROJECT_DIR$/back.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/demo1-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/demo1-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/game.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/game.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/heroshow.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/heroshow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/shop.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/shop.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/shop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cards.json" beforeDir="false" afterPath="$PROJECT_DIR$/cards.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/game.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/game.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/heroshow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/heroshow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/shop.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/shop.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/shop.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,71 +88,74 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Gradle.Build Element-Battle-main-public.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build Element-Battle-main.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [assemble].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [bootBuildImage].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [bootJar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [buildDependents].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [buildEnvironment].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [buildNeeded].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [check].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [classes].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [compileJava].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [compileTestJava].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [components].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependencyInsight].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependencyManagement].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependentComponents].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [help].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [init].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [jar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [javaToolchains].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [javadoc].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [model].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [outgoingVariants].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [prepareKotlinBuildScriptModel].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [processResources].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [processTestResources].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [projects].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [properties].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [resolvableConfigurations].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [resolveMainClassName].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [resolveTestMainClassName].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [tasks].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [testClasses].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [wrapper].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Demo1Application.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tillj/Downloads/Element-Battle-main-public&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Gradle.Build Element-Battle-main-public.executor": "Run",
+    "Gradle.Build Element-Battle-main.executor": "Run",
+    "Gradle.Element-Battle-main [assemble].executor": "Run",
+    "Gradle.Element-Battle-main [bootBuildImage].executor": "Run",
+    "Gradle.Element-Battle-main [bootJar].executor": "Run",
+    "Gradle.Element-Battle-main [buildDependents].executor": "Run",
+    "Gradle.Element-Battle-main [buildEnvironment].executor": "Run",
+    "Gradle.Element-Battle-main [buildNeeded].executor": "Run",
+    "Gradle.Element-Battle-main [build].executor": "Run",
+    "Gradle.Element-Battle-main [check].executor": "Run",
+    "Gradle.Element-Battle-main [classes].executor": "Run",
+    "Gradle.Element-Battle-main [clean].executor": "Run",
+    "Gradle.Element-Battle-main [compileJava].executor": "Run",
+    "Gradle.Element-Battle-main [compileTestJava].executor": "Run",
+    "Gradle.Element-Battle-main [components].executor": "Run",
+    "Gradle.Element-Battle-main [dependencies].executor": "Run",
+    "Gradle.Element-Battle-main [dependencyInsight].executor": "Run",
+    "Gradle.Element-Battle-main [dependencyManagement].executor": "Run",
+    "Gradle.Element-Battle-main [dependentComponents].executor": "Run",
+    "Gradle.Element-Battle-main [help].executor": "Run",
+    "Gradle.Element-Battle-main [init].executor": "Run",
+    "Gradle.Element-Battle-main [jar].executor": "Run",
+    "Gradle.Element-Battle-main [javaToolchains].executor": "Run",
+    "Gradle.Element-Battle-main [javadoc].executor": "Run",
+    "Gradle.Element-Battle-main [model].executor": "Run",
+    "Gradle.Element-Battle-main [outgoingVariants].executor": "Run",
+    "Gradle.Element-Battle-main [prepareKotlinBuildScriptModel].executor": "Run",
+    "Gradle.Element-Battle-main [processResources].executor": "Run",
+    "Gradle.Element-Battle-main [processTestResources].executor": "Run",
+    "Gradle.Element-Battle-main [projects].executor": "Run",
+    "Gradle.Element-Battle-main [properties].executor": "Run",
+    "Gradle.Element-Battle-main [resolvableConfigurations].executor": "Run",
+    "Gradle.Element-Battle-main [resolveMainClassName].executor": "Run",
+    "Gradle.Element-Battle-main [resolveTestMainClassName].executor": "Run",
+    "Gradle.Element-Battle-main [tasks].executor": "Run",
+    "Gradle.Element-Battle-main [testClasses].executor": "Run",
+    "Gradle.Element-Battle-main [test].executor": "Run",
+    "Gradle.Element-Battle-main [wrapper].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Demo1Application.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tillj/Downloads/Element-Battle-main-public/build/libs",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\build\libs" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\tillj\Downloads\Element-Battle-main\fonts\fontawesome" />
       <recent name="C:\Users\tillj\Downloads\Element-Battle-main\fonts\fontawesome\css" />
@@ -288,6 +313,8 @@
       <workItem from="1717365615266" duration="5529000" />
       <workItem from="1717365610672" duration="2862000" />
       <workItem from="1717368701125" duration="705000" />
+      <workItem from="1717365614484" duration="4582000" />
+      <workItem from="1717365615578" duration="3443000" />
     </task>
     <servers />
   </component>

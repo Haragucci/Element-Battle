@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <option value="Pflanze" ${hero.type === "Pflanze" ? "selected" : ""}>Pflanze</option>
                     <option value="Elektro" ${hero.type === "Elektro" ? "selected" : ""}>Elektro</option>
                     <option value="Erde" ${hero.type === "Erde" ? "selected" : ""}>Erde</option>
-                    <option value="Erde" ${hero.type === "Eis" ? "selected" : ""}>Eis</option>
+                    <option value="Eis" ${hero.type === "Eis" ? "selected" : ""}>Eis</option>
                     <option value="Erde" ${hero.type === "Luft" ? "selected" : ""}>Luft</option>
                 </select>
             </div>

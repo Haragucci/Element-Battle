@@ -915,7 +915,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ],
                     scale: [0, 1],
                     opacity: [0, 1],
-                    duration: adjustDuration(1000),
+                    duration: adjustDuration(100),
                     easing: 'easeOutQuad',
                     complete: chargeSpheres
                 });
@@ -1049,3 +1049,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     initializeGame();
 });
+
