@@ -606,29 +606,39 @@ public class Controller implements Serializable {
     @PostMapping("/buyCardDesign")
     public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, Object> request) {
         String username = (String) request.get("username");
-        int cost = (int) request.get("cost");
+        final int COST = 2;
 
-        Account account = accounts.get(username);
-        if (account != null) {
-            if (account.coins() >= cost) {
-                Account updatedAccount = new Account(account.username(), account.password(), account.coins() - cost);
-                accounts.put(username, updatedAccount);
-                saveAccounts();
+        synchronized (this) {
+            Account account = accounts.get(username);
+            if (account != null) {
+                if (account.coins() >= COST) {
+                    int newCoins = account.coins() - COST;
+                    Account updatedAccount = new Account(account.username(), account.password(), newCoins);
+                    accounts.put(username, updatedAccount);
+                    saveAccounts();
 
-                cardDesigns.put(username, "default");
-                saveCardDesigns();
+                    System.out.println("Benutzer: " + username);
+                    System.out.println("Münzen vor dem Kauf: " + account.coins());
+                    System.out.println("Münzen nach dem Kauf: " + newCoins);
 
-                return ResponseEntity.ok(Map.of(
-                        "success", true,
-                        "coins", updatedAccount.coins(),
-                        "activeDesign", "default"
-                ));
-            } else {
-                return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
+                    if (!cardDesigns.containsKey(username)) {
+                        cardDesigns.put(username, "default");
+                        saveCardDesigns();
+                    }
+                    return ResponseEntity.ok(Map.of(
+                            "success", true,
+                            "coins", newCoins,
+                            "activeDesign", cardDesigns.get(username)
+                    ));
+                } else {
+                    System.out.println("Nicht genug Münzen für Benutzer: " + username + ". Aktueller Stand: " + account.coins());
+                    return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
+                }
             }
-        }
 
-        return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
+            System.out.println("Benutzer nicht gefunden: " + username);
+            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
+        }
     }
 
     @PostMapping("/toggleCardDesign")

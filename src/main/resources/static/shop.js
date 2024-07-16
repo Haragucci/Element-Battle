@@ -332,20 +332,24 @@ function toggleCardDesign(designId) {
 
 function buyCardDesign() {
     const username = localStorage.getItem('username');
-    const cost = 2;
     const buyButton = document.getElementById('buyCardDesign');
+
+    // Verhindere doppelte Klicks
+    if (buyButton.disabled) return;
+    buyButton.disabled = true;
 
     fetch('/buyCardDesign', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, cost })
+        body: JSON.stringify({ username })
     })
         .then(response => response.json())
         .then(data => {
+            console.log('Server response:', data);
             if (data.success) {
-                console.log('Kartendesigns gekauft');
+                console.log('Kartendesigns gekauft. Neue Münzanzahl:', data.coins);
                 buyButton.style.display = 'none';
 
                 document.querySelectorAll('.toggle-button2').forEach(button => {
@@ -362,6 +366,9 @@ function buyCardDesign() {
         .catch(error => {
             console.error('Fehler:', error.message);
             flashButtonRed(buyButton);
+        })
+        .finally(() => {
+            buyButton.disabled = false;
         });
 }
 

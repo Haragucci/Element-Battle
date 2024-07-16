@@ -154,13 +154,13 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('coins');
         updateUserInfo();
         window.location.reload();
-    }
 
+    }
 
     function selectCard(card, field, nextTurn) {
         if (isBattleInProgress) return;
-
         isBattleInProgress = true;
+
 
         field.innerHTML = '';
         const selectedCard = createCard(card.name, card.HP, card.Damage, card.type, card.extra);
@@ -190,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 500);
     }
-
     function createConfetti() {
         const confettiCount = 300;
         const confettiContainer = document.createElement('div');
