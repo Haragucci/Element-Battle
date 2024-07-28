@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.PostConstruct;
@@ -10,11 +11,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.nio.file.Files;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -23,15 +24,16 @@ public class Controller implements Serializable {
     private static final String HEROES_FILE_PATH = "heros.json";
     private static final String ACCOUNTS_FILE_PATH = "acc.json";
     private static final String CARDS_FILE_PATH = "cards.json";
+    private static final String STATS_FILE_PATH = "stats.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
     public record Hero(int id, String name, int HP, int Damage, String type, String extra) {}
     public static List<Hero> heroes = new ArrayList<>();
     public static AtomicInteger counter = new AtomicInteger(1);
 
-    private final Map<String, String> cardDesigns = new HashMap<>();
+    Map<String, String> cardDesigns = new HashMap<>();
     public record Account(String username, String password, int coins) {}
-    private Map<String, Account> accounts = new HashMap<>();
+    Map<String, Account> accounts = new HashMap<>();
 
 
     private static final List<String> heroNames = List.of(
@@ -160,6 +162,7 @@ public class Controller implements Serializable {
         loadAccounts();
         loadBackgrounds();
         loadCardDesigns();
+        loadStats();
     }
 
     @PreDestroy
@@ -167,6 +170,8 @@ public class Controller implements Serializable {
         saveHeroes();
         saveAccounts();
         saveBackgrounds();
+        saveCardDesigns();
+        saveStats();
     }
 
     private void loadAccounts() {
@@ -178,17 +183,22 @@ public class Controller implements Serializable {
                 System.out.println("acc.json Datei existiert nicht.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
 
-    private void saveAccounts() {
+    void saveAccounts() {
         try {
             mapper.writeValue(new File(ACCOUNTS_FILE_PATH), accounts);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fehler beim speichern der Accounts");
         }
+    }
+
+    int getCoinsForUser(String username) {
+        Account account = accounts.get(username);
+        return account != null ? account.coins() : 0;
     }
 
     @PostMapping("/register")
@@ -210,11 +220,198 @@ public class Controller implements Serializable {
         accounts.put(username, newAccount);
         saveAccounts();
 
+        Map<String, Object> newUserStats = new HashMap<>();
+        newUserStats.put("wins", 0);
+        newUserStats.put("coins", 0);
+        newUserStats.put("damage", 0);
+        newUserStats.put("direkt-damage", 0);
+        newUserStats.put("lose", 0);
+        newUserStats.put("winrate", 0.0);
+
+        saveUserStats(username, newUserStats);
+
         return ResponseEntity.ok(Map.of(
                 "success", true,
                 "username", username,
                 "coins", 0
         ));
+    }
+
+    private void saveStats() {
+        try {
+            mapper.writeValue(new File(STATS_FILE_PATH), stats);
+            System.out.println("Statistiken gespeichert: " + stats);
+        } catch (IOException e) {
+            System.out.println("Fehler beim Speichern der Statistiken: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/leaderboard")
+    public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {
+        List<Map<String, Object>> leaderboard = stats.entrySet().stream()
+                .map(entry -> {
+                    Map<String, Object> playerStats = new HashMap<>(entry.getValue());
+                    playerStats.put("username", entry.getKey());
+                    return playerStats;
+                })
+                .sorted((a, b) -> Integer.compare(
+                        ((Number) b.getOrDefault("wins", 0)).intValue(),
+                        ((Number) a.getOrDefault("wins", 0)).intValue()
+                ))
+                .limit(10)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(leaderboard);
+    }
+
+    void saveUserStats(String username, Map<String, Object> userStats) {
+        stats.put(username, new HashMap<>(userStats));
+        saveStats();
+        System.out.println("Statistiken für " + username + " gespeichert: " + userStats);
+    }
+
+    @PostMapping("/del-user")
+    public ResponseEntity<String> deleteUser(@RequestBody Map<String, String> payload) {
+        String username = payload.get("username");
+        if (username == null || username.isEmpty()) {
+            return ResponseEntity.badRequest().body("Username is required");
+        }
+
+        try {
+            // Entfernen des Benutzers aus der acc.json Datei
+            File accountFile = new File(ACCOUNTS_FILE_PATH);
+            ObjectMapper mapper = new ObjectMapper();
+            TypeReference<Map<String, Map<String, Object>>> typeRef = new TypeReference<>() {};
+            Map<String, Map<String, Object>> users = mapper.readValue(accountFile, typeRef);
+
+            if (users.containsKey(username)) {
+                users.remove(username);
+                mapper.writeValue(accountFile, users);
+
+                accounts.remove(username);
+                stats.remove(username);
+                cardDesigns.remove(username);
+                backgrounds.remove(username);
+                saveStats();
+
+                return ResponseEntity.ok("User deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+        } catch (IOException e) {
+            System.out.println("Fehler beim Löschen des Users: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
+    }
+
+    Map<String, Map<String, Object>> stats = new HashMap<>();
+
+    void loadStats() {
+        File file = new File(STATS_FILE_PATH);
+        if (file.exists()) {
+            try {
+                stats = mapper.readValue(file, new TypeReference<>() {});
+                System.out.println("Statistiken geladen: " + stats);
+            } catch (IOException e) {
+                System.out.println("Fehler beim Laden der Statistiken: " + e.getMessage());
+                stats = new HashMap<>();
+            }
+        } else {
+            System.out.println("stats.json Datei existiert nicht. Initialisiere leere Statistiken.");
+            stats = new HashMap<>();
+        }
+    }
+
+    private Map<String, Map<String, Object>> loadAllStats() {
+        try {
+            File file = new File(STATS_FILE_PATH);
+            if (file.exists()) {
+                Map<String, Map<String, Object>> allStats = mapper.readValue(file, new TypeReference<>() {});
+                System.out.println("Geladene Statistiken: " + allStats);
+                return allStats;
+            } else {
+                System.out.println("stats.json Datei existiert nicht. Eine neue wird erstellt.");
+                return new HashMap<>();
+            }
+        } catch (IOException e) {
+            System.out.println("Fehler beim Laden der Stats: " + e.getMessage());
+            return new HashMap<>();
+        }
+    }
+
+    @PostMapping("/getUserStats")
+    public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        if (username == null || username.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "Benutzername ist erforderlich"
+            ));
+        }
+
+        Map<String, Object> userStats = loadUserStats(username);
+        if (userStats.isEmpty()) {
+            return ResponseEntity.ok(Map.of(
+                    "success", false,
+                    "message", "Keine Statistiken für diesen Benutzer gefunden"
+            ));
+        }
+
+        int coins = getCoinsForUser(username);
+        userStats.put("coins", coins);
+
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "stats", userStats
+        ));
+    }
+
+    @PostMapping("/updateStats")
+    public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
+        System.out.println("Empfangene Statistik-Update: " + statsUpdate);
+
+        String username = (String) statsUpdate.get("username");
+        int wins = ((Number) statsUpdate.getOrDefault("win", 0)).intValue();
+        int losses = ((Number) statsUpdate.getOrDefault("lose", 0)).intValue();
+        int damage = ((Number) statsUpdate.getOrDefault("damage", 0)).intValue();
+        int directDamage = ((Number) statsUpdate.getOrDefault("directDamage", 0)).intValue();
+        int coinsEarned = ((Number) statsUpdate.getOrDefault("coins", 0)).intValue();
+
+        System.out.println("Verarbeitete Daten: username=" + username + ", wins=" + wins + ", losses=" + losses + ", damage=" + damage + ", directDamage=" + directDamage + ", coinsEarned=" + coinsEarned);
+
+        Map<String, Object> userStats = loadUserStats(username);
+        System.out.println("Geladene Benutzerstatistiken vor Update: " + userStats);
+
+        userStats.put("wins", ((Number) userStats.getOrDefault("wins", 0)).intValue() + wins);
+        userStats.put("lose", ((Number) userStats.getOrDefault("lose", 0)).intValue() + losses);
+        userStats.put("damage", ((Number) userStats.getOrDefault("damage", 0)).intValue() + damage);
+        userStats.put("direkt-damage", ((Number) userStats.getOrDefault("direkt-damage", 0)).intValue() + directDamage);
+
+        int currentCoins = getCoinsForUser(username);
+        int newCoins = currentCoins + coinsEarned;
+        updateCoinsForUser(username, newCoins);
+        userStats.put("coins", newCoins);
+
+        int totalGames = ((Number) userStats.get("wins")).intValue() + ((Number) userStats.get("lose")).intValue();
+        double winrate = totalGames > 0 ? (((Number) userStats.get("wins")).doubleValue() / totalGames) * 100 : 0;
+        userStats.put("winrate", winrate);
+        System.out.println("Aktualisierte Benutzerstatistiken: " + userStats);
+
+        saveUserStats(username, userStats);
+
+        return ResponseEntity.ok(Map.of("success", true, "message", "Statistiken aktualisiert", "updatedStats", userStats));
+    }
+
+    void updateCoinsForUser(String username, int newCoins) {
+        Account account = accounts.get(username);
+        if (account != null) {
+            accounts.put(username, new Account(username, account.password(), newCoins));
+            saveAccounts();
+        }
+    }
+
+    Map<String, Object> loadUserStats(String username) {
+        return new HashMap<>(stats.getOrDefault(username, new HashMap<>()));
     }
 
 
@@ -317,7 +514,11 @@ public class Controller implements Serializable {
 
         Account account = accounts.get(username);
         if (account != null) {
-            Account updatedAccount = new Account(account.username(), account.password(), coins);
+            Account updatedAccount = new Account(
+                    account.username(),
+                    account.password(),
+                    coins
+            );
             accounts.put(username, updatedAccount);
             saveAccounts();
 
@@ -338,7 +539,11 @@ public class Controller implements Serializable {
 
         Account account = accounts.get(username);
         if (account != null) {
-            Account updatedAccount = new Account(account.username(), account.password(), account.coins() + amount);
+            Account updatedAccount = new Account(
+                    account.username(),
+                    account.password(),
+                    account.coins() + amount
+            );
             accounts.put(username, updatedAccount);
             saveAccounts();
 
@@ -352,7 +557,7 @@ public class Controller implements Serializable {
     }
 
     @GetMapping("/hero-types")
-    public List<String> getHeroTypes() {
+    public static List<String> getHeroTypes() {
         return heroTypes;
     }
 
@@ -406,7 +611,7 @@ public class Controller implements Serializable {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fehler beim laden der Helden!");
         }
     }
 
@@ -414,7 +619,7 @@ public class Controller implements Serializable {
         try {
             mapper.writeValue(new File(HEROES_FILE_PATH), heroes);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fehler beim speichern der Helden!");
         }
     }
 
@@ -471,7 +676,7 @@ public class Controller implements Serializable {
         return "Alle Helden wurden gelöscht!";
     }
 
-    private final Map<String, String> backgrounds = new HashMap<>();
+    final Map<String, String> backgrounds = new HashMap<>();
     private static final String BACKGROUNDS_FILE_PATH = "back.json";
 
 
@@ -517,7 +722,11 @@ public class Controller implements Serializable {
         Account account = accounts.get(username);
         if (account != null) {
             if (account.coins() >= cost) {
-                Account updatedAccount = new Account(account.username(), account.password(), account.coins() - cost);
+                Account updatedAccount = new Account(
+                        account.username(),
+                        account.password(),
+                        account.coins() - cost
+                );
                 accounts.put(username, updatedAccount);
                 saveAccounts();
 
@@ -578,15 +787,15 @@ public class Controller implements Serializable {
                 backgrounds.putAll(mapper.readValue(file, new TypeReference<Map<String, String>>() {}));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fehler beim laden der Hintergründe!");
         }
     }
 
-    private void saveBackgrounds() {
+    void saveBackgrounds() {
         try {
             mapper.writeValue(new File(BACKGROUNDS_FILE_PATH), backgrounds);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fehler beim speichern der Hintergründe!");
         }
     }
 
@@ -612,14 +821,17 @@ public class Controller implements Serializable {
             Account account = accounts.get(username);
             if (account != null) {
                 if (account.coins() >= COST) {
-                    int newCoins = account.coins() - COST;
-                    Account updatedAccount = new Account(account.username(), account.password(), newCoins);
+                    Account updatedAccount = new Account(
+                            account.username(),
+                            account.password(),
+                            account.coins() - COST
+                    );
                     accounts.put(username, updatedAccount);
                     saveAccounts();
 
                     System.out.println("Benutzer: " + username);
                     System.out.println("Münzen vor dem Kauf: " + account.coins());
-                    System.out.println("Münzen nach dem Kauf: " + newCoins);
+                    System.out.println("Münzen nach dem Kauf: " + updatedAccount.coins());
 
                     if (!cardDesigns.containsKey(username)) {
                         cardDesigns.put(username, "default");
@@ -627,7 +839,7 @@ public class Controller implements Serializable {
                     }
                     return ResponseEntity.ok(Map.of(
                             "success", true,
-                            "coins", newCoins,
+                            "coins", updatedAccount.coins(),
                             "activeDesign", cardDesigns.get(username)
                     ));
                 } else {
@@ -665,15 +877,15 @@ public class Controller implements Serializable {
                 cardDesigns.putAll(mapper.readValue(file, new TypeReference<Map<String, String>>() {}));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fehler beim laden der Kartendesigns");
         }
     }
 
-    private void saveCardDesigns() {
+    void saveCardDesigns() {
         try {
             mapper.writeValue(new File(CARDS_FILE_PATH), cardDesigns);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fehler beim speichern der Kartendesigns");
         }
     }
 }

@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - Element Battle</title>
     <link rel="stylesheet" href="shop.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="particles"></div>
 <header>
     <nav>
         <div class="nav-left">
@@ -42,59 +43,59 @@
 </header>
 
 <main>
-    <div class="shop-container">
-        <h2>Willkommen im Shop</h2>
-        <button id="buyAllBackgrounds" class="but buy-all-btn">Hintergründe kaufen (2 Coins)</button>
-        <div class="shop-items">
-            <div class="shop-row">
-                <div class="shop-item">
-                    <h3>Dino aus dem Dolle Dino Delta</h3>
-                    <img src="background1.gif" alt="Hintergrund 1">
-                    <button id="background-toggle-button1" class="but toggle-button" data-background="background1">Aktivieren</button>
+    <div class="content-wrapper">
+        <div class="shop-container">
+            <h2><i class="fas fa-paint-brush"></i> Hintergründe</h2>
+            <button id="buyAllBackgrounds" class="but buy-all-btn">Hintergründe kaufen (2 Coins)</button>
+            <div class="shop-items">
+                <div class="shop-row">
+                    <div class="shop-item">
+                        <h3>Dino aus dem Dolle Dino Delta</h3>
+                        <img src="background1.gif" alt="Hintergrund 1">
+                        <button id="background-toggle-button1" class="but toggle-button" data-background="background1">Aktivieren</button>
+                    </div>
+                    <div class="shop-item">
+                        <h3>Coole Space Animation</h3>
+                        <img src="background2.gif" alt="Hintergrund 2">
+                        <button id="background-toggle-button2" class="but toggle-button" data-background="background2">Aktivieren</button>
+                    </div>
                 </div>
-                <div class="shop-item">
-                    <h3>Coole Space Animation</h3>
-                    <img src="background2.gif" alt="Hintergrund 2">
-                    <button id="background-toggle-button2" class="but toggle-button" data-background="background2">Aktivieren</button>
-                </div>
-            </div>
-            <div class="shop-row">
-                <div class="shop-item">
-                    <h3>Cooler Skateboard Junge</h3>
-                    <img src="background3.gif" alt="Hintergrund 3">
-                    <button id="background-toggle-button3" class="but toggle-button" data-background="background3">Aktivieren</button>
-                </div>
-                <div class="shop-item">
-                    <h3>Fliegende Katze</h3>
-                    <img src="background4.gif" alt="Hintergrund 4">
-                    <button id="background-toggle-button4" class="but toggle-button" data-background="background4">Aktivieren</button>
+                <div class="shop-row">
+                    <div class="shop-item">
+                        <h3>Cooler Skateboard Junge</h3>
+                        <img src="background3.gif" alt="Hintergrund 3">
+                        <button id="background-toggle-button3" class="but toggle-button" data-background="background3">Aktivieren</button>
+                    </div>
+                    <div class="shop-item">
+                        <h3>Fliegende Katze</h3>
+                        <img src="background4.gif" alt="Hintergrund 4">
+                        <button id="background-toggle-button4" class="but toggle-button" data-background="background4">Aktivieren</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="shop-container">
-        <h2>Kartendesign</h2>
-        <div class="card-design">
-            <div class="design-container">
-                <button id="buyCardDesign" class="but buy-design-btn" onclick="buyCardDesign()">Premium Kartendesigns kaufen (2 Coins)</button>
+        <div class="shop-container">
+            <h2><i class="fas fa-palette"></i> Kartendesign</h2>
+            <button id="buyCardDesign" class="but buy-design-btn" onclick="buyCardDesign()">Premium Kartendesigns kaufen (2 Coins)</button>
+            <div class="card-design" id="cardDesignToggles" style="display: none;">
                 <div class="design-row">
                     <div class="shop-item">
                         <div class="design-preview" id="previewDefault"></div>
-                        <button id="toggleCardDesignDefault" class="but toggle-button2" data-design="default" style="display: none;">Aktivieren</button>
+                        <button id="toggleCardDesignDefault" class="but toggle-button2" data-design="default">Aktivieren</button>
                     </div>
                     <div class="shop-item">
                         <div class="design-preview" id="preview1"></div>
-                        <button id="toggleCardDesign1" class="but toggle-button2" data-design="1" style="display: none;">Aktivieren</button>
+                        <button id="toggleCardDesign1" class="but toggle-button2" data-design="1">Aktivieren</button>
                     </div>
                 </div>
                 <div class="design-row">
                     <div class="shop-item">
                         <div class="design-preview" id="preview2"></div>
-                        <button id="toggleCardDesign2" class="but toggle-button2" data-design="2" style="display: none;">Aktivieren</button>
+                        <button id="toggleCardDesign2" class="but toggle-button2" data-design="2">Aktivieren</button>
                     </div>
                     <div class="shop-item">
                         <div class="design-preview" id="preview3"></div>
-                        <button id="toggleCardDesign3" class="but toggle-button2" data-design="3" style="display: none;">Aktivieren</button>
+                        <button id="toggleCardDesign3" class="but toggle-button2" data-design="3">Aktivieren</button>
                     </div>
                 </div>
             </div>

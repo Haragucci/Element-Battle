@@ -10,11 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const computerHpValue = document.getElementById('computer-hp-value');
     const playerHpBar = document.getElementById('player-hp-bar');
     const computerHpBar = document.getElementById('computer-hp-bar');
-    const userInfo = document.getElementById('userInfo');
-    const usernameSpan = document.getElementById('username');
     const coinsSpan = document.getElementById('coins');
-    const loginButton = document.getElementById('loginButton');
-    const registerButton = document.getElementById('registerButton');
+    let totalDamageDealt = 0;
+    let totalDirectDamageDealt = 0;
+
 
     let playerHP = 25;
     let computerHP = 25;
@@ -63,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.success) {
                         console.log('Münzen erfolgreich aktualisiert');
+                        updateUserInfo();
                     } else {
                         console.error('Fehler beim Aktualisieren der Münzen');
                     }
@@ -122,6 +122,16 @@ document.addEventListener('DOMContentLoaded', function() {
             userInfo.style.display = 'none';
 
             if (loginButton) {
+                const allCards = document.querySelectorAll('.card');
+                const allElementRelationships = document.querySelectorAll('.element-relationship');
+
+                allCards.forEach(card => {
+                    card.classList.remove('premium-design-1', 'premium-design-2', 'premium-design-3');
+                });
+
+                allElementRelationships.forEach(element => {
+                    element.classList.remove('premium-design-1', 'premium-design-2', 'premium-design-3');
+                });
                 loginButton.style.display = 'inline-block';
                 loginButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Anmelden';
                 loginButton.onclick = function() {
@@ -275,6 +285,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const isFirstAttackEffective2 = calculateDamageMultiplier(firstAttacker.card.type, secondAttacker.card.type);
         displayBattleResult(firstAttacker.card, secondAttacker.card, firstDamage, firstDirectDamage, firstAttacker.name, roundCounter, isFirstAttackEffective2);
 
+        if (firstAttacker.name === 'Spieler') {
+            totalDamageDealt += firstDamage;
+            totalDirectDamageDealt += firstDirectDamage;
+        }
+
         await showDamage(
             firstAttacker.field,
             secondAttacker.field,
@@ -313,6 +328,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const isSecondAttackEffective = calculateDamageMultiplier(secondAttacker.card.type, firstAttacker.card.type) > 1;
             const isSecondAttackEffective2 = calculateDamageMultiplier(secondAttacker.card.type, firstAttacker.card.type);
             displayBattleResult(secondAttacker.card, firstAttacker.card, secondDamage, secondDirectDamage, secondAttacker.name, roundCounter, isSecondAttackEffective2);
+
+            if (secondAttacker.name === 'Spieler') {
+                totalDamageDealt += secondDamage;
+                totalDirectDamageDealt += secondDirectDamage;
+            }
 
             await showDamage(
                 secondAttacker.field,
@@ -441,7 +461,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         resultText += `Runde ${roundNumber}: ${attacker} ist am Zug\n\n`;
 
-        resultText += `${attackerCard.name} (${attackerCard.HP} HP)\ngreift\n${defenderCard.name} (${defenderCard.HP} HP) an.\n\n`;
+        resultText += `${attackerCard.name} \n(${attackerCard.HP} HP) / (${attackerCard.Damage} Damage)
+        \ngreift\n${defenderCard.name}\n(${defenderCard.HP} HP) / (${defenderCard.Damage} Damage) an.\n\n`;
 
         let effectivenessText = '';
         if (isEffective > 1) {
@@ -455,7 +476,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         resultText += `${defenderCard.name} erleidet ${damage} Schaden.\n\n`;
 
-        // Ergebnis
         const remainingHP = Math.max(0, defenderCard.HP - damage);
         if (remainingHP > 0) {
             resultText += `${defenderCard.name} hat noch ${remainingHP} HP übrig.\n`;
@@ -621,9 +641,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function endGame() {
+    async function updateStats(username, isWinner, damageDealt, directDamageDealt) {
+        try {
+            const response = await fetch('/updateStats', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    win: isWinner ? 1 : 0,
+                    lose: isWinner ? 0 : 1,
+                    damage: damageDealt,
+                    directDamage: directDamageDealt
+                }),
+            });
+
+            if (!response.ok) {
+                console.log('Fehler beim Aktualisieren der Statistiken');
+            }
+
+            const result = await response.json();
+            console.log('Statistiken aktualisiert:', result);
+        } catch (error) {
+            console.error('Fehler beim Aktualisieren der Statistiken:', error);
+        }
+    }
+
+    async function endGame() {
         let message;
         let color;
+        let isPlayerWinner = false;
 
         if (playerHP <= 0 && computerHP <= 0) {
             message = 'Unentschieden!';
@@ -631,13 +679,27 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (playerHP <= 0) {
             message = 'Computer gewinnt!';
             color = 'red';
+            isPlayerWinner = false;
         } else {
             message = 'Spieler gewinnt!';
             color = 'green';
+            isPlayerWinner = true;
             setTimeout(() => {
                 createConfetti();
                 updateCoins(5);
             }, 0);
+        }
+
+        const playerUsername = localStorage.getItem('username');
+
+        if (playerUsername !== '' || playerUsername !== null) {
+            // Aktualisiere die Statistiken
+            await updateStats(
+                playerUsername,
+                isPlayerWinner,
+                totalDamageDealt,
+                totalDirectDamageDealt
+            );
         }
 
         turnInfo.textContent = message;
@@ -720,7 +782,7 @@ document.addEventListener('DOMContentLoaded', function() {
         playerCardsContainer.style.pointerEvents = 'auto';
         computerCardsContainer.style.pointerEvents = 'auto';
         initializeGame();
-        turnInfo.textContent = 'Neues Spiel gestartet. Wähle deine erste Karte.';
+        turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
         roundCounter = 1;
         battleLog.innerHTML = '';
     }
@@ -986,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
         playerField.classList.add('drag-over');
     }
 
-    function dragLeave(e) {
+    function dragLeave() {
         playerField.classList.remove('drag-over');
     }
 
@@ -1025,7 +1087,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayComputerCards();
                 updateHP();
                 isPlayerFirstAttacker = true;
-                turnInfo.textContent = 'Neues Spiel gestartet. Wähle deine erste Karte.';
+                turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
                 updateUserInfo();
                 initializeDragAndDrop();
             })

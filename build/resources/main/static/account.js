@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveButton = document.querySelector('.save-btn');
     const accountForm = document.getElementById('accountForm');
     const togglePasswordButton = document.getElementById('togglePassword');
-    const formContainer = document.querySelector('.form-container');
+
+    loadLeaderboard();
 
     let originalUsername = '';
     let originalPassword = '';
@@ -85,6 +86,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return color;
     }
 
+    document.getElementById('del-button').addEventListener('click', function (e) {
+        e.preventDefault();
+        if (confirm('Sind Sie sicher, dass Sie Ihren Account löschen möchten?')) {
+            delAcc(localStorage.getItem('username'));
+        }
+    });
+
     accountForm.addEventListener('submit', function(e) {
         e.preventDefault();
         saveChanges();
@@ -101,6 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
             passwordInput.value = '*'.repeat(actualPassword.length);
         }
     });
+
+    function delAcc(username) {
+        fetch('/del-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                if (data === 'User deleted successfully'){
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ein Fehler ist aufgetreten beim Löschen des Accounts.');
+            });
+    }
 
     function loadUserInfo() {
         const username = localStorage.getItem('username');
@@ -123,15 +154,88 @@ document.addEventListener('DOMContentLoaded', function() {
                     usernameInput.value = data.username;
                     originalUsername = data.username;
                     actualPassword = data.password;
-                    passwordInput.value = '*'.repeat(actualPassword.length);
-                    originalPassword = '*'.repeat(actualPassword.length);
+                    passwordInput.value = '*'.repeat(data.password.length);
+                    originalPassword = passwordInput.value;
+
+                    loadUserStats();
                 } else {
-                    alert('Fehler beim Laden der Benutzerinformationen.');
+                    console.error('Fehler beim Laden der Benutzerinformationen:', data.message);
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+                console.error('Fehler beim Laden der Benutzerinformationen:', error);
+            });
+    }
+
+    function loadUserStats() {
+        const username = localStorage.getItem('username');
+        if (!username) return;
+
+        fetch('/getUserStats', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const statsContent = document.getElementById('statsContent');
+                    const stats = data.stats;
+                    statsContent.innerHTML = `
+                    <div class="stat-item">
+                        <div class="stat-label">Siege</div>
+                        <div class="stat-value">${stats.wins || 0}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Niederlagen</div>
+                        <div class="stat-value">${stats.lose || 0}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Schaden</div>
+                        <div class="stat-value">${stats.damage || 0}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Direkter Schaden</div>
+                        <div class="stat-value">${stats['direkt-damage'] || 0}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Coins</div>
+                        <div class="stat-value">${stats.coins || 0}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Gewinnrate</div>
+                        <div class="stat-value">${(stats.winrate || 0).toFixed(2)}%</div>
+                    </div>
+                `;
+                } else {
+                    console.error('Fehler beim Laden der Statistiken:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Fehler beim Laden der Statistiken:', error);
+            });
+    }
+
+    function loadLeaderboard() {
+        fetch('/leaderboard')
+            .then(response => response.json())
+            .then(data => {
+                const leaderboardBody = document.querySelector('#leaderboardTable tbody');
+                leaderboardBody.innerHTML = '';
+                data.forEach((player, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${player.username}</td>
+                    <td>${player.wins || 0}</td>
+                `;
+                    leaderboardBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Fehler beim Laden des Leaderboards:', error);
             });
     }
 

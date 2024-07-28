@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="3104645.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Element Battle</title>
+    <link rel="stylesheet" href="game.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<body>
+<header>
+    <nav>
+        <div class="nav-left">
+            <img src="3104645.png" alt="Logo" class="logo">
+            <h1 class="nav-title">Element Battle</h1>
+        </div>
+        <div class="nav-buttons">
+            <button id="shopButton" class="but" onclick="window.location.href='shop.html'">
+                <i class="fas fa-store"></i> Shop
+            </button>
+            <button onclick="window.location.href='index.html'" id="backbutton" class="but">
+                <i class="fas fa-users"></i> Heldenverwaltung
+            </button>
+        </div>
+        <div class="nav-right">
+            <span id="userInfo" style="display: none;">
+                <span id="username"></span>
+            </span>
+            <div id="authButtons">
+                <button class="but" onclick="window.location.href='login.html#login'" id="loginButton">
+                    <i class="fas fa-sign-in-alt"></i> Anmelden
+                </button>
+                <button class="but" onclick="window.location.href='login.html#register'" id="registerButton">
+                    <i class="fas fa-user-plus"></i> Registrieren
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="game-container">
+        <div class="side-panel left-panel">
+            <div class="game-info">
+                <h2>Spieler vs. Computer</h2>
+                <div class="hp-container">
+                    <div class="hp-bar">
+                        <div id="player-hp-bar" class="hp-fill"></div>
+                    </div>
+                    <p id="player-hp">Spieler HP: <span id="player-hp-value">25</span></p>
+                </div>
+                <div class="hp-container">
+                    <div class="hp-bar">
+                        <div id="computer-hp-bar" class="hp-fill"></div>
+                    </div>
+                    <p id="computer-hp">Computer HP: <span id="computer-hp-value">25</span></p>
+                </div>
+                <p id="turn-info" class="turn-info">Wähle eine Karte aus.</p>
+            </div>
+            <div class="element-info">
+                <h3>Elementbeziehungen</h3>
+                <ul>
+                    <li><span class="element-relationship feuer">Feuer</span> > <span class="element-relationship pflanze">Pflanze</span></li>
+                    <li><span class="element-relationship wasser">Wasser</span> > <span class="element-relationship feuer">Feuer</span></li>
+                    <li><span class="element-relationship pflanze">Pflanze</span> > <span class="element-relationship wasser">Wasser</span></li>
+                    <li><span class="element-relationship elektro">Elektro</span> > <span class="element-relationship wasser">Wasser</span></li>
+                    <li><span class="element-relationship erde">Erde</span> > <span class="element-relationship elektro">Elektro</span></li>
+                    <li><span class="element-relationship luft">Luft</span> > <span class="element-relationship erde">Erde</span></li>
+                    <li><span class="element-relationship eis">Eis</span> > <span class="element-relationship luft">Luft</span></li>
+                </ul>
+
+
+                <h3>Schadensberechnung</h3>
+                <ul>
+                    <li>Effektiver Angriff: 1.5x Schaden</li>
+                    <li>Ineffektiver Angriff: 0.5x Schaden</li>
+                    <li>Normaler Angriff: 1x Schaden</li>
+                </ul>
+            </div>
+        </div>
+        <div class="center-panel">
+            <div class="computer-cards">
+
+            </div>
+            <div class="game-board">
+                <div id="computer-field" class="computer-field">
+                </div>
+                <div id="player-field" class="player-field">
+
+                </div>
+            </div>
+            <div class="player-cards">
+
+            </div>
+        </div>
+        <div class="side-panel right-panel">
+            <h2>Kampfprotokoll</h2>
+            <div id="battle-log"></div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const username = localStorage.getItem('username');
+        if (username) {
+            fetch('/getBackground', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.background) {
+                        const backgroundUrl = `url('${data.background}.gif')`;
+                        document.querySelector('.player-field').style.backgroundImage = backgroundUrl;
+                        document.querySelector('.computer-field').style.backgroundImage = backgroundUrl;
+                    } else {
+                        console.log('Kein Hintergrund gefunden oder Fehler:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

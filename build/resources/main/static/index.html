@@ -4,25 +4,26 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="x-icon" href="1721923.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heldenverwaltung</title>
+    <title>Kartenerstellung</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="particles"></div>
 <header>
     <nav>
         <div class="nav-left">
             <img src="oie_91221183fDov5el.png" alt="Logo" class="logo">
-            <h1 class="nav-title">Heldenverwaltung</h1>
+            <h1 class="nav-title">Kartenverwaltung</h1>
         </div>
         <div class="nav-center">
             <div class="nav-buttons">
                 <button id="create-profiles-button" class="but">
-                    <i class="fas fa-user-plus"></i> Standard Heros Generieren
+                    <i class="fas fa-user-plus"></i> Standard Karten Generieren
                 </button>
                 <button onclick="window.location.href='heroshow.html'" class="but">
-                    <i class="fas fa-list-alt"></i> Heros anzeigen
+                    <i class="fas fa-list-alt"></i> Karten anzeigen
                 </button>
                 <button onclick="window.location.href='game.html'" class="but">
                     <i class="fas fa-gamepad"></i> Spielen!
@@ -62,7 +63,7 @@
             <label for="extra">Extra:</label>
             <input type="text" id="extra" name="extra">
         </div>
-        <button type="submit" class="but">Helden erstellen</button>
+        <button type="submit" class="but">Karte erstellen</button>
     </form>
 
     <script src="script.js"></script>

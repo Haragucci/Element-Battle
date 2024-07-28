@@ -60,25 +60,42 @@
 
 html,
 body {
-    width: 100%;
-    height: 100%;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f9;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
     color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
-header {
-    width: 100%;
-    background-color: #4CAF50;
-    color: #fff;
+.particles {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
-    padding: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: fall 15s linear infinite;
+}
+
+header {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 header nav {
@@ -86,35 +103,28 @@ header nav {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    max-width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    flex-wrap: wrap;
 }
 
 .nav-left {
     display: flex;
     align-items: center;
-    flex-grow: 1;
 }
 
 .logo {
-    height: 40px;
+    height: 50px;
     margin-right: 15px;
 }
 
 .nav-title {
     margin: 0;
-    font-size: 1.5em;
-    font-weight: 500;
-}
-
-.nav-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    font-size: 1.8em;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .nav-buttons {
@@ -123,152 +133,111 @@ header nav {
 }
 
 .nav-buttons .but {
-    background-color: #ffffff;
-    color: #4CAF50;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
     border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
+    padding: 10px 20px;
+    border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     display: flex;
     align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .nav-buttons .but:hover {
-    background-color: #e8f5e9;
+    background-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 .nav-buttons .but i {
-    margin-right: 5px;
-}
-
-@media (max-width: 768px) {
-    header nav {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-left {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .logo {
-        height: 30px;
-        margin: 0 0 10px 0;
-    }
-
-    .nav-title {
-        font-size: 1.2em;
-        text-align: center;
-        margin: 0 0 10px 0;
-    }
-
-    .nav-center {
-        position: static;
-        transform: none;
-    }
-
-    .nav-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .nav-buttons .but {
-        width: 90%;
-        margin: 5px 0;
-    }
-}
-
-
-.nav-buttons .but:hover {
-    background-color: skyblue;
-    transform: translateY(-2px);
-}
-
-@media (max-width: 768px) {
-    header nav {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .nav-left {
-        margin-bottom: 10px;
-    }
-
-    .nav-buttons {
-        justify-content: space-between;
-    }
-
-    .nav-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .nav-buttons .but {
-        width: 90%;
-        margin: 5px 0;
-    }
+    margin-right: 8px;
 }
 
 main {
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin-top: 80px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
 }
 
 .form-container {
-    background-color: #fff;
-    border: 2px solid #4CAF50;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-out;
 }
 
 .input-group {
-    margin-bottom: 20px;
-    width: 100%;
+    margin-bottom: 25px;
+    animation: slideIn 0.5s ease-out;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
 }
 
 .input-group input,
-.input-group select {
+.input-group select,
+textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+textarea:focus,
+.input-group input.editing,
+.input-group select.editing,
+textarea.editing {
+    border-color: #fdbb2d;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(253, 187, 45, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 button[type="submit"] {
-    background-color: #4CAF50;
+    background: linear-gradient(45deg, #fdbb2d, #b21f1f);
+    color: white;
     width: 100%;
-    color: #fff;
-    margin: 0;
-    padding: 10px 20px;
+    padding: 12px;
     border: none;
-    border-radius: 25px;
+    border-radius: 30px;
+    font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    animation: slideIn 0.5s ease-out;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+button[type="submit"]:hover:not(:disabled) {
     transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button[type="submit"]:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
 }
 
 #hero-list {
@@ -283,6 +252,11 @@ button[type="submit"]:hover {
 #hero-list h2 {
     margin-top: 0;
     text-align: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 28px;
+    animation: slideIn 0.5s ease-out;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 #hero-list ul {
@@ -291,23 +265,67 @@ button[type="submit"]:hover {
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
+    gap: 20px;
     width: 100%;
 }
 
 #hero-list li {
-    padding: 10px;
-    border: 2px solid #ccc;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    width: 20rem;
+    padding: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
     box-sizing: border-box;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 1s ease, background-color 1s ease, height 1s ease, opacity 1s ease;
-    overflow: hidden;
+    transition: transform 0.5s ease, background-color 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+    animation: fadeIn 0.5s ease-out;
+}
+
+#hero-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+#hero-list li div {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+#hero-list li label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#hero-list li input {
+    width: 100%;
+    padding: 10px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+#hero-list li input:focus {
+    border-color: #fdbb2d;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(253, 187, 45, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 600px) {
+    #hero-list ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #hero-list li {
+        max-width: 100%;
+    }
 }
 
 #hero-list li div {
@@ -360,27 +378,75 @@ button[type="submit"]:hover {
     transform: translate(-50%, -50%) scale(1.1);
     width: 30rem;
     z-index: 1001;
-    background-color: #FFE0E0;
+    background: #1e3d59;
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 #hero-list li.saving {
-    background-color: yellowgreen;
+    background-color: #2ecc71;
 }
 
 #hero-list li.cancelling {
-    background-color: #FF5500;
+    background-color: #e74c3c;
 }
 
 #hero-list li.deleting {
-    background-color: red;
+    background-color: #e74c3c;
     opacity: 0;
     height: 0;
     padding: 0;
     margin: 0;
-    filter: blur(2px);
+    transform: scale(0.2);
+    animation: scaleDown 0.5s ease forwards;
+}
+
+#hero-list li:not(.deleting) {
+    transition: transform 1s ease, background-color 1s ease, height 1s ease, opacity 1s ease;
+}
+
+textarea {
+    width: 95%;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+button[type="button"] {
+    background-color: #e74c3c;
+    color: #fff;
     border: none;
-    box-shadow: none;
-    transition: filter 3s ease, height 1s ease, padding 1s ease, margin 1s ease;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[type="button"]:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+button[type="button"].cancel-button {
+    background-color: #2ecc71;
+}
+
+button[type="button"].cancel-button:hover {
+    background-color: #27ae60;
+}
+
+textarea,
+input {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="text"] {
+    height: 44px;
 }
 
 .blur-background {

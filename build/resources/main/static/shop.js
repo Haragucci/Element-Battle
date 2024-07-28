@@ -207,6 +207,9 @@ function buyAllBackgrounds() {
         return;
     }
 
+    if (buyButton.disabled) return;
+    buyButton.disabled = true;
+
     const cost = 2;
     const requestBody = { username, background: 'all', cost };
     console.log('Sending buyBackground request:', requestBody);
@@ -244,14 +247,6 @@ function updateCoins(newCoins) {
     updateUserDisplay(localStorage.getItem('username'), newCoins);
 }
 
-function updateCoinsDisplay() {
-    const coinsElement = document.getElementById('coins');
-    if (coinsElement) {
-        const coins = localStorage.getItem('coins') || '0';
-        coinsElement.textContent = coins;
-    }
-}
-
 function loadCardDesignStatus() {
     const username = localStorage.getItem('username');
     if (!username) {
@@ -276,7 +271,7 @@ function loadCardDesignStatus() {
                 togglesContainer.style.display = 'block';
                 updateToggleButtons(data.activeDesign);
             } else {
-                buyButton.style.display = 'inline-block';
+                buyButton.style.display = 'block';
                 togglesContainer.style.display = 'none';
             }
         })
@@ -334,7 +329,6 @@ function buyCardDesign() {
     const username = localStorage.getItem('username');
     const buyButton = document.getElementById('buyCardDesign');
 
-    // Verhindere doppelte Klicks
     if (buyButton.disabled) return;
     buyButton.disabled = true;
 

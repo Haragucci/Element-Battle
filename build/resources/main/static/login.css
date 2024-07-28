@@ -8,22 +8,57 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+:root {
+    --primary-color: #fdbb2d;
+    --secondary-color: #b21f1f;
+    --tertiary-color: #1a2a6c;
+    --text-color: #ffffff;
+    --background-opacity: 0.1;
+    --transition-speed: 0.3s;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
+    background: linear-gradient(135deg, var(--tertiary-color), var(--secondary-color), var(--primary-color));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: var(--text-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    z-index: -1;
+    pointer-events: none;
 }
 
 header {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, var(--background-opacity));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 15px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 header nav {
@@ -31,7 +66,7 @@ header nav {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    max-width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     flex-wrap: wrap;
 }
@@ -45,12 +80,19 @@ header nav {
 .logo {
     height: 40px;
     margin-right: 15px;
+    transition: transform var(--transition-speed) ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
 }
 
 .nav-title {
     margin: 0;
     font-size: 1.5em;
-    font-weight: 500;
+    font-weight: 700;
+    color: var(--text-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .nav-buttons {
@@ -59,26 +101,29 @@ header nav {
 }
 
 .nav-buttons .but {
-    background-color: #ffffff;
-    color: #4CAF50;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-color);
     border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
+    padding: 10px 20px;
+    border-radius: 25px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed) ease;
     font-size: 14px;
     font-weight: 500;
     display: flex;
     align-items: center;
+    letter-spacing: 0.5px;
 }
 
 .nav-buttons .but:hover {
-    background-color: #e8f5e9;
+    background-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav-buttons .but i {
-    margin-right: 5px;
+    margin-right: 8px;
+    font-size: 16px;
 }
 
 main {
@@ -86,27 +131,38 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .form-container {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     animation: fadeIn 0.5s ease-out;
-    border: 2px solid #4CAF50;
+}
+
+.form-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
     margin-bottom: 30px;
-    font-size: 24px;
-    color: #333;
+    font-size: 28px;
+    color: var(--text-color);
     text-align: center;
-    font-weight: 500;
+    font-weight: 700;
     animation: slideIn 0.5s ease-out;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .input-group {
@@ -117,9 +173,10 @@ h2 {
 label {
     display: block;
     margin-bottom: 8px;
-    font-size: 14px;
-    color: #555;
+    font-size: 16px;
+    color: var(--text-color);
     font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 .input-wrapper {
@@ -127,87 +184,101 @@ label {
     display: flex;
     align-items: center;
 }
+.input-wrapper i {
+    color: black;
+}
 
 input[type="text"], input[type="password"] {
     width: 100%;
-    padding: 10px 40px 10px 35px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 12px 40px 12px 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
     font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: var(--text-color);
+    transition: all var(--transition-speed) ease;
 }
 
 input[type="text"]:focus, input[type="password"]:focus {
-    border-color: #4CAF50;
+    background-color: rgba(255, 255, 255, 0.2);
     outline: none;
-    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .input-icon {
     position: absolute;
-    left: 10px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #4CAF50;
+    color: var(--text-color);
+    font-size: 18px;
 }
 
 .toggle-password {
     background: none;
     border: none;
-    color: #4CAF50;
+    color: var(--text-color);
     cursor: pointer;
     font-size: 18px;
     padding: 5px;
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: all var(--transition-speed) ease;
 }
 
 .toggle-password:hover {
-    color: #45a049;
-    transform: translateY(-50%) scale(1.1);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .save-btn {
     width: 100%;
     padding: 12px;
-    background: #4CAF50;
-    color: white;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 30px;
+    font-size: 18px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition: all var(--transition-speed) ease;
     font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: slideIn 0.5s ease-out;
+    letter-spacing: 1px;
 }
 
 .save-btn:hover {
-    background: #45a049;
     transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
 }
 
 #loginMessage, #registerMessage {
     margin-top: 15px;
     text-align: center;
-    color: #f44336;
+    color: #ff6b6b;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    font-weight: 500;
 }
 
 p {
     text-align: center;
     margin-top: 20px;
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 a {
-    color: #4CAF50;
+    color: var(--primary-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-speed) ease;
+    font-weight: 500;
 }
 
 a:hover {
-    color: #45a049;
+    color: var(--secondary-color);
+    text-decoration: underline;
 }
 
 .nav-right {
@@ -227,32 +298,33 @@ a:hover {
 .nav-right .but {
     margin-left: 10px;
     padding: 8px 15px;
-    background-color: #2196F3;
-    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-color);
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all var(--transition-speed) ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-size: 14px;
 }
 
 .nav-right .but:hover {
-    background-color: #1976D2;
+    background-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
 }
 
 #logoutButton {
-    background-color: #f44336;
+    background-color: rgba(244, 67, 54, 0.7);
 }
 
 #logoutButton:hover {
-    background-color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.8);
 }
 
 #username, #coins {
     margin-right: 10px;
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 .login-container, .register-container {
@@ -285,5 +357,17 @@ a:hover {
     .nav-buttons .but {
         width: 100%;
         margin-bottom: 5px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    input[type="text"], input[type="password"] {
+        font-size: 14px;
     }
 }
