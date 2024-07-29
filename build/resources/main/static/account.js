@@ -230,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${index + 1}</td>
                     <td>${player.username}</td>
                     <td>${player.wins || 0}</td>
+                    <td>${player.winrate.toFixed(2)}%</td>
                 `;
                     leaderboardBody.appendChild(row);
                 });

@@ -244,8 +244,8 @@ h2 i {
     flex-direction: column;
     align-items: center;
     transition: all 0.3s ease;
-    min-height: 300px; /* Fügen Sie eine Mindesthöhe hinzu */
-    justify-content: space-between; /* Verteilen Sie den Inhalt gleichmäßig */
+    min-height: 300px;
+    justify-content: space-between;
 }
 
 .shop-item:hover {
@@ -280,8 +280,8 @@ h2 i {
     transition: all 0.3s ease;
     font-size: 16px;
     font-weight: 500;
-    width: 80%; /* Fügen Sie eine feste Breite hinzu */
-    text-align: center; /* Zentrieren Sie den Text */
+    width: 80%;
+    text-align: center;
 }
 
 .toggle-button:hover, .toggle-button2:hover, .buy-design-btn:hover {
@@ -398,7 +398,6 @@ h2 i {
 .preview-card.premium-design-3.eis { background: linear-gradient(135deg, #b0e0e6, #87ceeb); color: #4682b4; }
 
 .shop-container {
-    /* Bestehende Stile beibehalten */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -458,13 +457,11 @@ h2 i {
     align-items: center;
 }
 
-/* Entfernen Sie die margin-left und margin-right für .buy-design-btn */
 .buy-design-btn {
     margin-left: 0;
     margin-right: 0;
 }
 
-/* Fügen Sie diese neue Regel hinzu */
 #cardDesignToggles {
     width: 100%;
 }

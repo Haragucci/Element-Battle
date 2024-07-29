@@ -115,7 +115,7 @@ main {
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 370px; /* Reduced max-width for better alignment */
+    max-width: 370px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -302,8 +302,7 @@ input[type="text"].editing, input[type="password"].editing {
 #leaderboardTable th {
     background-color: rgba(253, 187, 45, 0.2);
     font-weight: 600;
-    font-size: 16px;
-    text-transform: uppercase;
+    font-size: 13.6px;
 }
 
 #leaderboardTable tr {

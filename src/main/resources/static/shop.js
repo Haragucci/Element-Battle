@@ -364,6 +364,7 @@ function buyCardDesign() {
         .finally(() => {
             buyButton.disabled = false;
         });
+    window.location.reload();
 }
 
 function flashButtonRed(button) {

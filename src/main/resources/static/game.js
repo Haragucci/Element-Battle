@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     updateCardDesign();
     updateElementRelationships();
+    checkAndUpdateUserCardDesign();
     const playerField = document.querySelector('.player-field');
     const computerField = document.querySelector('.computer-field');
     const playerCardsContainer = document.querySelector('.player-cards');
@@ -36,6 +37,37 @@ document.addEventListener('DOMContentLoaded', function() {
         loadCoins();
         updateUserInfo();
     };
+
+    function checkAndUpdateUserCardDesign() {
+        const username = localStorage.getItem('username');
+        if (!username) {
+            localStorage.setItem('activeCardDesign', 'default');
+            updateCardDesign();
+            return;
+        }
+
+        fetch('/checkUserCardDesign', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })
+        })
+            .then(response => response.json())
+            .then(data => {
+                let design = 'default';
+                if (data.purchased) {
+                    design = data.activeDesign || 'default';
+                }
+                localStorage.setItem('activeCardDesign', design);
+                updateCardDesign();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                localStorage.setItem('activeCardDesign', 'default');
+                updateCardDesign();
+            });
+    }
 
     function updateCoins(amount) {
         const currentCoins = parseInt(localStorage.getItem('coins')) || 0;
@@ -162,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function logout() {
         localStorage.removeItem('username');
         localStorage.removeItem('coins');
+        localStorage.setItem('activeCardDesign', 'default');
         updateUserInfo();
         window.location.reload();
 
@@ -259,7 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const computerCardData = allHeroes.find(card => card.name === computerCardName);
 
         if (!playerCardData || !computerCardData) {
-            console.error('Card data not found');
             isBattleInProgress = false;
             endTurn();
             return;
@@ -686,14 +718,13 @@ document.addEventListener('DOMContentLoaded', function() {
             isPlayerWinner = true;
             setTimeout(() => {
                 createConfetti();
-                updateCoins(5);
+                updateCoins(1);
             }, 0);
         }
 
         const playerUsername = localStorage.getItem('username');
 
         if (playerUsername !== '' || playerUsername !== null) {
-            // Aktualisiere die Statistiken
             await updateStats(
                 playerUsername,
                 isPlayerWinner,

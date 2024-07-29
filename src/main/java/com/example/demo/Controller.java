@@ -240,7 +240,6 @@ public class Controller implements Serializable {
     private void saveStats() {
         try {
             mapper.writeValue(new File(STATS_FILE_PATH), stats);
-            System.out.println("Statistiken gespeichert: " + stats);
         } catch (IOException e) {
             System.out.println("Fehler beim Speichern der Statistiken: " + e.getMessage());
         }
@@ -258,7 +257,7 @@ public class Controller implements Serializable {
                         ((Number) b.getOrDefault("wins", 0)).intValue(),
                         ((Number) a.getOrDefault("wins", 0)).intValue()
                 ))
-                .limit(10)
+                .limit(5)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(leaderboard);
@@ -267,7 +266,6 @@ public class Controller implements Serializable {
     void saveUserStats(String username, Map<String, Object> userStats) {
         stats.put(username, new HashMap<>(userStats));
         saveStats();
-        System.out.println("Statistiken für " + username + " gespeichert: " + userStats);
     }
 
     @PostMapping("/del-user")
@@ -278,7 +276,6 @@ public class Controller implements Serializable {
         }
 
         try {
-            // Entfernen des Benutzers aus der acc.json Datei
             File accountFile = new File(ACCOUNTS_FILE_PATH);
             ObjectMapper mapper = new ObjectMapper();
             TypeReference<Map<String, Map<String, Object>>> typeRef = new TypeReference<>() {};
@@ -299,7 +296,6 @@ public class Controller implements Serializable {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
         } catch (IOException e) {
-            System.out.println("Fehler beim Löschen des Users: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
@@ -311,13 +307,10 @@ public class Controller implements Serializable {
         if (file.exists()) {
             try {
                 stats = mapper.readValue(file, new TypeReference<>() {});
-                System.out.println("Statistiken geladen: " + stats);
             } catch (IOException e) {
-                System.out.println("Fehler beim Laden der Statistiken: " + e.getMessage());
                 stats = new HashMap<>();
             }
         } else {
-            System.out.println("stats.json Datei existiert nicht. Initialisiere leere Statistiken.");
             stats = new HashMap<>();
         }
     }
@@ -327,14 +320,11 @@ public class Controller implements Serializable {
             File file = new File(STATS_FILE_PATH);
             if (file.exists()) {
                 Map<String, Map<String, Object>> allStats = mapper.readValue(file, new TypeReference<>() {});
-                System.out.println("Geladene Statistiken: " + allStats);
                 return allStats;
             } else {
-                System.out.println("stats.json Datei existiert nicht. Eine neue wird erstellt.");
                 return new HashMap<>();
             }
         } catch (IOException e) {
-            System.out.println("Fehler beim Laden der Stats: " + e.getMessage());
             return new HashMap<>();
         }
     }
@@ -368,7 +358,6 @@ public class Controller implements Serializable {
 
     @PostMapping("/updateStats")
     public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
-        System.out.println("Empfangene Statistik-Update: " + statsUpdate);
 
         String username = (String) statsUpdate.get("username");
         int wins = ((Number) statsUpdate.getOrDefault("win", 0)).intValue();
@@ -377,10 +366,7 @@ public class Controller implements Serializable {
         int directDamage = ((Number) statsUpdate.getOrDefault("directDamage", 0)).intValue();
         int coinsEarned = ((Number) statsUpdate.getOrDefault("coins", 0)).intValue();
 
-        System.out.println("Verarbeitete Daten: username=" + username + ", wins=" + wins + ", losses=" + losses + ", damage=" + damage + ", directDamage=" + directDamage + ", coinsEarned=" + coinsEarned);
-
         Map<String, Object> userStats = loadUserStats(username);
-        System.out.println("Geladene Benutzerstatistiken vor Update: " + userStats);
 
         userStats.put("wins", ((Number) userStats.getOrDefault("wins", 0)).intValue() + wins);
         userStats.put("lose", ((Number) userStats.getOrDefault("lose", 0)).intValue() + losses);
@@ -395,7 +381,6 @@ public class Controller implements Serializable {
         int totalGames = ((Number) userStats.get("wins")).intValue() + ((Number) userStats.get("lose")).intValue();
         double winrate = totalGames > 0 ? (((Number) userStats.get("wins")).doubleValue() / totalGames) * 100 : 0;
         userStats.put("winrate", winrate);
-        System.out.println("Aktualisierte Benutzerstatistiken: " + userStats);
 
         saveUserStats(username, userStats);
 

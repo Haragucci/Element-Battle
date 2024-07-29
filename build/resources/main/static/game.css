@@ -1,4 +1,4 @@
-/* Allgemeine Animationen */
+
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
@@ -240,14 +240,14 @@ p#turn-info {
 }
 
 .hp-bar {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: #e0e0e0;
     border-radius: 10px;
     overflow: hidden;
     height: 20px;
 }
 
 .hp-fill {
-    background-color: #fdbb2d;
+    background-color: #4CAF50;
     height: 100%;
 }
 
@@ -278,7 +278,7 @@ p#turn-info {
 }
 
 .computer-cards {
-    color: black;
+    color: rgba(0, 0, 0, 0.1);
 }
 
 .game-board {
@@ -326,6 +326,7 @@ p#turn-info {
     width: 45%;
     height: 250px;
     background-size: cover;
+    background-repeat: round;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 15px;
     display: flex;
@@ -334,7 +335,7 @@ p#turn-info {
 }
 
 .card {
-    width: 7.5rem;
+    width: 7.6rem;
     height: 11.25rem;
     padding: 0.625rem;
     margin: 0.625rem;

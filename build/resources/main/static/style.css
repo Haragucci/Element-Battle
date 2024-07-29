@@ -361,6 +361,9 @@ button[type="submit"]:disabled {
 #overlay.active {
     display: block;
 }
+option {
+    color: black;
+}
 
 #hero-list li.editing,
 #hero-list li.saving,

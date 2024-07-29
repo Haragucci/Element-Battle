@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch("/createProfiles")
             .then(response => response.text())
             .then(data=> {
-                data.includes("");//Nur damit keine Fehler angezeigt werden ;D
+                data.includes("");//Nur damit keine Fehler angezeigt werden
                 createProfilesButton.classList.add('blink-success');
                 setTimeout(() => createProfilesButton.classList.remove('blink-success'), 1000);
             })
@@ -57,9 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(data => {
                 console.log('Success:', data);
-                document.getElementById('hero-form').reset();
                 const formContainer = document.querySelector('.form-container');
-                formContainer.classList.remove('blink-error');
                 formContainer.classList.add('blink-success');
                 setTimeout(() => formContainer.classList.remove('blink-success'), 1000);
             })
