@@ -14,6 +14,9 @@
     to { transform: translateY(100vh) rotate(720deg); }
 }
 
+html {
+    overflow: hidden;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -180,11 +183,9 @@ main {
 }
 
 .game-container {
-    display: grid;
-    grid-template-columns: 20% 1fr 20%;
-    gap: 20px;
+    display: flex;
     width: 100%;
-    height: 850px;
+    height: calc(100vh - 90px);
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -194,27 +195,34 @@ main {
 
 
 .side-panel {
+    height: fit-content;
+    width: 20%;
     padding: 20px;
     background: rgba(255, 255, 255, 0.05);
 }
 
 .left-panel {
-    grid-column: 1;
+    order: 1;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
     border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 9px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 
 .right-panel {
-    grid-column: 3;
+    order: 3;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    border-radius: 15px;
+    padding: 9px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .center-panel {
-    grid-column: 2;
+    flex: 1;
+    order: 2;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -252,12 +260,12 @@ p#turn-info {
     transition: width 0.5s ease-in-out;
 }
 
-.element-info ul {
+.gam-info ul {
     list-style-type: none;
     padding: 0;
 }
 
-.element-info li {
+.game-info li {
     margin-bottom: 10px;
     font-size: 16px;
     color: #e0e0e0;
@@ -287,8 +295,6 @@ p#turn-info {
     justify-content: space-around;
     align-items: center;
     flex: 1;
-    margin-top: 15px;
-    margin-bottom: 15px;
 }
 
 @keyframes borderGradient {
@@ -327,7 +333,8 @@ p#turn-info {
     width: 45%;
     height: 250px;
     background-size: cover;
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-position: center;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 15px;
     display: flex;
@@ -443,7 +450,7 @@ p#turn-info {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 15px;
-    height:700px;
+    height:39rem;
     overflow-y: auto;
 }
 

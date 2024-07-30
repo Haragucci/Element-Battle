@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadUserInfo();
     loadPurchasedBackgrounds();
     loadCardDesignStatus();
+    createPreviewCards();
 
     const buyAllBackgroundsButton = document.getElementById('buyAllBackgrounds');
     if (buyAllBackgroundsButton) {
@@ -479,6 +480,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     checkPurchaseStatus();
-    createPreviewCards();
     loadCardDesignStatus();
 });

@@ -57,8 +57,25 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(data => {
                 console.log('Success:', data);
+                document.getElementById('hero-form').reset();
                 const formContainer = document.querySelector('.form-container');
                 formContainer.classList.add('blink-success');
+                const successMessage = document.createElement('div');
+                successMessage.textContent = 'Karte erfolgreich Erstellt!';
+                successMessage.style.position = 'fixed';
+                successMessage.style.top = '200px';
+                successMessage.style.left = '50%';
+                successMessage.style.transform = 'translateX(-50%)';
+                successMessage.style.backgroundColor = '#4CAF50';
+                successMessage.style.color = 'white';
+                successMessage.style.padding = '10px 20px';
+                successMessage.style.borderRadius = '5px';
+                successMessage.style.zIndex='10000'
+                document.body.appendChild(successMessage);
+
+                setTimeout(() => {
+                    document.body.removeChild(successMessage);
+                }, 3000);
                 setTimeout(() => formContainer.classList.remove('blink-success'), 1000);
             })
             .catch((error) => {
