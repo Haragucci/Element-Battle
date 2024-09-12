@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+    createPreviewCards();
     loadUserInfo();
     loadPurchasedBackgrounds();
     loadCardDesignStatus();
-    createPreviewCards();
 
     const buyAllBackgroundsButton = document.getElementById('buyAllBackgrounds');
     if (buyAllBackgroundsButton) {
@@ -250,8 +250,10 @@ function updateCoins(newCoins) {
 
 function loadCardDesignStatus() {
     const username = localStorage.getItem('username');
+    const togglesContainer = document.getElementById('cardDesignToggles');
     if (!username) {
         console.error('Kein Benutzer angemeldet');
+        togglesContainer.style.display='block';
         return;
     }
 
@@ -265,7 +267,6 @@ function loadCardDesignStatus() {
         .then(response => response.json())
         .then(data => {
             const buyButton = document.getElementById('buyCardDesign');
-            const togglesContainer = document.getElementById('cardDesignToggles');
 
             if (data.purchased) {
                 buyButton.style.display = 'none';
@@ -273,7 +274,7 @@ function loadCardDesignStatus() {
                 updateToggleButtons(data.activeDesign);
             } else {
                 buyButton.style.display = 'block';
-                togglesContainer.style.display = 'none';
+                togglesContainer.style.display = 'block';
             }
         })
         .catch(error => console.error('Error:', error));
@@ -479,6 +480,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleCardDesign(designId);
         });
     });
+
     checkPurchaseStatus();
     loadCardDesignStatus();
 });

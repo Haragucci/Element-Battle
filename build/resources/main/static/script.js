@@ -63,18 +63,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 const successMessage = document.createElement('div');
                 successMessage.textContent = 'Karte erfolgreich Erstellt!';
                 successMessage.style.position = 'fixed';
-                successMessage.style.top = '200px';
+                successMessage.style.top = '2%';
                 successMessage.style.left = '50%';
                 successMessage.style.transform = 'translateX(-50%)';
-                successMessage.style.backgroundColor = '#4CAF50';
+                successMessage.style.backgroundColor = 'rgba(0,255,0, 0.8)';
                 successMessage.style.color = 'white';
                 successMessage.style.padding = '10px 20px';
-                successMessage.style.borderRadius = '5px';
-                successMessage.style.zIndex='10000'
-                document.body.appendChild(successMessage);
+                successMessage.style.borderRadius = '13px';
+                successMessage.style.zIndex='1000'
+                successMessage.style.opacity='0';
+                successMessage.style.transition='opacity 0.5s ease-in-out';
+                formContainer.appendChild(successMessage);
+
+                setTimeout(()=> {
+                    successMessage.style.opacity='1';
+                }, 100);
+                setTimeout(()=> {
+                   successMessage.style.opacity='0';
+                }, 2000);
 
                 setTimeout(() => {
-                    document.body.removeChild(successMessage);
+                    formContainer.removeChild(successMessage);
                 }, 3000);
                 setTimeout(() => formContainer.classList.remove('blink-success'), 1000);
             })

@@ -577,6 +577,7 @@ input[type="text"] {
 }
 
 #delete-all-button {
+    height: 44px;
     background-color: #f44336;
     color: #fff;
     padding: 10px 20px;

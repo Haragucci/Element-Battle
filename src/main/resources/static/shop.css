@@ -435,6 +435,10 @@ h2 i {
     margin-bottom: 15px;
 }
 
+.design-preview {
+    flex: auto;
+}
+
 .toggle-button, .toggle-button2, .buy-design-btn {
     width: 100%;
     margin-top: 10px;

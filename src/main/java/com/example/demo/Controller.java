@@ -205,6 +205,7 @@ public class Controller implements Serializable {
     public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> user) {
         String username = user.get("username");
         String password = user.get("password");
+        
 
         if (accounts.containsKey(username)) {
             Account existingAccount = accounts.get(username);
