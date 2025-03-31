@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -316,19 +315,6 @@ public class Controller implements Serializable {
         }
     }
 
-    private Map<String, Map<String, Object>> loadAllStats() {
-        try {
-            File file = new File(STATS_FILE_PATH);
-            if (file.exists()) {
-                Map<String, Map<String, Object>> allStats = mapper.readValue(file, new TypeReference<>() {});
-                return allStats;
-            } else {
-                return new HashMap<>();
-            }
-        } catch (IOException e) {
-            return new HashMap<>();
-        }
-    }
 
     @PostMapping("/getUserStats")
     public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
@@ -542,10 +528,6 @@ public class Controller implements Serializable {
         return ResponseEntity.ok(Map.of("success", false));
     }
 
-    @GetMapping("/hero-types")
-    public static List<String> getHeroTypes() {
-        return heroTypes;
-    }
 
     @PostMapping("/hero")
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
