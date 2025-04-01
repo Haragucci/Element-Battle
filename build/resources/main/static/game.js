@@ -1184,12 +1184,23 @@ document.addEventListener('DOMContentLoaded', function() {
         playerField.addEventListener('drop', drop);
     }
 
-    let sigma = true;
+    let generatedGame = true;
 
     function initializeGame() {
         const username = localStorage.getItem('username');
         if (!username) {
-            console.error('Kein Benutzername gefunden.');
+            fetch('/heroshow')
+                .then(response => response.json())
+                .then(heroes => {
+                    allHeroes = heroes;
+                    playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                    computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                    if (!username){
+                        savePlayerGame();
+                    }
+                    startGame();
+                })
+                .catch(error => console.error('Fehler beim Laden der Helden:', error));
             return;
         }
 
@@ -1210,7 +1221,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     computerHand = data.Computercards;
                     playerHP = data.PHP;
                     computerHP = data.CHP;
-                    sigma = false;
+                    generatedGame = false;
+                    savePlayerGame();
                     startGame();
                 } else {
                     console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
@@ -1220,7 +1232,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             allHeroes = heroes;
                             playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
                             computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
-                            savePlayerGame();
+                            if (username){
+                                savePlayerGame();
+                            }
                             startGame();
                         })
                         .catch(error => console.error('Fehler beim Laden der Helden:', error));
@@ -1232,17 +1246,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function startGame() {
         displayPlayerCards();
         displayComputerCards();
-        if(!sigma){
-            updateHP();
-        }
-        sigma = true;
+        updateHP();
+        generatedGame = true;
         isPlayerFirstAttacker = true;
         turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
         updateUserInfo();
 
-        console.log('Vor der Initialisierung von Drag and Drop.');
         initializeDragAndDrop();
-        console.log('Nach der Initialisierung von Drag and Drop.');
     }
 
     const style = document.createElement('style');
