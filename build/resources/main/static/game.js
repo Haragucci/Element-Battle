@@ -288,10 +288,10 @@ document.addEventListener('DOMContentLoaded', function() {
         field.appendChild(selectedCard);
 
         if (field === playerField) {
-            playerHand = playerHand.filter(c => c.name !== card.name);
+            playerHand = playerHand.filter(c => c.id !== card.id);
             displayPlayerCards();
         } else {
-            computerHand = computerHand.filter(c => c.name !== card.name);
+            computerHand = computerHand.filter(c => c.id !== card.id);
             displayComputerCards();
         }
 
@@ -310,6 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 500);
     }
+
     function createConfetti() {
         const confettiCount = 300;
         const confettiContainer = document.createElement('div');
@@ -352,6 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function battle() {
+        console.log("test")
         const playerCard = playerField.querySelector('.card');
         const computerCard = computerField.querySelector('.card');
 
@@ -367,7 +369,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const playerCardData = allHeroes.find(card => card.name === playerCardName);
         const computerCardData = allHeroes.find(card => card.name === computerCardName);
-
         if (!playerCardData || !computerCardData) {
             isBattleInProgress = false;
             endTurn();
@@ -1203,6 +1204,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 .catch(error => console.error('Fehler beim Laden der Helden:', error));
             return;
         }
+
+        fetch('/heroshow')
+            .then(response => response.json())
+            .then(heroes => {
+                allHeroes = heroes;
+            })
+            .catch(error => console.error('Fehler beim Laden der Helden:', error));
 
         fetch('/checkGame', {
             method: 'POST',
