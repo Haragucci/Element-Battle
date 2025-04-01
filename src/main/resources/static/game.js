@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    checkPlayerGame();
     updateCardDesign();
     updateElementRelationships();
     checkAndUpdateUserCardDesign();
@@ -37,6 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
         loadCoins();
         updateUserInfo();
     };
+
+    function checkPlayerGame(){
+
+    }
 
     function checkAndUpdateUserCardDesign() {
         const username = localStorage.getItem('username');
