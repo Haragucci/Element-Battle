@@ -39,8 +39,76 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUserInfo();
     };
 
-    function checkPlayerGame(){
+    function savePlayerGame() {
+        console.log('OK!')
+        const username = localStorage.getItem('username');
+        if (!username || playerHand.length === 0 || computerHand.length === 0) {
+            console.error('Fehlende Daten für das Speichern des Spiels!');
+            return;
+        }
 
+        const requestData = {
+            username: username,
+            Playercards: playerHand.map(hero => ({
+                id: hero.id,
+                name: hero.name,
+                HP: hero.HP,
+                Damage: hero.Damage,
+                type: hero.type,
+                extra: hero.extra
+            })),
+            Computercards: computerHand.map(hero => ({
+                id: hero.id,
+                name: hero.name,
+                HP: hero.HP,
+                Damage: hero.Damage,
+                type: hero.type,
+                extra: hero.extra
+            }))
+        };
+
+        fetch('/saveGame', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Spiel gespeichert:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function checkPlayerGame() {
+        const username = localStorage.getItem('username');
+        if (!username) {
+            return;
+        }
+
+        fetch('/checkGame', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.Playercards && data.Computercards) {
+                    console.log('Gespeichertes Spiel gefunden:', data);
+                    playerHand = data.Playercards;
+                    computerHand = data.Computercards;
+                } else {
+                    console.log('Kein gespeichertes Spiel gefunden.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     function checkAndUpdateUserCardDesign() {
@@ -394,7 +462,6 @@ document.addEventListener('DOMContentLoaded', function() {
             );
             await new Promise(resolve => setTimeout(resolve, 500));
         }
-
         await endBattleRound(false);
     }
 
@@ -425,6 +492,7 @@ document.addEventListener('DOMContentLoaded', function() {
         roundCounter++;
 
         isBattleInProgress = false;
+        savePlayerGame();
         console.log('Battle ended, starting next turn.');
         endTurn();
     }

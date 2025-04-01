@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
+import com.example.demo.Game;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -17,13 +18,20 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+
+import java.util.List;
+
+
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Controller implements Serializable {
 
+    private final Map<String, Game> games = new HashMap<>();
+
     private static final String HEROES_FILE_PATH = "heros.json";
     private static final String ACCOUNTS_FILE_PATH = "acc.json";
     private static final String CARDS_FILE_PATH = "cards.json";
+    private static final String GAME_FILE_PATH = "saved-games.json";
     private static final String STATS_FILE_PATH = "stats.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -163,6 +171,7 @@ public class Controller implements Serializable {
         loadBackgrounds();
         loadCardDesigns();
         loadStats();
+        loadGame();
     }
 
     @PreDestroy
@@ -172,6 +181,7 @@ public class Controller implements Serializable {
         saveBackgrounds();
         saveCardDesigns();
         saveStats();
+        saveGame();
     }
 
     private void loadAccounts() {
@@ -649,15 +659,60 @@ public class Controller implements Serializable {
     private static final String BACKGROUNDS_FILE_PATH = "back.json";
 
     @PostMapping("/saveGame")
-    public ResponseEntity<Map<String, Object>> saveGame(@RequestBody Map<String, Object> body) {
+    public ResponseEntity<Map<String, Object>> saveGame(@RequestBody Map<String, Object> request) {
+        String username = (String) request.get("username");
+        List<Hero> playerCards = (List<Hero>) request.get("Playercards");
+        List<Hero> computerCards = (List<Hero>) request.get("Computercards");
 
-        return null;
+        if (username == null || playerCards == null || computerCards == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
+        }
+
+        games.put(username, new Game(playerCards, computerCards));
+
+        saveGame();
+
+        return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
     }
 
-    @PostMapping("/checkGame")
-    public ResponseEntity<Map<String, Object>> checkGame(@RequestBody Map<String, Object> body) {
 
-        return null;
+
+    @PostMapping("/checkGame")
+    public ResponseEntity<Map<String, Object>> checkGame(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+
+        if (username == null || !games.containsKey(username)) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
+        }
+
+        Game game = games.get(username);
+
+        return ResponseEntity.ok(Map.of(
+                "Playercards", game.getPlayerCards(),
+                "Computercards", game.getComputerCards()
+        ));
+    }
+
+
+
+    private void loadGame() {
+        try {
+            File file = new File(GAME_FILE_PATH);
+            if (file.exists()) {
+                Map<String, Game> loadedGames = mapper.readValue(file, new TypeReference<Map<String, Game>>() {});
+                games.putAll(loadedGames);
+            }
+        } catch (IOException e) {
+            System.out.println("Fehler beim Laden der Games!");
+        }
+    }
+
+    private void saveGame() {
+        try {
+            mapper.writeValue(new File(GAME_FILE_PATH), games);
+        } catch (IOException e) {
+            System.out.println("Fehler beim Speichern der Games!");
+        }
     }
 
     @PostMapping("/hasBackground")
