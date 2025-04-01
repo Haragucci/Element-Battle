@@ -664,6 +664,8 @@ public class Controller implements Serializable {
     public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
         System.out.println("Received GameRequest: " + request);
         String username = request.getUsername();
+        int playerHP = request.getPlayerHP();
+        int computerHP = request.getComputerHP();
         List<Hero> playerCards = request.getPlayercards();
         List<Hero> computerCards = request.getComputercards();
 
@@ -671,7 +673,8 @@ public class Controller implements Serializable {
             return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
         }
 
-        games.put(username, new Game(playerCards, computerCards));
+        Game game = new Game(playerCards, computerCards, playerHP, computerHP);
+        games.put(username, game);
         saveGame();
 
         return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
@@ -702,7 +705,9 @@ public class Controller implements Serializable {
                         "Damage", hero.Damage(),
                         "type", hero.type(),
                         "extra", hero.extra()
-                )).collect(Collectors.toList())
+                )).collect(Collectors.toList()),
+                "PHP", game.getPlayerHP(),
+                "CHP", game.getComputerHP()
         ));
     }
 
@@ -725,7 +730,6 @@ public class Controller implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
 
     @PostMapping("/hasBackground")
     public ResponseEntity<Map<String, Object>> hasBackground(@RequestBody Map<String, String> request) {

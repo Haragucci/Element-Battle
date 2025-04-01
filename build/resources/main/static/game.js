@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const requestData = {
             username: username,
+            PHP:playerHP,
+            CHP:computerHP,
             playerCards: playerHand.map(hero => ({
                 id: hero.id,
                 name: hero.name,
@@ -1182,6 +1184,8 @@ document.addEventListener('DOMContentLoaded', function() {
         playerField.addEventListener('drop', drop);
     }
 
+    let sigma = true;
+
     function initializeGame() {
         const username = localStorage.getItem('username');
         if (!username) {
@@ -1204,7 +1208,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('Gespeichertes Spiel gefunden.');
                     playerHand = data.Playercards;
                     computerHand = data.Computercards;
-                    savePlayerGame();
+                    playerHP = data.PHP;
+                    computerHP = data.CHP;
+                    sigma = false;
                     startGame();
                 } else {
                     console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
@@ -1226,14 +1232,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function startGame() {
         displayPlayerCards();
         displayComputerCards();
-        updateHP();
+        if(!sigma){
+            updateHP();
+        }
+        sigma = true;
         isPlayerFirstAttacker = true;
         turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
         updateUserInfo();
 
-        console.log('Vor der Initialisierung von Drag and Drop.'); // Hinzugefügter Log
+        console.log('Vor der Initialisierung von Drag and Drop.');
         initializeDragAndDrop();
-        console.log('Nach der Initialisierung von Drag and Drop.'); // Hinzugefügter Log
+        console.log('Nach der Initialisierung von Drag and Drop.');
     }
 
     const style = document.createElement('style');

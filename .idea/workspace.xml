@@ -12,19 +12,12 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acc.json" beforeDir="false" afterPath="$PROJECT_DIR$/acc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$6.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$Hero.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller$Hero.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Controller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/GameRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/GameRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/saved-games.json" beforeDir="false" afterPath="$PROJECT_DIR$/saved-games.json" afterDir="false" />
@@ -32,7 +25,6 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GameRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/stats.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -424,7 +416,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/Controller.java</url>
-          <line>841</line>
+          <line>845</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
