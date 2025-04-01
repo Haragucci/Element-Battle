@@ -744,6 +744,17 @@ public class Controller implements Serializable {
         }
     }
 
+    @DeleteMapping("/game/{username}")
+    public ResponseEntity<String> deleteGame(@PathVariable String username) {
+        if (games.containsKey(username)) {
+            games.remove(username);
+            saveGame();
+            return ResponseEntity.ok("Spielstand für Benutzer '" + username + "' gelöscht.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/hasBackground")
     public ResponseEntity<Map<String, Object>> hasBackground(@RequestBody Map<String, String> request) {
         String username = request.get("username");
