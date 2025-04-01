@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 
+
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Controller implements Serializable {
@@ -699,11 +700,13 @@ public class Controller implements Serializable {
         try {
             File file = new File(GAME_FILE_PATH);
             if (file.exists()) {
-                Map<String, Game> loadedGames = mapper.readValue(file, new TypeReference<Map<String, Game>>() {});
+                Map<String, Game> loadedGames = mapper.readValue(file, new TypeReference<>() {
+                });
                 games.putAll(loadedGames);
             }
         } catch (IOException e) {
-            System.out.println("Fehler beim Laden der Games!");
+            String mes = e.getMessage();
+            System.out.println(mes);
         }
     }
 
@@ -711,7 +714,8 @@ public class Controller implements Serializable {
         try {
             mapper.writeValue(new File(GAME_FILE_PATH), games);
         } catch (IOException e) {
-            System.out.println("Fehler beim Speichern der Games!");
+            String mes = e.getMessage();
+            System.out.println(mes);
         }
     }
 

@@ -1181,21 +1181,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initializeGame() {
-        fetch('/heroshow')
+        const username = localStorage.getItem('username');
+        if (!username) {
+            console.error('Kein Benutzername gefunden.');
+            return;
+        }
+
+        fetch('/checkGame', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })
+        })
             .then(response => response.json())
-            .then(heroes => {
-                allHeroes = heroes;
-                playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
-                computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
-                displayPlayerCards();
-                displayComputerCards();
-                updateHP();
-                isPlayerFirstAttacker = true;
-                turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
-                updateUserInfo();
-                initializeDragAndDrop();
+            .then(data => {
+                if (data.Playercards && data.Computercards) {
+                    console.log('Gespeichertes Spiel gefunden.');
+                    playerHand = data.Playercards;
+                    computerHand = data.Computercards;
+                    startGame();
+                } else {
+                    console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
+                    fetch('/heroshow')
+                        .then(response => response.json())
+                        .then(heroes => {
+                            allHeroes = heroes;
+                            playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                            computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                            savePlayerGame();
+                            startGame();
+                        })
+                        .catch(error => console.error('Fehler beim Laden der Helden:', error));
+                }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Fehler beim Überprüfen des gespeicherten Spiels:', error));
+    }
+
+    function startGame() {
+        displayPlayerCards();
+        displayComputerCards();
+        updateHP();
+        isPlayerFirstAttacker = true;
+        turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
+        updateUserInfo();
+        initializeDragAndDrop();
     }
 
     const style = document.createElement('style');
