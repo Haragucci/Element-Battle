@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -715,8 +716,20 @@ public class Controller implements Serializable {
         try {
             File file = new File(GAME_FILE_PATH);
             if (file.exists()) {
-                Map<String, Game> loadedGames = mapper.readValue(file, new TypeReference<Map<String, Game>>() {});
-                games.putAll(loadedGames);
+                JsonNode rootNode = mapper.readTree(file);
+
+                rootNode.fields().forEachRemaining(entry -> {
+                    String username = entry.getKey();
+                    JsonNode gameData = entry.getValue();
+
+                    List<Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<List<Hero>>() {});
+                    List<Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<List<Hero>>() {});
+                    int playerHP = gameData.get("playerHP").asInt();
+                    int computerHP = gameData.get("computerHP").asInt();
+
+                    Game game = new Game(playerCards, computerCards, playerHP, computerHP);
+                    games.put(username, game);
+                });
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -728,6 +741,17 @@ public class Controller implements Serializable {
             mapper.writeValue(new File(GAME_FILE_PATH), games);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/game/{username}")
+    public ResponseEntity<String> deleteGame(@PathVariable String username) {
+        if (games.containsKey(username)) {
+            games.remove(username);
+            saveGame();
+            return ResponseEntity.ok("Spielstand für Benutzer '" + username + "' gelöscht.");
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

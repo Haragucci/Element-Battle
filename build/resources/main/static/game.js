@@ -38,8 +38,25 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUserInfo();
     };
 
+    async function delPlayerGame() {
+        const username = localStorage.getItem('username');
+
+        try {
+            const response = await fetch(`/game/${username}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                console.log('Spielstand gelöscht!');
+            } else {
+                console.error('Fehler beim Löschen des Spielstands:', response.status);
+            }
+        } catch (error) {
+            console.error('Netzwerkfehler:', error);
+        }
+    }
+
     function savePlayerGame() {
-        console.log('OK!');
         const username = localStorage.getItem('username');
 
         if (!username || playerHand.length === 0 || computerHand.length === 0) {
@@ -353,7 +370,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function battle() {
-        console.log("test")
         const playerCard = playerField.querySelector('.card');
         const computerCard = computerField.querySelector('.card');
 
@@ -497,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
         roundCounter++;
 
         isBattleInProgress = false;
-        savePlayerGame();
+        if (localStorage.getItem('username') !== null && localStorage.getItem('username') !== "") {savePlayerGame();}
         console.log('Battle ended, starting next turn.');
         endTurn();
     }
@@ -517,6 +533,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         displayPlayerCards();
         displayComputerCards();
+        if (localStorage.getItem('username') !== null && localStorage.getItem('username') !== "") {savePlayerGame();}
 
         const firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer";
         turnInfo.textContent = `Wähle deine nächste Karte. ${firstAttacker} greift zuerst an.`;
@@ -802,13 +819,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const playerUsername = localStorage.getItem('username');
 
-        if (playerUsername !== '' || playerUsername !== null) {
+        if (playerUsername !== '' && playerUsername !== null) {
             await updateStats(
                 playerUsername,
                 isPlayerWinner,
                 totalDamageDealt,
                 totalDirectDamageDealt
             );
+            await delPlayerGame();
         }
 
         turnInfo.textContent = message;
@@ -899,7 +917,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function refillPlayerHand() {
         const remainingHeroes = allHeroes.filter(hero => !playerHand.includes(hero) && !computerHand.includes(hero));
         shuffleArray(remainingHeroes);
-        playerHand = remainingHeroes.slice(0, 5);
+        playerHand = remainingHeroes.slice(0, 5)
     }
 
     function refillComputerHand() {
@@ -1255,11 +1273,8 @@ document.addEventListener('DOMContentLoaded', function() {
         displayPlayerCards();
         displayComputerCards();
         updateHP();
-        generatedGame = true;
-        isPlayerFirstAttacker = true;
-        turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
+        turnInfo.textContent = `Wähle deine erste Karte. Spieler greift als erstes an!`;
         updateUserInfo();
-
         initializeDragAndDrop();
     }
 
