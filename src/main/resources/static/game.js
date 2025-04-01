@@ -38,6 +38,24 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUserInfo();
     };
 
+    async function delPlayerGame() {
+        const username = localStorage.getItem('username');
+
+        try {
+            const response = await fetch(`/game/${username}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                console.log('Spielstand gelöscht!');
+            } else {
+                console.error('Fehler beim Löschen des Spielstands:', response.status);
+            }
+        } catch (error) {
+            console.error('Netzwerkfehler:', error);
+        }
+    }
+
     function savePlayerGame() {
         console.log('OK!');
         const username = localStorage.getItem('username');
