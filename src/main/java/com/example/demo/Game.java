@@ -15,10 +15,6 @@ public class Game {
         this.computerCards = computerCards;
     }
 
-    public void setPlayerCards(List<Hero> playerCards) {
-        this.playerCards = playerCards;
-    }
-
     public List<Hero> getPlayerCards() {
         return playerCards;
     }

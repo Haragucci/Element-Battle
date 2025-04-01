@@ -1,1 +1,1 @@
-{"Tilljan":{"playerCards":[{
+{"Tilljan":{"playerCards":[{"id":1,"name":"Ignis Flammenherz","HP":12,"Damage":12,"type":"Feuer","extra":"Entfesselt ein feuriges Inferno!"},{"id":19,"name":"Jolt Elektrosturm","HP":10,"Damage":10,"type":"Elektro","extra":"Ladung, die die Luft zum Zerreißen bringt!"}],"computerCards":[{"id":23,"name":"Atlas Felsenfaust","HP":10,"Damage":8,"type":"Erde","extra":"Erdbeben und Steinschatten!"},{"id":34,"name":"Galea Windesflügel","HP":10,"Damage":9,"type":"Luft","extra":"Sturmfänger und Wolkenwanderer!"}]}}

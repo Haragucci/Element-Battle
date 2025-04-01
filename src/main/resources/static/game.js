@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    checkPlayerGame();
     updateCardDesign();
     updateElementRelationships();
     checkAndUpdateUserCardDesign();
@@ -40,8 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     function savePlayerGame() {
-        console.log('OK!')
+        console.log('OK!');
         const username = localStorage.getItem('username');
+
         if (!username || playerHand.length === 0 || computerHand.length === 0) {
             console.error('Fehlende Daten für das Speichern des Spiels!');
             return;
@@ -49,7 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const requestData = {
             username: username,
-            Playercards: playerHand.map(hero => ({
+            PHP:playerHP,
+            CHP:computerHP,
+            playerCards: playerHand.map(hero => ({
                 id: hero.id,
                 name: hero.name,
                 HP: hero.HP,
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 type: hero.type,
                 extra: hero.extra
             })),
-            Computercards: computerHand.map(hero => ({
+            computerCards: computerHand.map(hero => ({
                 id: hero.id,
                 name: hero.name,
                 HP: hero.HP,
@@ -66,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 extra: hero.extra
             }))
         };
+
+        console.log("Sending data:", JSON.stringify(requestData));
 
         fetch('/saveGame', {
             method: 'POST',
@@ -79,10 +83,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Spiel gespeichert:', data);
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Fehler beim Speichern des Spiels:', error);
             });
     }
-
+/*
     function checkPlayerGame() {
         const username = localStorage.getItem('username');
         if (!username) {
@@ -109,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error:', error);
             });
-    }
+    }*/
 
     function checkAndUpdateUserCardDesign() {
         const username = localStorage.getItem('username');
@@ -1196,10 +1200,13 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             .then(response => response.json())
             .then(data => {
+                console.log('Antwort vom Server:', data);
+
                 if (data.Playercards && data.Computercards) {
                     console.log('Gespeichertes Spiel gefunden.');
                     playerHand = data.Playercards;
                     computerHand = data.Computercards;
+                    savePlayerGame();
                     startGame();
                 } else {
                     console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
@@ -1225,7 +1232,10 @@ document.addEventListener('DOMContentLoaded', function() {
         isPlayerFirstAttacker = true;
         turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
         updateUserInfo();
+
+        console.log('Vor der Initialisierung von Drag and Drop.'); // Hinzugefügter Log
         initializeDragAndDrop();
+        console.log('Nach der Initialisierung von Drag and Drop.'); // Hinzugefügter Log
     }
 
     const style = document.createElement('style');

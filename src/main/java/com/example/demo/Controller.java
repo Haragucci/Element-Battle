@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -7,12 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.example.demo.Game;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,8 +22,6 @@ import java.util.stream.Collectors;
 
 
 import java.util.List;
-
-
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -36,6 +36,7 @@ public class Controller implements Serializable {
     private static final String STATS_FILE_PATH = "stats.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public record Hero(int id, String name, int HP, int Damage, String type, String extra) {}
     public static List<Hero> heroes = new ArrayList<>();
     public static AtomicInteger counter = new AtomicInteger(1);
@@ -660,23 +661,21 @@ public class Controller implements Serializable {
     private static final String BACKGROUNDS_FILE_PATH = "back.json";
 
     @PostMapping("/saveGame")
-    public ResponseEntity<Map<String, Object>> saveGame(@RequestBody Map<String, Object> request) {
-        String username = (String) request.get("username");
-        List<Hero> playerCards = (List<Hero>) request.get("Playercards");
-        List<Hero> computerCards = (List<Hero>) request.get("Computercards");
+    public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
+        System.out.println("Received GameRequest: " + request);
+        String username = request.getUsername();
+        List<Hero> playerCards = request.getPlayercards();
+        List<Hero> computerCards = request.getComputercards();
 
         if (username == null || playerCards == null || computerCards == null) {
             return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
         }
 
         games.put(username, new Game(playerCards, computerCards));
-
         saveGame();
 
         return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
     }
-
-
 
     @PostMapping("/checkGame")
     public ResponseEntity<Map<String, Object>> checkGame(@RequestBody Map<String, String> request) {
@@ -685,28 +684,37 @@ public class Controller implements Serializable {
         if (username == null || !games.containsKey(username)) {
             return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
         }
-
         Game game = games.get(username);
 
         return ResponseEntity.ok(Map.of(
-                "Playercards", game.getPlayerCards(),
-                "Computercards", game.getComputerCards()
+                "Playercards", game.getPlayerCards().stream().map(hero -> Map.of(
+                        "id", hero.id(),
+                        "name", hero.name(),
+                        "HP", hero.HP(),
+                        "Damage", hero.Damage(),
+                        "type", hero.type(),
+                        "extra", hero.extra()
+                )).collect(Collectors.toList()),
+                "Computercards", game.getComputerCards().stream().map(hero -> Map.of(
+                        "id", hero.id(),
+                        "name", hero.name(),
+                        "HP", hero.HP(),
+                        "Damage", hero.Damage(),
+                        "type", hero.type(),
+                        "extra", hero.extra()
+                )).collect(Collectors.toList())
         ));
     }
-
-
 
     private void loadGame() {
         try {
             File file = new File(GAME_FILE_PATH);
             if (file.exists()) {
-                Map<String, Game> loadedGames = mapper.readValue(file, new TypeReference<>() {
-                });
+                Map<String, Game> loadedGames = mapper.readValue(file, new TypeReference<Map<String, Game>>() {});
                 games.putAll(loadedGames);
             }
         } catch (IOException e) {
-            String mes = e.getMessage();
-            System.out.println(mes);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -714,10 +722,10 @@ public class Controller implements Serializable {
         try {
             mapper.writeValue(new File(GAME_FILE_PATH), games);
         } catch (IOException e) {
-            String mes = e.getMessage();
-            System.out.println(mes);
+            System.out.println(e.getMessage());
         }
     }
+
 
     @PostMapping("/hasBackground")
     public ResponseEntity<Map<String, Object>> hasBackground(@RequestBody Map<String, String> request) {
