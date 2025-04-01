@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -647,6 +648,17 @@ public class Controller implements Serializable {
     final Map<String, String> backgrounds = new HashMap<>();
     private static final String BACKGROUNDS_FILE_PATH = "back.json";
 
+    @PostMapping("/saveGame")
+    public ResponseEntity<Map<String, Object>> saveGame(@RequestBody Map<String, Object> body) {
+
+        return null;
+    }
+
+    @PostMapping("/checkGame")
+    public ResponseEntity<Map<String, Object>> checkGame(@RequestBody Map<String, Object> body) {
+
+        return null;
+    }
 
     @PostMapping("/hasBackground")
     public ResponseEntity<Map<String, Object>> hasBackground(@RequestBody Map<String, String> request) {
