@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Classes;
 
 import com.example.demo.Controller.Hero;
 import java.util.List;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GameRequest {
     private String username;
+    private String firstAttack;
     private int playerHP;
     private int computerHP;
     private List<Hero> playerCards;
@@ -15,11 +16,13 @@ public class GameRequest {
     @JsonCreator
     public GameRequest(
             @JsonProperty("username") String username,
+            @JsonProperty("firstAttack") String firstAttack,
             @JsonProperty("PHP") int playerHP,
             @JsonProperty("CHP") int computerHP,
             @JsonProperty("playerCards") List<Hero> playerCards,
             @JsonProperty("computerCards") List<Hero> computerCards) {
         this.username = username;
+        this.firstAttack = firstAttack;
         this.playerHP = playerHP;
         this.computerHP = computerHP;
         this.playerCards = playerCards;
@@ -35,6 +38,14 @@ public class GameRequest {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFirstAttack(){
+        return firstAttack;
+    }
+
+    public void setFirstAttack(String firstAttack){
+        this.firstAttack = firstAttack;
     }
 
     public int getPlayerHP() {

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Classes;
 
 import com.example.demo.Controller.Hero;
 import java.util.List;
@@ -6,12 +6,14 @@ import java.util.List;
 public class Game {
     private List<Hero> playerCards;
     private List<Hero> computerCards;
+    private String firstAttack;
     private int playerHP;
     private int computerHP;
 
-    public Game(List<Hero> playerCards, List<Hero> computerCards, int playerHP, int computerHP) {
+    public Game(List<Hero> playerCards, List<Hero> computerCards, String firstAttack, int playerHP, int computerHP) {
         this.playerCards = playerCards;
         this.computerCards = computerCards;
+        this.firstAttack = firstAttack;
         this.playerHP = playerHP;
         this.computerHP = computerHP;
     }
@@ -30,5 +32,9 @@ public class Game {
 
     public int getComputerHP() {
         return computerHP;
+    }
+
+    public String getFirstAttack(){
+        return firstAttack;
     }
 }
