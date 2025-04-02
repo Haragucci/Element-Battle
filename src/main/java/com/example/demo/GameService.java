@@ -3,7 +3,6 @@ package com.example.demo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,19 +17,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class GameService {
-    private final AccountService accountService;
-    private final HeroService heroService;
 
     private final Map<String, Game> games = new HashMap<>();
 
     private static final String GAME_FILE_PATH = "saved-games.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
-    @Autowired
-    public GameService(AccountService accountService, HeroService heroService) {
-        this.accountService = accountService;
-        this.heroService = heroService;
-    }
 
     public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
         String username = request.getUsername();
@@ -39,6 +31,7 @@ public class GameService {
         int computerHP = request.getComputerHP();
         List<Controller.Hero> playerCards = request.getPlayercards();
         List<Controller.Hero> computerCards = request.getComputercards();
+
 
         if (username == null || playerCards == null || computerCards == null) {
             return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
@@ -103,8 +96,10 @@ public class GameService {
                     String username = entry.getKey();
                     JsonNode gameData = entry.getValue();
 
-                    List<Controller.Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<List<Controller.Hero>>() {});
-                    List<Controller.Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<List<Controller.Hero>>() {});
+                    List<Controller.Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<>() {
+                    });
+                    List<Controller.Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<>() {
+                    });
                     String firstAttack = gameData.get("firstAttack").asText();
                     int playerHP = gameData.get("playerHP").asInt();
                     int computerHP = gameData.get("computerHP").asInt();

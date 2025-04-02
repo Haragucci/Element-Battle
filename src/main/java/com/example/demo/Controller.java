@@ -20,15 +20,17 @@ public class Controller implements Serializable {
     private final HeroService heroService;
 
     private final GameService gameService;
+    private final StatsService statsService;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record Hero(int id, String name, int HP, int Damage, String type, String extra) {}
 
     @Autowired
-    public Controller(AccountService accountService, HeroService heroService, GameService gameService) {
+    public Controller(AccountService accountService, HeroService heroService, GameService gameService, StatsService statsService) {
         this.accountService = accountService;
         this.heroService = heroService;
         this.gameService = gameService;
+        this.statsService =statsService;
     }
 
     @PostConstruct
@@ -37,7 +39,7 @@ public class Controller implements Serializable {
         accountService.loadAccounts();
         accountService.loadBackgrounds();
         accountService.loadCardDesigns();
-        accountService.loadStats();
+        statsService.loadStats();
         gameService.loadGame();
     }
 
@@ -47,7 +49,7 @@ public class Controller implements Serializable {
         accountService.saveAccounts();
         accountService.saveBackgrounds();
         accountService.saveCardDesigns();
-        accountService.saveStats();
+        statsService.saveStats();
         gameService.saveGame();
     }
 
@@ -64,7 +66,7 @@ public class Controller implements Serializable {
 
     @GetMapping("/leaderboard")
     public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {
-        return accountService.getLeaderboard();
+        return statsService.getLeaderboard();
     }
 
     @PostMapping("/del-user")
@@ -75,12 +77,12 @@ public class Controller implements Serializable {
 
     @PostMapping("/getUserStats")
     public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
-        return accountService.getUserStats(request);
+        return statsService.getUserStats(request);
     }
 
     @PostMapping("/updateStats")
     public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
-            return accountService.updateStats(statsUpdate);
+            return statsService.updateStats(statsUpdate);
     }
 
     @PostMapping("/getUserInfo")
