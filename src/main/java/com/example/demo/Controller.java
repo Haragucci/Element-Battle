@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.Classes.GameRequest;
+import com.example.demo.Services.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

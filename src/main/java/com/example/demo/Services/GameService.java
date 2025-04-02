@@ -1,5 +1,8 @@
-package com.example.demo;
+package com.example.demo.Services;
 
+import com.example.demo.Classes.Game;
+import com.example.demo.Classes.GameRequest;
+import com.example.demo.Controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

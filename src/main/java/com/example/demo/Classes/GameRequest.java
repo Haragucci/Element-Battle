@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Classes;
 
 import com.example.demo.Controller.Hero;
 import java.util.List;

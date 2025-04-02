@@ -1,7 +1,7 @@
-package com.example.demo;
+package com.example.demo.Services;
 
+import com.example.demo.Controller;
 import com.example.demo.Controller.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class HeroService {
 
-    public static List<Controller.Hero> heroes = new ArrayList<>();
+    public static List<Hero> heroes = new ArrayList<>();
     public static AtomicInteger counter = new AtomicInteger(1);
 
     public static final String HEROES_FILE_PATH = "heros.json";
