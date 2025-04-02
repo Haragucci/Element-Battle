@@ -675,7 +675,7 @@ public class Controller implements Serializable {
             return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
         }
 
-        Game game = new Game(playerCards, computerCards, firstAttack, computerHP, playerHP);
+        Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
         games.put(username, game);
         saveGame();
 
@@ -729,7 +729,7 @@ public class Controller implements Serializable {
                     String firstAttack = gameData.get("firstAttack").asText();
                     int playerHP = gameData.get("playerHP").asInt();
                     int computerHP = gameData.get("computerHP").asInt();
-                    Game game = new Game(playerCards, computerCards, firstAttack, computerHP, playerHP);
+                    Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
                     games.put(username, game);
                 });
             }
