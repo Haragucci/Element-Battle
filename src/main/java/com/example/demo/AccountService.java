@@ -400,6 +400,32 @@ public class AccountService {
         }
     }
 
+    public ResponseEntity<Map<String, Object>> getUserInfo(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+
+        if (username == null || username.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "Kein Benutzername angegeben"
+            ));
+        }
+
+        Account account = accounts.get(username);
+        if (account == null) {
+            return ResponseEntity.ok(Map.of(
+                    "success", false,
+                    "message", "Benutzer nicht gefunden"
+            ));
+        }
+
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "username", account.username(),
+                "password", account.password(),
+                "coins", account.coins()
+        ));
+    }
+
     public int getCoinsForUser(String username) {
         Account account = accounts.get(username);
         return account != null ? account.coins() : 0;

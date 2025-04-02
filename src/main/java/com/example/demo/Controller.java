@@ -1,48 +1,25 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
-
-
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Controller implements Serializable {
 
-    private final Map<String, Game> games = new HashMap<>();
-
-    private static final String HEROES_FILE_PATH = "heros.json";
-    private static final String ACCOUNTS_FILE_PATH = "acc.json";
-    private static final String CARDS_FILE_PATH = "cards.json";
-    private static final String GAME_FILE_PATH = "saved-games.json";
-    private static final String STATS_FILE_PATH = "stats.json";
-    private final ObjectMapper mapper = new ObjectMapper();
     private final AccountService accountService;
     private final HeroService heroService;
 
-    public static AtomicInteger counter = new AtomicInteger(1);
+    private final GameService gameService;
 
     public record Account(String username, String password, int coins) {}
     Map<String, Account> accounts = new HashMap<>();
@@ -51,9 +28,10 @@ public class Controller implements Serializable {
     public record Hero(int id, String name, int HP, int Damage, String type, String extra) {}
 
     @Autowired
-    public Controller(AccountService accountService, HeroService heroService) {
+    public Controller(AccountService accountService, HeroService heroService, GameService gameService) {
         this.accountService = accountService;
         this.heroService = heroService;
+        this.gameService = gameService;
     }
 
     @PostConstruct
@@ -63,7 +41,7 @@ public class Controller implements Serializable {
         accountService.loadBackgrounds();
         accountService.loadCardDesigns();
         accountService.loadStats();
-        loadGame();
+        gameService.loadGame();
     }
 
     @PreDestroy
@@ -73,7 +51,7 @@ public class Controller implements Serializable {
         accountService.saveBackgrounds();
         accountService.saveCardDesigns();
         accountService.saveStats();
-        saveGame();
+        gameService.saveGame();
     }
 
 
@@ -110,29 +88,7 @@ public class Controller implements Serializable {
 
     @PostMapping("/getUserInfo")
     public ResponseEntity<Map<String, Object>> getUserInfo(@RequestBody Map<String, String> request) {
-        String username = request.get("username");
-
-        if (username == null || username.isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of(
-                    "success", false,
-                    "message", "Kein Benutzername angegeben"
-            ));
-        }
-
-        Account account = accounts.get(username);
-        if (account == null) {
-            return ResponseEntity.ok(Map.of(
-                    "success", false,
-                    "message", "Benutzer nicht gefunden"
-            ));
-        }
-
-        return ResponseEntity.ok(Map.of(
-                "success", true,
-                "username", account.username(),
-                "password", account.password(),
-                "coins", account.coins()
-        ));
+        return accountService.getUserInfo(request);
     }
 
     @PostMapping("/updateAccount")
@@ -222,97 +178,18 @@ public class Controller implements Serializable {
 
     @PostMapping("/saveGame")
     public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
-        String username = request.getUsername();
-        String firstAttack = request.getFirstAttack();
-        int playerHP = request.getPlayerHP();
-        int computerHP = request.getComputerHP();
-        List<Hero> playerCards = request.getPlayercards();
-        List<Hero> computerCards = request.getComputercards();
-
-        if (username == null || playerCards == null || computerCards == null) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
-        }
-
-        Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
-        games.put(username, game);
-        saveGame();
-
-        return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
+        return gameService.saveGame(request);
     }
 
     @PostMapping("/checkGame")
     public ResponseEntity<Map<String, Object>> checkGame(@RequestBody Map<String, String> request) {
-        String username = request.get("username");
-
-        if (username == null || !games.containsKey(username)) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
-        }
-        Game game = games.get(username);
-
-        return ResponseEntity.ok(Map.of(
-                "Playercards", game.getPlayerCards().stream().map(hero -> Map.of(
-                        "id", hero.id(),
-                        "name", hero.name(),
-                        "HP", hero.HP(),
-                        "Damage", hero.Damage(),
-                        "type", hero.type(),
-                        "extra", hero.extra()
-                )).collect(Collectors.toList()),
-                "Computercards", game.getComputerCards().stream().map(hero -> Map.of(
-                        "id", hero.id(),
-                        "name", hero.name(),
-                        "HP", hero.HP(),
-                        "Damage", hero.Damage(),
-                        "type", hero.type(),
-                        "extra", hero.extra()
-                )).collect(Collectors.toList()),
-                "firstAttack", game.getFirstAttack(),
-                "PHP", game.getPlayerHP(),
-                "CHP", game.getComputerHP()
-        ));
+        return gameService.checkGame(request);
     }
 
-    private void loadGame() {
-        try {
-            File file = new File(GAME_FILE_PATH);
-            if (file.exists()) {
-                JsonNode rootNode = mapper.readTree(file);
-
-                rootNode.fields().forEachRemaining(entry -> {
-                    String username = entry.getKey();
-                    JsonNode gameData = entry.getValue();
-
-                    List<Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<List<Hero>>() {});
-                    List<Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<List<Hero>>() {});
-                    String firstAttack = gameData.get("firstAttack").asText();
-                    int playerHP = gameData.get("playerHP").asInt();
-                    int computerHP = gameData.get("computerHP").asInt();
-                    Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
-                    games.put(username, game);
-                });
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void saveGame() {
-        try {
-            mapper.writeValue(new File(GAME_FILE_PATH), games);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     @DeleteMapping("/game/{username}")
     public ResponseEntity<String> deleteGame(@PathVariable String username) {
-        if (games.containsKey(username)) {
-            games.remove(username);
-            saveGame();
-            return ResponseEntity.ok("Spielstand für Benutzer '" + username + "' gelöscht.");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return gameService.deleteGame(username);
     }
 
     @PostMapping("/hasBackground")
