@@ -665,6 +665,7 @@ public class Controller implements Serializable {
     public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
         System.out.println("Received GameRequest: " + request);
         String username = request.getUsername();
+        String firstAttack = request.getFirstAttack();
         int playerHP = request.getPlayerHP();
         int computerHP = request.getComputerHP();
         List<Hero> playerCards = request.getPlayercards();
@@ -674,7 +675,7 @@ public class Controller implements Serializable {
             return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
         }
 
-        Game game = new Game(playerCards, computerCards, playerHP, computerHP);
+        Game game = new Game(playerCards, computerCards, firstAttack, computerHP, playerHP);
         games.put(username, game);
         saveGame();
 
@@ -707,6 +708,7 @@ public class Controller implements Serializable {
                         "type", hero.type(),
                         "extra", hero.extra()
                 )).collect(Collectors.toList()),
+                "firstAttack", game.getFirstAttack(),
                 "PHP", game.getPlayerHP(),
                 "CHP", game.getComputerHP()
         ));
@@ -724,10 +726,10 @@ public class Controller implements Serializable {
 
                     List<Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<List<Hero>>() {});
                     List<Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<List<Hero>>() {});
+                    String firstAttack = gameData.get("firstAttack").asText();
                     int playerHP = gameData.get("playerHP").asInt();
                     int computerHP = gameData.get("computerHP").asInt();
-
-                    Game game = new Game(playerCards, computerCards, playerHP, computerHP);
+                    Game game = new Game(playerCards, computerCards, firstAttack, computerHP, playerHP);
                     games.put(username, game);
                 });
             }

@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const coinsSpan = document.getElementById('coins');
     let totalDamageDealt = 0;
     let totalDirectDamageDealt = 0;
-    let firstAttacker;
 
     let playerHP = 25;
     let computerHP = 25;
@@ -23,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let computerHand = [];
     let isPlayerFirstAttacker = true;
     let roundCounter = 1;
+    let firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer";
 
     const battleLog = document.getElementById('battle-log');
 
@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function savePlayerGame() {
         const username = localStorage.getItem('username');
+        firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer"
 
         if (!username || playerHand.length === 0 || computerHand.length === 0) {
             console.error('Fehlende Daten für das Speichern des Spiels!');
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const requestData = {
             username: username,
+            firstAttack:firstAttacker,
             PHP:playerHP,
             CHP:computerHP,
             playerCards: playerHand.map(hero => ({
@@ -1280,9 +1282,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     computerHand = data.Computercards;
                     playerHP = data.PHP;
                     computerHP = data.CHP;
+                    isPlayerFirstAttacker = data.firstAttack === "Spieler";
                     generatedGame = false;
                     savePlayerGame();
-                    startGame();
+                    startGameWithAttacker(data.firstAttack);
                 } else {
                     console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
                     fetch('/heroshow')
@@ -1307,6 +1310,15 @@ document.addEventListener('DOMContentLoaded', function() {
         displayComputerCards();
         updateHP();
         turnInfo.textContent = `Wähle deine erste Karte. Spieler greift als erstes an!`;
+        updateUserInfo();
+        initializeDragAndDrop();
+    }
+
+    function startGameWithAttacker(firstAttackerFromData) {
+        displayPlayerCards();
+        displayComputerCards();
+        updateHP();
+        turnInfo.textContent = `Wähle deine erste Karte. ${firstAttackerFromData} greift als erstes an!`;
         updateUserInfo();
         initializeDragAndDrop();
     }
