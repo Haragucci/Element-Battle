@@ -88,8 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }))
         };
 
-        console.log("Sending data:", JSON.stringify(requestData));
-
         fetch('/saveGame', {
             method: 'POST',
             headers: {
@@ -105,34 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Fehler beim Speichern des Spiels:', error);
             });
     }
-/*
-    function checkPlayerGame() {
-        const username = localStorage.getItem('username');
-        if (!username) {
-            return;
-        }
-
-        fetch('/checkGame', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: username })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.Playercards && data.Computercards) {
-                    console.log('Gespeichertes Spiel gefunden:', data);
-                    playerHand = data.Playercards;
-                    computerHand = data.Computercards;
-                } else {
-                    console.log('Kein gespeichertes Spiel gefunden.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }*/
 
     function checkAndUpdateUserCardDesign() {
         const username = localStorage.getItem('username');
@@ -402,8 +372,6 @@ document.addEventListener('DOMContentLoaded', function() {
             secondAttacker = { card: { ...playerCardData }, name: 'Spieler', field: playerField };
         }
 
-        console.log('Battle started between:', firstAttacker, secondAttacker);
-
         firstAttacker.field.querySelector('.card').style.zIndex = '10';
         secondAttacker.field.querySelector('.card').style.zIndex = '5';
 
@@ -515,7 +483,6 @@ document.addEventListener('DOMContentLoaded', function() {
         roundCounter++;
 
         isBattleInProgress = false;
-        if (localStorage.getItem('username') !== null && localStorage.getItem('username') !== "") {savePlayerGame();}
         console.log('Battle ended, starting next turn.');
         endTurn();
     }
@@ -729,31 +696,46 @@ document.addEventListener('DOMContentLoaded', function() {
         if (computerHand.length === 0) {
             refillComputerHand();
         }
-        function waehleBesteKarte(computerHand, firstAttacker) {
-            let besteKarte = null;
+        function waehleBesteKarte(computerHand, firstAttacker, gegnerischeHP, eigeneHP) {
+            if (!computerHand || computerHand.length === 0) {
+                return null;
+            }
 
-            if (firstAttacker === 'Computer') {
-                let maxDamage = -1;
-                for (const karte of computerHand) {
-                    if (karte.Damage > maxDamage) {
-                        maxDamage = karte.Damage;
-                        besteKarte = karte;
-                    }
+            let besteKarte = null;
+            let bewertungBesteKarte = -Infinity;
+
+            for (const karte of computerHand) {
+                let bewertung = 0;
+
+                bewertung += karte.Damage;
+                bewertung += karte.HP * (1 + (1 - (eigeneHP / 25)));
+
+                if (firstAttacker === 'Computer') {
+                    bewertung += karte.Damage * 1.5;
+                    bewertung -= karte.HP * 0.5;
+                } else {
+                    bewertung += karte.HP * 1.2;
+                    bewertung += karte.Damage * 0.8;
                 }
-            } else {
-                let maxHP = -1;
-                for (const karte of computerHand) {
-                    if (karte.HP > maxHP) {
-                        maxHP = karte.HP;
-                        besteKarte = karte;
-                    }
+
+                if (gegnerischeHP <= 8) {
+                    bewertung = karte.Damage * 10;
+                }
+
+                if (eigeneHP <= 5) {
+                    bewertung = karte.HP * 15;
+                }
+
+                if (bewertung > bewertungBesteKarte) {
+                    bewertungBesteKarte = bewertung;
+                    besteKarte = karte;
                 }
             }
 
             return besteKarte;
         }
 
-        const besteKarte = waehleBesteKarte(computerHand, firstAttacker);
+        const besteKarte = waehleBesteKarte(computerHand, firstAttacker, playerHP, computerHP);
 
         if (besteKarte) {
             selectCard(besteKarte, computerField, () => {
@@ -824,7 +806,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const result = await response.json();
-            console.log('Statistiken aktualisiert:', result);
         } catch (error) {
             console.error('Fehler beim Aktualisieren der Statistiken:', error);
         }
@@ -943,6 +924,7 @@ document.addEventListener('DOMContentLoaded', function() {
         computerHand = [];
         playerCardsContainer.style.pointerEvents = 'auto';
         computerCardsContainer.style.pointerEvents = 'auto';
+        isPlayerFirstAttacker = true;
         initializeGame();
         turnInfo.textContent = 'Wähle deine erste Karte. Spieler greift als erstes an!';
         roundCounter = 1;
@@ -1242,21 +1224,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function initializeGame() {
         const username = localStorage.getItem('username');
-        if (!username) {
-            fetch('/heroshow')
-                .then(response => response.json())
-                .then(heroes => {
-                    allHeroes = heroes;
-                    playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
-                    computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
-                    if (!username){
-                        savePlayerGame();
-                    }
-                    startGame();
-                })
-                .catch(error => console.error('Fehler beim Laden der Helden:', error));
-            return;
-        }
 
         fetch('/heroshow')
             .then(response => response.json())
@@ -1264,6 +1231,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 allHeroes = heroes;
             })
             .catch(error => console.error('Fehler beim Laden der Helden:', error));
+
+        if (!username) {
+            fetch('/heroshow')
+                .then(response => response.json())
+                .then(heroes => {
+                    allHeroes = heroes;
+                    playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                    computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                    startGame();
+                })
+            return;
+        }
 
         fetch('/checkGame', {
             method: 'POST',
@@ -1274,7 +1253,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Antwort vom Server:', data);
 
                 if (data.Playercards && data.Computercards) {
                     console.log('Gespeichertes Spiel gefunden.');
