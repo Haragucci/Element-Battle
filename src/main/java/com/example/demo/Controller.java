@@ -21,9 +21,6 @@ public class Controller implements Serializable {
 
     private final GameService gameService;
 
-    public record Account(String username, String password, int coins) {}
-    Map<String, Account> accounts = new HashMap<>();
-
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record Hero(int id, String name, int HP, int Damage, String type, String extra) {}
 
@@ -98,51 +95,13 @@ public class Controller implements Serializable {
 
     @PostMapping("/updateCoins")
     public ResponseEntity<Map<String, Object>> updateCoins(@RequestBody Map<String, Object> request) {
-        String username = (String) request.get("username");
-        int coins = (int) request.get("coins");
-
-        Account account = accounts.get(username);
-        if (account != null) {
-            Account updatedAccount = new Account(
-                    account.username(),
-                    account.password(),
-                    coins
-            );
-            accounts.put(username, updatedAccount);
-            accountService.saveAccounts();
-
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "coins", updatedAccount.coins()
-            ));
-        }
-
-        return ResponseEntity.ok(Map.of("success", false));
+        return accountService.updateCoins(request);
     }
 
 
     @PostMapping("/addCoins")
     public ResponseEntity<Map<String, Object>> addCoins(@RequestBody Map<String, Object> request) {
-        String username = (String) request.get("username");
-        int amount = (int) request.get("amount");
-
-        Account account = accounts.get(username);
-        if (account != null) {
-            Account updatedAccount = new Account(
-                    account.username(),
-                    account.password(),
-                    account.coins() + amount
-            );
-            accounts.put(username, updatedAccount);
-            accountService.saveAccounts();
-
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "coins", updatedAccount.coins()
-            ));
-        }
-
-        return ResponseEntity.ok(Map.of("success", false));
+        return accountService.addCoins(request);
     }
 
 

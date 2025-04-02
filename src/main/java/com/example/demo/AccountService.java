@@ -426,6 +426,52 @@ public class AccountService {
         ));
     }
 
+    public ResponseEntity<Map<String, Object>> updateCoins(@RequestBody Map<String, Object> request) {
+        String username = (String) request.get("username");
+        int coins = (int) request.get("coins");
+
+        Account account = accounts.get(username);
+        if (account != null) {
+            Account updatedAccount = new Account(
+                    account.username(),
+                    account.password(),
+                    coins
+            );
+            accounts.put(username, updatedAccount);
+            saveAccounts();
+
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "coins", updatedAccount.coins()
+            ));
+        }
+
+        return ResponseEntity.ok(Map.of("success", false));
+    }
+
+    public ResponseEntity<Map<String, Object>> addCoins(@RequestBody Map<String, Object> request) {
+        String username = (String) request.get("username");
+        int amount = (int) request.get("amount");
+
+        Account account = accounts.get(username);
+        if (account != null) {
+            Account updatedAccount = new Account(
+                    account.username(),
+                    account.password(),
+                    account.coins() + amount
+            );
+            accounts.put(username, updatedAccount);
+            saveAccounts();
+
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "coins", updatedAccount.coins()
+            ));
+        }
+
+        return ResponseEntity.ok(Map.of("success", false));
+    }
+
     public int getCoinsForUser(String username) {
         Account account = accounts.get(username);
         return account != null ? account.coins() : 0;
