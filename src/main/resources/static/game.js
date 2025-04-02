@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const coinsSpan = document.getElementById('coins');
     let totalDamageDealt = 0;
     let totalDirectDamageDealt = 0;
-
+    let firstAttacker;
 
     let playerHP = 25;
     let computerHP = 25;
@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', function() {
         displayComputerCards();
         if (localStorage.getItem('username') !== null && localStorage.getItem('username') !== "") {savePlayerGame();}
 
-        const firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer";
+        firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer";
         turnInfo.textContent = `Wähle deine nächste Karte. ${firstAttacker} greift zuerst an.`;
 
         playerCardsContainer.style.pointerEvents = 'auto';
@@ -677,9 +677,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayComputerCards() {
         computerCardsContainer.innerHTML = '';
-        computerHand.forEach(() => {
-            const cardElement = createCard('-', '-', '-', '-', '-');
-            cardElement.style.backgroundImage = 'url("Kartenrückseite.png")';
+        computerHand.forEach(card => {
+            const cardElement = createCard(card.name, card.HP, card.Damage, card.type, card.extra);
+            //cardElement.style.backgroundImage = 'url("Kartenrückseite.png")';
             cardElement.style.backgroundSize = 'cover';
             computerCardsContainer.appendChild(cardElement);
         });
@@ -727,10 +727,43 @@ document.addEventListener('DOMContentLoaded', function() {
         if (computerHand.length === 0) {
             refillComputerHand();
         }
-        const randomCard = computerHand[Math.floor(Math.random() * computerHand.length)];
-        selectCard(randomCard, computerField, () => {
-            turnInfo.textContent = 'Wähle deine nächste Karte.';
-        });
+        function waehleBesteKarte(computerHand, firstAttacker) {
+            let besteKarte = null;
+
+            if (firstAttacker === 'Computer') {
+                let maxDamage = -1;
+                for (const karte of computerHand) {
+                    if (karte.Damage > maxDamage) {
+                        maxDamage = karte.Damage;
+                        besteKarte = karte;
+                    }
+                }
+            } else {
+                let maxHP = -1;
+                for (const karte of computerHand) {
+                    if (karte.HP > maxHP) {
+                        maxHP = karte.HP;
+                        besteKarte = karte;
+                    }
+                }
+            }
+
+            return besteKarte;
+        }
+
+        const besteKarte = waehleBesteKarte(computerHand, firstAttacker);
+
+        if (besteKarte) {
+            selectCard(besteKarte, computerField, () => {
+                turnInfo.textContent = 'Wähle deine nächste Karte.';
+            });
+        } else {
+            console.log('Keine passende Karte gefunden.');
+            const randomCard = computerHand[Math.floor(Math.random() * computerHand.length)];
+            selectCard(randomCard, computerField, () => {
+                turnInfo.textContent = 'Wähle deine nächste Karte.';
+            });
+        }
     }
 
     function calculateDamageMultiplier(attackerElement, defenderElement) {
