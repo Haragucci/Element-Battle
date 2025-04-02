@@ -20,10 +20,11 @@ public class BackgroundService {
     @Autowired
     public BackgroundService(AccountService accountService) {
         this.accountService = accountService;
+        this.backgrounds = new HashMap<>();
     }
 
     public static final String BACKGROUNDS_FILE_PATH = "back.json";
-    public final Map<String, String> backgrounds = new HashMap<>();
+    public final Map<String, String> backgrounds;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ResponseEntity<Map<String, Object>> buyBackground(@RequestBody Map<String, Object> request) {

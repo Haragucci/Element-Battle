@@ -646,9 +646,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayComputerCards() {
         computerCardsContainer.innerHTML = '';
-        computerHand.forEach(card => {
-            const cardElement = createCard(card.name, card.HP, card.Damage, card.type, card.extra);
-            //cardElement.style.backgroundImage = 'url("Kartenrückseite.png")';
+        computerHand.forEach(() => {
+            const cardElement = createCard('-', '-', '-', '-', '-');
+            cardElement.style.backgroundImage = 'url("Kartenrückseite.png")';
             cardElement.style.backgroundSize = 'cover';
             computerCardsContainer.appendChild(cardElement);
         });

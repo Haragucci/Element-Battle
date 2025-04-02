@@ -112,13 +112,13 @@ public class AccountService {
         accounts.put(newUsername, updatedAccount);
         saveAccounts();
 
-        if (backgroundService.backgrounds.containsKey(oldUsername)) {
+        if (backgroundService.backgrounds != null && backgroundService.backgrounds.containsKey(oldUsername)) {
             String background = backgroundService.backgrounds.remove(oldUsername);
             backgroundService.backgrounds.put(newUsername, background);
             backgroundService.saveBackgrounds();
         }
 
-        if (cardService.cardDesigns.containsKey(oldUsername)) {
+        if (cardService.cardDesigns != null && cardService.cardDesigns.containsKey(oldUsername)) {
             String cardDesign = cardService.cardDesigns.remove(oldUsername);
             cardService.cardDesigns.put(newUsername, cardDesign);
             cardService.saveCardDesigns();
