@@ -134,7 +134,7 @@ public class AccountService {
         String username = request.get("username");
         String designId = request.get("designId");
 
-        if (cardService.cardDesigns.containsKey(username)) {
+        if (cardService.cardDesigns != null &&cardService.cardDesigns.containsKey(username)) {
             cardService.cardDesigns.put(username, designId);
             cardService.saveCardDesigns();
             return ResponseEntity.ok(Map.of(
