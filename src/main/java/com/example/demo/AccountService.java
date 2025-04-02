@@ -19,17 +19,16 @@ public class AccountService {
 
     private StatsService statsService;
     private BackgroundService backgroundService;
+    private CardService cardService;
 
     @Autowired
-    public void setStatsService(@Lazy StatsService statsService,@Lazy BackgroundService backgroundService) {
+    public void setStatsService(@Lazy StatsService statsService,@Lazy BackgroundService backgroundService,@Lazy CardService cardService) {
         this.statsService = statsService;
         this.backgroundService = backgroundService;
+        this.cardService = cardService;
     }
 
     public static final String ACCOUNTS_FILE_PATH = "acc.json";
-    private static final String CARDS_FILE_PATH = "cards.json";
-
-    Map<String, String> cardDesigns = new HashMap<>();
 
     public record Account(String username, String password, int coins) {}
 
@@ -71,7 +70,7 @@ public class AccountService {
 
                 accounts.remove(username);
                 statsService.stats.remove(username);
-                cardDesigns.remove(username);
+                cardService.cardDesigns.remove(username);
                 backgroundService.backgrounds.remove(username);
                 saveAccounts();
 
@@ -119,10 +118,10 @@ public class AccountService {
             backgroundService.saveBackgrounds();
         }
 
-        if (cardDesigns.containsKey(oldUsername)) {
-            String cardDesign = cardDesigns.remove(oldUsername);
-            cardDesigns.put(newUsername, cardDesign);
-            saveCardDesigns();
+        if (cardService.cardDesigns.containsKey(oldUsername)) {
+            String cardDesign = cardService.cardDesigns.remove(oldUsername);
+            cardService.cardDesigns.put(newUsername, cardDesign);
+            cardService.saveCardDesigns();
         }
 
         return ResponseEntity.ok(Map.of(
@@ -135,54 +134,15 @@ public class AccountService {
         String username = request.get("username");
         String designId = request.get("designId");
 
-        if (cardDesigns.containsKey(username)) {
-            cardDesigns.put(username, designId);
-            saveCardDesigns();
+        if (cardService.cardDesigns.containsKey(username)) {
+            cardService.cardDesigns.put(username, designId);
+            cardService.saveCardDesigns();
             return ResponseEntity.ok(Map.of(
                     "success", true,
-                    "activeDesign", cardDesigns.get(username)
+                    "activeDesign", cardService.cardDesigns.get(username)
             ));
         } else {
             return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
-        }
-    }
-
-    public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, Object> request) {
-        String username = (String) request.get("username");
-        final int COST = 2;
-
-        synchronized (this) {
-            Account account = accounts.get(username);
-            if (account != null) {
-                if (account.coins() >= COST) {
-                    Account updatedAccount = new Account(
-                            account.username(),
-                            account.password(),
-                            account.coins() - COST
-                    );
-                    accounts.put(username, updatedAccount);
-                    saveAccounts();
-
-                    System.out.println("Benutzer: " + username);
-                    System.out.println("Münzen vor dem Kauf: " + account.coins());
-                    System.out.println("Münzen nach dem Kauf: " + updatedAccount.coins());
-
-                    if (!cardDesigns.containsKey(username)) {
-                        cardDesigns.put(username, "default");
-                        saveCardDesigns();
-                    }
-                    return ResponseEntity.ok(Map.of(
-                            "success", true,
-                            "coins", updatedAccount.coins(),
-                            "activeDesign", cardDesigns.get(username)
-                    ));
-                } else {
-                    System.out.println("Nicht genug Münzen für Benutzer: " + username + ". Aktueller Stand: " + account.coins());
-                    return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
-                }
-            }
-
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
         }
     }
 
@@ -218,19 +178,6 @@ public class AccountService {
                 "success", true,
                 "username", username,
                 "coins", 0
-        ));
-    }
-
-
-    public ResponseEntity<Map<String, Object>> checkUserCardDesign(@RequestBody Map<String, String> request) {
-        String username = request.get("username");
-
-        boolean purchased = cardDesigns.containsKey(username);
-        String activeDesign = cardDesigns.getOrDefault(username, "");
-
-        return ResponseEntity.ok(Map.of(
-                "purchased", purchased,
-                "activeDesign", activeDesign
         ));
     }
 
@@ -329,23 +276,5 @@ public class AccountService {
         }
     }
 
-    public void loadCardDesigns() {
-        try {
-            File file = new File(CARDS_FILE_PATH);
-            if (file.exists()) {
-                cardDesigns.putAll(mapper.readValue(file, new TypeReference<Map<String, String>>() {}));
-            }
-        } catch (IOException e) {
-            System.out.println("Fehler beim laden der Kartendesigns");
-        }
-    }
-
-    public void saveCardDesigns() {
-        try {
-            mapper.writeValue(new File(CARDS_FILE_PATH), cardDesigns);
-        } catch (IOException e) {
-            System.out.println("Fehler beim speichern der Kartendesigns");
-        }
-    }
 
 }

@@ -22,17 +22,19 @@ public class Controller implements Serializable {
     private final GameService gameService;
     private final StatsService statsService;
     private final BackgroundService backgroundService;
+    private final CardService cardService;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record Hero(int id, String name, int HP, int Damage, String type, String extra) {}
 
     @Autowired
-    public Controller(AccountService accountService, HeroService heroService, GameService gameService, StatsService statsService, BackgroundService backgroundService) {
+    public Controller(AccountService accountService, HeroService heroService, GameService gameService, StatsService statsService, BackgroundService backgroundService, CardService cardService) {
         this.accountService = accountService;
         this.heroService = heroService;
         this.gameService = gameService;
         this.statsService =statsService;
         this.backgroundService = backgroundService;
+        this.cardService = cardService;
     }
 
     @PostConstruct
@@ -40,7 +42,7 @@ public class Controller implements Serializable {
         heroService.loadHeroes();
         accountService.loadAccounts();
         backgroundService.loadBackgrounds();
-        accountService.loadCardDesigns();
+        cardService.loadCardDesigns();
         statsService.loadStats();
         gameService.loadGame();
     }
@@ -50,11 +52,10 @@ public class Controller implements Serializable {
         heroService.saveHeroes();
         accountService.saveAccounts();
         backgroundService.saveBackgrounds();
-        accountService.saveCardDesigns();
+        cardService.saveCardDesigns();
         statsService.saveStats();
         gameService.saveGame();
     }
-
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> user) {
@@ -75,7 +76,6 @@ public class Controller implements Serializable {
     public ResponseEntity<String> deleteUser(@RequestBody Map<String, String> payload) {
         return accountService.deleteUser(payload);
     }
-
 
     @PostMapping("/getUserStats")
     public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
@@ -102,12 +102,10 @@ public class Controller implements Serializable {
         return accountService.updateCoins(request);
     }
 
-
     @PostMapping("/addCoins")
     public ResponseEntity<Map<String, Object>> addCoins(@RequestBody Map<String, Object> request) {
         return accountService.addCoins(request);
     }
-
 
     @PostMapping("/hero")
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
@@ -180,15 +178,14 @@ public class Controller implements Serializable {
         return backgroundService.getBackground(request);
     }
 
-
     @PostMapping("/checkUserCardDesign")
     public ResponseEntity<Map<String, Object>> checkUserCardDesign(@RequestBody Map<String, String> request) {
-        return accountService.checkUserCardDesign(request);
+        return cardService.checkUserCardDesign(request);
     }
 
     @PostMapping("/buyCardDesign")
     public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, Object> request) {
-        return accountService.buyCardDesign(request);
+        return cardService.buyCardDesign(request);
     }
 
     @PostMapping("/toggleCardDesign")
