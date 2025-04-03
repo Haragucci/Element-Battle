@@ -2,7 +2,6 @@ package com.example.demo.Services;
 
 import com.example.demo.Classes.Game;
 import com.example.demo.Classes.GameRequest;
-import com.example.demo.Controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,23 +16,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.example.demo.Services.HeroService.Hero;
 
 @Service
 public class GameService {
 
-    private final Map<String, Game> games = new HashMap<>();
+    //===============================================VARIABLES===============================================\\
 
-    private static final String GAME_FILE_PATH = "saved-games.json";
+    private final Map<String, Game> games = new HashMap<>();
+    private static final String GAME_FILE_PATH = "files/saved-games.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
+
+    //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
         String username = request.getUsername();
         String firstAttack = request.getFirstAttack();
         int playerHP = request.getPlayerHP();
         int computerHP = request.getComputerHP();
-        List<Controller.Hero> playerCards = request.getPlayercards();
-        List<Controller.Hero> computerCards = request.getComputercards();
+        List<Hero> playerCards = request.getPlayercards();
+        List<Hero> computerCards = request.getComputercards();
 
 
         if (username == null || playerCards == null || computerCards == null) {
@@ -66,7 +69,7 @@ public class GameService {
         Game game = games.get(username);
 
         return ResponseEntity.ok(Map.of(
-                "Playercards", game.getPlayerCards().stream().map(hero -> Map.of(
+                "Playercards", game.playerCards().stream().map(hero -> Map.of(
                         "id", hero.id(),
                         "name", hero.name(),
                         "HP", hero.HP(),
@@ -74,7 +77,7 @@ public class GameService {
                         "type", hero.type(),
                         "extra", hero.extra()
                 )).collect(Collectors.toList()),
-                "Computercards", game.getComputerCards().stream().map(hero -> Map.of(
+                "Computercards", game.computerCards().stream().map(hero -> Map.of(
                         "id", hero.id(),
                         "name", hero.name(),
                         "HP", hero.HP(),
@@ -82,12 +85,15 @@ public class GameService {
                         "type", hero.type(),
                         "extra", hero.extra()
                 )).collect(Collectors.toList()),
-                "firstAttack", game.getFirstAttack(),
-                "PHP", game.getPlayerHP(),
-                "CHP", game.getComputerHP()
+                "firstAttack", game.firstAttack(),
+                "PHP", game.playerHP(),
+                "CHP", game.computerHP()
         ));
     }
 
+
+
+    //===============================================FILE MANAGEMENT===============================================\\
 
     public void loadGame() {
         try {
@@ -99,9 +105,9 @@ public class GameService {
                     String username = entry.getKey();
                     JsonNode gameData = entry.getValue();
 
-                    List<Controller.Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<>() {
+                    List<Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<>() {
                     });
-                    List<Controller.Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<>() {
+                    List<Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<>() {
                     });
                     String firstAttack = gameData.get("firstAttack").asText();
                     int playerHP = gameData.get("playerHP").asInt();

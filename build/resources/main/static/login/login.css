@@ -9,9 +9,9 @@
 }
 
 @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
+    0% { background-position: 0 50%; }
     50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    100% { background-position: 0 50%; }
 }
 
 :root {
@@ -112,7 +112,7 @@ header nav {
     font-weight: 500;
     display: flex;
     align-items: center;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .nav-buttons .but:hover {

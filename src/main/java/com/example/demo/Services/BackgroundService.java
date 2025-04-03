@@ -15,6 +15,8 @@ import java.util.Map;
 @Service
 public class BackgroundService {
 
+    //===============================================SERVICE INTEGRATION===============================================\\
+
     private final AccountService accountService;
 
     @Autowired
@@ -23,9 +25,15 @@ public class BackgroundService {
         this.backgrounds = new HashMap<>();
     }
 
-    public static final String BACKGROUNDS_FILE_PATH = "back.json";
+
+    //===============================================VARIABLES===============================================\\
+
+    public static final String BACKGROUNDS_FILE_PATH = "files/back.json";
     public final Map<String, String> backgrounds;
     private final ObjectMapper mapper = new ObjectMapper();
+
+
+    //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> buyBackground(@RequestBody Map<String, Object> request) {
         String username = (String) request.get("username");
@@ -121,6 +129,9 @@ public class BackgroundService {
             return ResponseEntity.ok(Map.of("success", false, "message", "Kein Hintergrund für diesen Benutzer gefunden"));
         }
     }
+
+
+    //===============================================FILE MANAGEMENT===============================================\\
 
     public void loadBackgrounds() {
         try {

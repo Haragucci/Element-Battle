@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (registerButton) {
                 registerButton.innerHTML = '<i class="fas fa-user"></i> Account';
                 registerButton.onclick = function() {
-                    window.location.href = 'account.html';
+                    window.location.href = 'account/account.html';
                 };
                 registerButton.style.display = 'inline-block';
             }
@@ -233,14 +233,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 loginButton.style.display = 'inline-block';
                 loginButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Anmelden';
                 loginButton.onclick = function() {
-                    window.location.href = 'login.html#login';
+                    window.location.href = 'login/login.html#login';
                 };
             }
             if (registerButton) {
                 registerButton.style.display = 'inline-block';
                 registerButton.innerHTML = '<i class="fas fa-user-plus"></i> Registrieren';
                 registerButton.onclick = function() {
-                    window.location.href = 'login.html#register';
+                    window.location.href = 'login/login.html#register';
                 };
             }
 
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', function() {
         computerCardsContainer.innerHTML = '';
         computerHand.forEach(() => {
             const cardElement = createCard('-', '-', '-', '-', '-');
-            cardElement.style.backgroundImage = 'url("Kartenrückseite.png")';
+            cardElement.style.backgroundImage = 'url("/src/Kartenrückseite.png")';
             cardElement.style.backgroundSize = 'cover';
             computerCardsContainer.appendChild(cardElement);
         });
@@ -805,7 +805,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Fehler beim Aktualisieren der Statistiken');
             }
 
-            const result = await response.json();
         } catch (error) {
             console.error('Fehler beim Aktualisieren der Statistiken:', error);
         }
@@ -1225,7 +1224,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializeGame() {
         const username = localStorage.getItem('username');
 
-        fetch('/heroshow')
+        fetch('/heroshow',{
+            method:'GET'
+        })
             .then(response => response.json())
             .then(heroes => {
                 allHeroes = heroes;
@@ -1233,7 +1234,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Fehler beim Laden der Helden:', error));
 
         if (!username) {
-            fetch('/heroshow')
+            fetch('/heroshow', {
+                method: 'GET'
+            })
                 .then(response => response.json())
                 .then(heroes => {
                     allHeroes = heroes;
@@ -1266,7 +1269,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     startGameWithAttacker(data.firstAttack);
                 } else {
                     console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
-                    fetch('/heroshow')
+                    fetch('/heroshow', {
+                        method: 'GET'
+                    })
                         .then(response => response.json())
                         .then(heroes => {
                             allHeroes = heroes;

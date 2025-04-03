@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.success) {
                     const statsContent = document.getElementById('statsContent');
-                    const stats = data.stats;
+                    const stats = data.stats();
                     statsContent.innerHTML = `
                     <div class="stat-item">
                         <div class="stat-label">Siege</div>

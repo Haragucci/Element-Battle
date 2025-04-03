@@ -2,12 +2,12 @@ package com.example.demo;
 
 import com.example.demo.Classes.GameRequest;
 import com.example.demo.Services.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import com.example.demo.Services.HeroService.Hero;
 
 import java.io.Serializable;
 
@@ -18,6 +18,8 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Controller implements Serializable {
 
+    //===============================================SERVICE INTEGRATION===============================================\\
+
     private final AccountService accountService;
     private final HeroService heroService;
 
@@ -25,9 +27,6 @@ public class Controller implements Serializable {
     private final StatsService statsService;
     private final BackgroundService backgroundService;
     private final CardService cardService;
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Hero(int id, String name, int HP, int Damage, String type, String extra) {}
 
     @Autowired
     public Controller(AccountService accountService, HeroService heroService, GameService gameService, StatsService statsService, BackgroundService backgroundService, CardService cardService) {
@@ -38,6 +37,9 @@ public class Controller implements Serializable {
         this.backgroundService = backgroundService;
         this.cardService = cardService;
     }
+
+
+    //===============================================INITIAL AND SHUTDOWN===============================================\\
 
     @PostConstruct
     public void init() {
@@ -59,6 +61,9 @@ public class Controller implements Serializable {
         gameService.saveGame();
     }
 
+
+    //===============================================REQUEST METHODS  ACCOUNT-SERVICE===============================================\\
+
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> user) {
         return accountService.register(user);
@@ -69,24 +74,9 @@ public class Controller implements Serializable {
         return accountService.login(user);
     }
 
-    @GetMapping("/leaderboard")
-    public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {
-        return statsService.getLeaderboard();
-    }
-
     @PostMapping("/del-user")
     public ResponseEntity<String> deleteUser(@RequestBody Map<String, String> payload) {
         return accountService.deleteUser(payload);
-    }
-
-    @PostMapping("/getUserStats")
-    public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
-        return statsService.getUserStats(request);
-    }
-
-    @PostMapping("/updateStats")
-    public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
-            return statsService.updateStats(statsUpdate);
     }
 
     @PostMapping("/getUserInfo")
@@ -108,6 +98,55 @@ public class Controller implements Serializable {
     public ResponseEntity<Map<String, Object>> addCoins(@RequestBody Map<String, Object> request) {
         return accountService.addCoins(request);
     }
+
+
+    //===============================================REQUEST METHODS BACKGROUND-SERVICE===============================================\\
+
+    @PostMapping("/hasBackground")
+    public ResponseEntity<Map<String, Object>> hasBackground(@RequestBody Map<String, String> request) {
+        return backgroundService.hasBackground(request);
+    }
+
+    @PostMapping("/checkUserBackground")
+    public ResponseEntity<Map<String, Object>> checkUserBackground(@RequestBody Map<String, String> request) {
+        return backgroundService.checkUserBackground(request);
+    }
+
+    @PostMapping("/buyBackground")
+    public ResponseEntity<Map<String, Object>> buyBackground(@RequestBody Map<String, Object> request) {
+        return backgroundService.buyBackground(request);
+    }
+
+    @PostMapping("/toggleBackground")
+    public ResponseEntity<Map<String, Object>> toggleBackground(@RequestBody Map<String, Object> request) {
+        return backgroundService.toggleBackground(request);
+    }
+
+    @PostMapping("/getBackground")
+    public ResponseEntity<Map<String, Object>> getBackground(@RequestBody Map<String, Object> request) {
+        return backgroundService.getBackground(request);
+    }
+
+
+    //===============================================REQUEST METHODS STATS-SERVICE===============================================\\
+
+    @PostMapping("/getUserStats")
+    public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
+        return statsService.getUserStats(request);
+    }
+
+    @PostMapping("/updateStats")
+    public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
+            return statsService.updateStats(statsUpdate);
+    }
+
+    @GetMapping("/leaderboard")
+    public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {
+        return statsService.getLeaderboard();
+    }
+
+
+    //===============================================REQUEST METHODS HERO-SERVICE===============================================\\
 
     @PostMapping("/hero")
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
@@ -139,6 +178,9 @@ public class Controller implements Serializable {
         return heroService.deleteAllHeroes();
     }
 
+
+    //===============================================REQUEST METHODS GAME-SERVICE===============================================\\
+
     @PostMapping("/saveGame")
     public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
         return gameService.saveGame(request);
@@ -154,30 +196,8 @@ public class Controller implements Serializable {
         return gameService.deleteGame(username);
     }
 
-    @PostMapping("/hasBackground")
-    public ResponseEntity<Map<String, Object>> hasBackground(@RequestBody Map<String, String> request) {
-       return backgroundService.hasBackground(request);
-    }
 
-    @PostMapping("/checkUserBackground")
-    public ResponseEntity<Map<String, Object>> checkUserBackground(@RequestBody Map<String, String> request) {
-        return backgroundService.checkUserBackground(request);
-    }
-
-    @PostMapping("/buyBackground")
-    public ResponseEntity<Map<String, Object>> buyBackground(@RequestBody Map<String, Object> request) {
-        return backgroundService.buyBackground(request);
-    }
-
-    @PostMapping("/toggleBackground")
-    public ResponseEntity<Map<String, Object>> toggleBackground(@RequestBody Map<String, Object> request) {
-        return backgroundService.toggleBackground(request);
-    }
-
-    @PostMapping("/getBackground")
-    public ResponseEntity<Map<String, Object>> getBackground(@RequestBody Map<String, Object> request) {
-        return backgroundService.getBackground(request);
-    }
+    //===============================================REQUEST METHODS CARD-SERVICE===============================================\\
 
     @PostMapping("/checkUserCardDesign")
     public ResponseEntity<Map<String, Object>> checkUserCardDesign(@RequestBody Map<String, String> request) {

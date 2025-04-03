@@ -17,6 +17,8 @@ import java.util.Map;
 @Service
 public class AccountService {
 
+    //===============================================SERVICE INTEGRATION===============================================\\
+
     private StatsService statsService;
     private BackgroundService backgroundService;
     private CardService cardService;
@@ -28,15 +30,16 @@ public class AccountService {
         this.cardService = cardService;
     }
 
-    public static final String ACCOUNTS_FILE_PATH = "acc.json";
 
+    //===============================================VARIABLES===============================================\\
+
+    public static final String ACCOUNTS_FILE_PATH = "files/acc.json";
     public record Account(String username, String password, int coins) {}
-
     public Map<String, Account> accounts = new HashMap<>();
-
     private final ObjectMapper mapper = new ObjectMapper();
 
 
+    //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> user) {
         String username = user.get("username");
@@ -165,7 +168,6 @@ public class AccountService {
         ));
     }
 
-
     public ResponseEntity<Map<String, Object>> getUserInfo(@RequestBody Map<String, String> request) {
         String username = request.get("username");
 
@@ -239,6 +241,8 @@ public class AccountService {
     }
 
 
+    //===============================================FILE MANAGEMENT===============================================\\
+
     public void loadAccounts() {
         try {
             File file = new File(ACCOUNTS_FILE_PATH);
@@ -259,6 +263,4 @@ public class AccountService {
             System.out.println("Fehler beim speichern der Accounts");
         }
     }
-
-
 }

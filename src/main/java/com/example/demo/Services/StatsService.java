@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class StatsService {
 
+    //===============================================SERVICE INTEGRATION===============================================\\
+
     private final AccountService accountService;
 
     @Autowired
@@ -24,10 +26,16 @@ public class StatsService {
         this.accountService = accountService;
     }
 
+
+    //===============================================VARIABLES===============================================\\
+
     public Map<String, Map<String, Object>> stats = new HashMap<>();
-    public static final String STATS_FILE_PATH = "stats.json";
+    public static final String STATS_FILE_PATH = "files/stats.json";
     public Map<String, Object> loadUserStats(String username) {return new HashMap<>(stats.getOrDefault(username, new HashMap<>()));}
     private final ObjectMapper mapper = new ObjectMapper();
+
+
+    //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
 
@@ -102,6 +110,26 @@ public class StatsService {
         ));
     }
 
+
+
+    //===============================================HELPING METHODS===============================================\\
+
+    private int getCoinsForUser(String username) {
+        AccountService.Account account = accountService.accounts.get(username);
+        return account != null ? account.coins() : 0;
+    }
+
+    private void updateCoinsForUser(String username, int newCoins) {
+        AccountService.Account account = accountService.accounts.get(username);
+        if (account != null) {
+            accountService.accounts.put(username, new AccountService.Account(username, account.password(), newCoins));
+            accountService.saveAccounts();
+        }
+    }
+
+
+    //===============================================FILE MANAGEMENT===============================================\\
+
     public void saveStats() {
         try {
             mapper.writeValue(new File(STATS_FILE_PATH), stats);
@@ -115,7 +143,6 @@ public class StatsService {
         saveStats();
     }
 
-
     public void loadStats() {
         File file = new File(STATS_FILE_PATH);
         if (file.exists()) {
@@ -126,19 +153,6 @@ public class StatsService {
             }
         } else {
             stats = new HashMap<>();
-        }
-    }
-
-    public int getCoinsForUser(String username) {
-        AccountService.Account account = accountService.accounts.get(username);
-        return account != null ? account.coins() : 0;
-    }
-
-    public void updateCoinsForUser(String username, int newCoins) {
-        AccountService.Account account = accountService.accounts.get(username);
-        if (account != null) {
-            accountService.accounts.put(username, new AccountService.Account(username, account.password(), newCoins));
-            accountService.saveAccounts();
         }
     }
 }

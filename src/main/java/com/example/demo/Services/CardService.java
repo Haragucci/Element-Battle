@@ -15,6 +15,8 @@ import java.util.Map;
 @Service
 public class CardService {
 
+    //===============================================SERVICE INTEGRATION===============================================\\
+
     private final AccountService accountService;
 
     @Autowired
@@ -22,9 +24,15 @@ public class CardService {
         this.accountService = accountService;
     }
 
-    private static final String CARDS_FILE_PATH = "cards.json";
+
+    //===============================================VARIABLES===============================================\\
+
+    private static final String CARDS_FILE_PATH = "files/cards.json";
     Map<String, String> cardDesigns = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
+
+
+    //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, Object> request) {
         String username = (String) request.get("username");
@@ -41,10 +49,6 @@ public class CardService {
                     );
                     accountService.accounts.put(username, updatedAccount);
                     accountService.saveAccounts();
-
-                    System.out.println("Benutzer: " + username);
-                    System.out.println("Münzen vor dem Kauf: " + account.coins());
-                    System.out.println("Münzen nach dem Kauf: " + updatedAccount.coins());
 
                     if (!cardDesigns.containsKey(username)) {
                         cardDesigns.put(username, "default");
@@ -92,6 +96,10 @@ public class CardService {
             return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
         }
     }
+
+
+
+    //===============================================FILE MANAGEMENT===============================================\\
 
     public void loadCardDesigns() {
         try {
