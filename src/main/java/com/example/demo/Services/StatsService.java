@@ -138,7 +138,7 @@ public class StatsService {
         }
     }
 
-    private void saveUserStats(String username, Map<String, Object> userStats) {
+    public void saveUserStats(String username, Map<String, Object> userStats) {
         stats.put(username, new HashMap<>(userStats));
         saveStats();
     }
