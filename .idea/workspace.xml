@@ -9,26 +9,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Classes/Game.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Classes/GameRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/ElementBattleApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$Account.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/BackgroundService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/BackgroundService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/CardService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/CardService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/StatsService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/StatsService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/StatsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/StatsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/account/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/account/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/acc.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/acc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/saved-games.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/saved-games.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/stats.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/account/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/account/account.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +149,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.Demo1Application.executor": "Run",
     "Spring Boot.ElementBattleApplication.executor": "Run",
-    "git-widget-placeholder": "feature",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/tillj/OneDrive - Staatliches berufliches Schulzentrum Roth/AE(OOP)/ZipManager",
