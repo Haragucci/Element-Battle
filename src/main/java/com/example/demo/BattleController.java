@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class Controller implements Serializable {
+public class BattleController implements Serializable {
 
     //===============================================SERVICE INTEGRATION===============================================\\
 
@@ -29,7 +29,7 @@ public class Controller implements Serializable {
     private final CardService cardService;
 
     @Autowired
-    public Controller(AccountService accountService, HeroService heroService, GameService gameService, StatsService statsService, BackgroundService backgroundService, CardService cardService) {
+    public BattleController(AccountService accountService, HeroService heroService, GameService gameService, StatsService statsService, BackgroundService backgroundService, CardService cardService) {
         this.accountService = accountService;
         this.heroService = heroService;
         this.gameService = gameService;
