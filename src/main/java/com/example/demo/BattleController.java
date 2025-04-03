@@ -1,13 +1,17 @@
 package com.example.demo;
 
-import com.example.demo.Classes.GameRequest;
-import com.example.demo.Services.*;
+import com.example.demo.classes.GameRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import com.example.demo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import com.example.demo.Services.HeroService.Hero;
+import com.example.demo.services.HeroService.Hero;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+/*import com.example.demo.config.WebConfig.*;*/
 
 import java.io.Serializable;
 
@@ -22,7 +26,6 @@ public class BattleController implements Serializable {
 
     private final AccountService accountService;
     private final HeroService heroService;
-
     private final GameService gameService;
     private final StatsService statsService;
     private final BackgroundService backgroundService;
@@ -191,7 +194,7 @@ public class BattleController implements Serializable {
         return gameService.checkGame(request);
     }
 
-    @DeleteMapping("/game/{username}")
+    @DeleteMapping("/deleteGame/{username}")
     public ResponseEntity<String> deleteGame(@PathVariable String username) {
         return gameService.deleteGame(username);
     }

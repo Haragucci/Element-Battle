@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showMessage('Erfolgreich angemeldet!', false, document.getElementById('loginMessage'));
                     localStorage.setItem('username', username);
                     localStorage.setItem('coins', data.coins);
-                    setTimeout(() => window.location.href = '../game.html', 1500);
+                    setTimeout(() => window.location.href = '../game/game.html', 1500);
                 } else {
                     showMessage('Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.', true, document.getElementById('loginMessage'));
                 }
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showMessage('Registrierung erfolgreich! Sie werden nun angemeldet.', false, document.getElementById('registerMessage'));
                     localStorage.setItem('username', username);
                     localStorage.setItem('coins', '0');
-                    setTimeout(() => window.location.href = '../game.html', 1500);
+                    setTimeout(() => window.location.href = '../game/game.html', 1500);
                 } else {
                     showMessage('Registrierung fehlgeschlagen. Möglicherweise existiert der Benutzername bereits.', true, document.getElementById('registerMessage'));
                 }

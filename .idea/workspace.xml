@@ -5,8 +5,72 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="39e58791-12f3-4491-8c65-efbdec4ae57e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/heroshow/heroshow.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/heroshow/heroshow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/BattleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/BattleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Classes/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Classes/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Classes/GameRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Classes/GameRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService$Account.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/AccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/BackgroundService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/BackgroundService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/BackgroundService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/BackgroundService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/CardService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/CardService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/CardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/CardService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/GameService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/HeroService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/HeroService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/HeroService$Hero.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/HeroService$Hero.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/HeroService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/HeroService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/StatsService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/StatsService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/StatsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/demo/Services/StatsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/account/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/account/account.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/game.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/game.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/game.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/login/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/login/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/login/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/login/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/shop/shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/shop/shop.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/acc.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/acc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/cards.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/cards.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/saved-games.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/saved-games.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/stats.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/BattleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/BattleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Classes/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/classes/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Classes/GameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/classes/GameRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/services/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/BackgroundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/services/BackgroundService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/CardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/services/CardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/services/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/HeroService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/services/HeroService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/Services/StatsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/services/StatsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/account/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/account/account.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/game.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/game/game.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/game/game.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/game/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/login/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/login/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/shop/shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/shop/shop.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +110,8 @@
       <list>
         <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -84,88 +148,92 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Gradle.Build Element-Battle-main-public.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build Element-Battle-main.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ControllerTest.contextLoads.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ControllerTest.testLoadAllStats.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ControllerTest.testRegisterNewUser.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ControllerTest.testRegister_Success.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [assemble].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [bootBuildImage].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [bootJar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [buildDependents].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [buildEnvironment].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [buildNeeded].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [check].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [classes].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [compileJava].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [compileTestJava].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [components].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependencyInsight].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependencyManagement].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [dependentComponents].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [help].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [init].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [jar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [javaToolchains].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [javadoc].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [model].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [outgoingVariants].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [prepareKotlinBuildScriptModel].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [processResources].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [processTestResources].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [projects].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [properties].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [resolvableConfigurations].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [resolveMainClassName].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [resolveTestMainClassName].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [tasks].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [testClasses].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Element-Battle-main [wrapper].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TestController.testRegister_Success.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Demo1Application.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ElementBattleApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tillj/OneDrive - Staatliches berufliches Schulzentrum Roth/AE(OOP)/ZipManager&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.Build Element-Battle-main-public.executor": "Run",
+    "Gradle.Build Element-Battle-main.executor": "Run",
+    "Gradle.ControllerTest.contextLoads.executor": "Run",
+    "Gradle.ControllerTest.executor": "Run",
+    "Gradle.ControllerTest.testLoadAllStats.executor": "Run",
+    "Gradle.ControllerTest.testRegisterNewUser.executor": "Run",
+    "Gradle.ControllerTest.testRegister_Success.executor": "Run",
+    "Gradle.Element-Battle-main [assemble].executor": "Run",
+    "Gradle.Element-Battle-main [bootBuildImage].executor": "Run",
+    "Gradle.Element-Battle-main [bootJar].executor": "Run",
+    "Gradle.Element-Battle-main [buildDependents].executor": "Run",
+    "Gradle.Element-Battle-main [buildEnvironment].executor": "Run",
+    "Gradle.Element-Battle-main [buildNeeded].executor": "Run",
+    "Gradle.Element-Battle-main [build].executor": "Run",
+    "Gradle.Element-Battle-main [check].executor": "Run",
+    "Gradle.Element-Battle-main [classes].executor": "Run",
+    "Gradle.Element-Battle-main [clean].executor": "Run",
+    "Gradle.Element-Battle-main [compileJava].executor": "Run",
+    "Gradle.Element-Battle-main [compileTestJava].executor": "Run",
+    "Gradle.Element-Battle-main [components].executor": "Run",
+    "Gradle.Element-Battle-main [dependencies].executor": "Run",
+    "Gradle.Element-Battle-main [dependencyInsight].executor": "Run",
+    "Gradle.Element-Battle-main [dependencyManagement].executor": "Run",
+    "Gradle.Element-Battle-main [dependentComponents].executor": "Run",
+    "Gradle.Element-Battle-main [help].executor": "Run",
+    "Gradle.Element-Battle-main [init].executor": "Run",
+    "Gradle.Element-Battle-main [jar].executor": "Run",
+    "Gradle.Element-Battle-main [javaToolchains].executor": "Run",
+    "Gradle.Element-Battle-main [javadoc].executor": "Run",
+    "Gradle.Element-Battle-main [model].executor": "Run",
+    "Gradle.Element-Battle-main [outgoingVariants].executor": "Run",
+    "Gradle.Element-Battle-main [prepareKotlinBuildScriptModel].executor": "Run",
+    "Gradle.Element-Battle-main [processResources].executor": "Run",
+    "Gradle.Element-Battle-main [processTestResources].executor": "Run",
+    "Gradle.Element-Battle-main [projects].executor": "Run",
+    "Gradle.Element-Battle-main [properties].executor": "Run",
+    "Gradle.Element-Battle-main [resolvableConfigurations].executor": "Run",
+    "Gradle.Element-Battle-main [resolveMainClassName].executor": "Run",
+    "Gradle.Element-Battle-main [resolveTestMainClassName].executor": "Run",
+    "Gradle.Element-Battle-main [tasks].executor": "Run",
+    "Gradle.Element-Battle-main [testClasses].executor": "Run",
+    "Gradle.Element-Battle-main [test].executor": "Run",
+    "Gradle.Element-Battle-main [wrapper].executor": "Run",
+    "Gradle.TestController.testRegister_Success.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Demo1Application.executor": "Run",
+    "Spring Boot.ElementBattleApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tillj/OneDrive - Staatliches berufliches Schulzentrum Roth/AE(OOP)/ZipManager",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\build\libs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\files" />
-      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static" />
-      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static\shop" />
       <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static\game" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\files" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static\shop" />
       <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static\login" />
     </key>
   </component>
@@ -421,7 +489,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/Services/AccountService.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/services/AccountService.java</url>
           <line>44</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>

@@ -1,4 +1,4 @@
-package com.example.demo.Services;
+package com.example.demo.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;

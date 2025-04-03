@@ -1,7 +1,7 @@
-package com.example.demo.Services;
+package com.example.demo.services;
 
-import com.example.demo.Classes.Game;
-import com.example.demo.Classes.GameRequest;
+import com.example.demo.classes.Game;
+import com.example.demo.classes.GameRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import com.example.demo.Services.HeroService.Hero;
+import com.example.demo.services.HeroService.Hero;
 
 @Service
 public class GameService {

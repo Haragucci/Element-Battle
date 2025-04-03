@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" type="x-icon" href="src/3104645.png">
+    <link rel="shortcut icon" type="x-icon" href="../src/3104645.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Element Battle</title>
     <link rel="stylesheet" href="game.css">
@@ -12,11 +12,11 @@
 <header>
     <nav>
         <div class="nav-left">
-            <img src="src/3104645.png" alt="Logo" class="logo">
+            <img src="../src/3104645.png" alt="Logo" class="logo">
             <h1 class="nav-title">Element Battle</h1>
         </div>
         <div class="nav-buttons">
-            <button id="shopButton" class="but" onclick="window.location.href='shop/shop.html'">
+            <button id="shopButton" class="but" onclick="window.location.href='../shop/shop.html'">
                 <i class="fas fa-store"></i> Shop
             </button>
             <button onclick="window.location.href='index.html'" id="backbutton" class="but">
@@ -28,10 +28,10 @@
                 <span id="username"></span>
             </span>
             <div id="authButtons">
-                <button class="but" onclick="window.location.href='login/login.html#login'" id="loginButton">
+                <button class="but" onclick="window.location.href='../login/login.html#login'" id="loginButton">
                     <i class="fas fa-sign-in-alt"></i> Anmelden
                 </button>
-                <button class="but" onclick="window.location.href='login/login.html#register'" id="registerButton">
+                <button class="but" onclick="window.location.href='../login/login.html#register'" id="registerButton">
                     <i class="fas fa-user-plus"></i> Registrieren
                 </button>
             </div>
@@ -106,7 +106,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success && data.background) {
-                        const backgroundUrl = `url('/src/${data.background}.gif')`;
+                        const backgroundUrl = `url('../src/${data.background}.gif')`;
                         document.querySelector('.player-field').style.backgroundImage = backgroundUrl;
                         document.querySelector('.computer-field').style.backgroundImage = backgroundUrl;
                     } else {

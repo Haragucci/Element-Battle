@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = localStorage.getItem('username');
 
         try {
-            const response = await fetch(`/game/${username}`, {
+            const response = await fetch(`/deleteGame/${username}`, {
                 method: 'DELETE',
             });
 
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (registerButton) {
                 registerButton.innerHTML = '<i class="fas fa-user"></i> Account';
                 registerButton.onclick = function() {
-                    window.location.href = 'account/account.html';
+                    window.location.href = '../account/account.html';
                 };
                 registerButton.style.display = 'inline-block';
             }
@@ -233,14 +233,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 loginButton.style.display = 'inline-block';
                 loginButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Anmelden';
                 loginButton.onclick = function() {
-                    window.location.href = 'login/login.html#login';
+                    window.location.href = '../login/login.html#login';
                 };
             }
             if (registerButton) {
                 registerButton.style.display = 'inline-block';
                 registerButton.innerHTML = '<i class="fas fa-user-plus"></i> Registrieren';
                 registerButton.onclick = function() {
-                    window.location.href = 'login/login.html#register';
+                    window.location.href = '../login/login.html#register';
                 };
             }
 
@@ -1317,7 +1317,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const backButton = document.getElementById('backbutton');
     backButton.addEventListener('click', function() {
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     });
 
     initializeGame();
