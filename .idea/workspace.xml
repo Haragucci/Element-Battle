@@ -184,7 +184,7 @@
       <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static\login" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.Demo1Application">
+  <component name="RunManager" selected="Spring Boot.ElementBattleApplication">
     <configuration name="ControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -312,9 +312,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Demo1Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <configuration name="ElementBattleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="demo1.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.Demo1Application" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.ElementBattleApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
