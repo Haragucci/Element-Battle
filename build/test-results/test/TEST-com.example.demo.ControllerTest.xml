@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.demo.ControllerTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-04-03T09:30:19" hostname="IRGENDWER" time="0.009">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.example.demo.ControllerTest" time="0.009">
+    <failure message="org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [com.example.demo.Services.CardService cardService] in constructor [public com.example.demo.ControllerTest(com.example.demo.Services.CardService,com.example.demo.Services.AccountService,com.example.demo.Services.BackgroundService)]." type="org.junit.jupiter.api.extension.ParameterResolutionException">org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [com.example.demo.Services.CardService cardService] in constructor [public com.example.demo.ControllerTest(com.example.demo.Services.CardService,com.example.demo.Services.AccountService,com.example.demo.Services.BackgroundService)].
+	at java.base@21.0.3/java.util.Optional.orElseGet(Optional.java:364)
+	at java.base@21.0.3/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base@21.0.3/java.util.ArrayList.forEach(ArrayList.java:1596)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

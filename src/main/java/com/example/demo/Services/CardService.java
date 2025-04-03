@@ -28,7 +28,7 @@ public class CardService {
     //===============================================VARIABLES===============================================\\
 
     private static final String CARDS_FILE_PATH = "files/cards.json";
-    Map<String, String> cardDesigns = new HashMap<>();
+    public Map<String, String> cardDesigns = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
 
