@@ -77,6 +77,22 @@ public class CardService {
         ));
     }
 
+    public ResponseEntity<Map<String, Object>> toggleCardDesign(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String designId = request.get("designId");
+
+        if (cardDesigns != null &&cardDesigns.containsKey(username)) {
+            cardDesigns.put(username, designId);
+            saveCardDesigns();
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "activeDesign", cardDesigns.get(username)
+            ));
+        } else {
+            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
+        }
+    }
+
     public void loadCardDesigns() {
         try {
             File file = new File(CARDS_FILE_PATH);

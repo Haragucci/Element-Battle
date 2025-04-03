@@ -130,22 +130,6 @@ public class AccountService {
         ));
     }
 
-    public ResponseEntity<Map<String, Object>> toggleCardDesign(@RequestBody Map<String, String> request) {
-        String username = request.get("username");
-        String designId = request.get("designId");
-
-        if (cardService.cardDesigns != null &&cardService.cardDesigns.containsKey(username)) {
-            cardService.cardDesigns.put(username, designId);
-            cardService.saveCardDesigns();
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "activeDesign", cardService.cardDesigns.get(username)
-            ));
-        } else {
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
-        }
-    }
-
     public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> user) {
         String username = user.get("username");
         String password = user.get("password");

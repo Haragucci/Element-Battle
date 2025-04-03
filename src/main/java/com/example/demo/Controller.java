@@ -149,7 +149,6 @@ public class Controller implements Serializable {
         return gameService.checkGame(request);
     }
 
-
     @DeleteMapping("/game/{username}")
     public ResponseEntity<String> deleteGame(@PathVariable String username) {
         return gameService.deleteGame(username);
@@ -192,7 +191,6 @@ public class Controller implements Serializable {
 
     @PostMapping("/toggleCardDesign")
     public ResponseEntity<Map<String, Object>> toggleCardDesign(@RequestBody Map<String, String> request) {
-        return accountService.toggleCardDesign(request);
+        return cardService.toggleCardDesign(request);
     }
-
 }
