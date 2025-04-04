@@ -43,7 +43,7 @@ git clone https://github.com/haragucci/element-battle.git
 cd element-battle
 ```
 
-> Starte dein Spiel lokal z. B. mit IntelliJ und dem Built-in Tomcat Server:  
+> Starte dein Spiel lokal z. B. mit IntelliJ und dem Built-in Tomcat Server: https://localhost:8080
 
 ---
 
