@@ -27,8 +27,9 @@ public class AccountRepository {
         return accounts.get(username);
     }
 
-    public void removeAccount(String username) {
+    public void removeAccountAndSave(String username) {
         accounts.remove(username);
+        saveAccounts();
     }
 
     public void updateAccount(String username, Account account) {
