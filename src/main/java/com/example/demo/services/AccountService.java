@@ -58,7 +58,7 @@ public class AccountService {
 
             if (accountRepository.userExists(username)) {
                 accountRepository.removeAccount(username);
-                statsService.removeStats(username);
+                statsService.removeStatsAndSave(username);
                 cardService.removeCardStats(username);
                 backgroundService.removeBackground(username);
                 accountRepository.saveAccounts();
@@ -120,8 +120,8 @@ public class AccountService {
         }
 
         if(statsService.checkStats(oldUsername)) {
-            Map<String, Object> stats = statsService.stats.remove(oldUsername);
-            statsService.stats.put(newUsername, stats);
+            Map<String, Object> stats = statsService.removeStats(oldUsername);
+            statsService.putStats(newUsername, stats);
             statsService.saveStats();
         }
 

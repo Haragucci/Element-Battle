@@ -162,8 +162,16 @@ public class StatsService {
         return stats.containsKey(username);
     }
 
-    public void removeStats(String username){
+    public void removeStatsAndSave(String username){
         stats.remove(username);
         saveStats();
+    }
+
+    public void putStats(String username, Map<String, Object> stats) {
+        stats.put(username, stats);
+    }
+
+    public Map<String , Object> removeStats(String username){
+        return stats.remove(username);
     }
 }
