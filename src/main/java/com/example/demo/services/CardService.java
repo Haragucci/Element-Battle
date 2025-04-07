@@ -110,6 +110,26 @@ public class CardService {
 
 
 
+    //===============================================HELPING METHODS===============================================\\
+
+
+    public boolean checkCards(String username){
+        return cardDesigns.containsKey(username);
+    }
+
+    public void removeCardStatsAndSave(String username){
+        cardDesigns.remove(username);
+        saveCardDesigns();
+    }
+
+    public String removeCardDesign(String username){
+        return cardDesigns.remove(username);
+    }
+
+    public void putCardDesign(String username, String designId){
+        cardDesigns.put(username, designId);
+    }
+
     //===============================================FILE MANAGEMENT===============================================\\
 
     public void loadCardDesigns() {
@@ -129,22 +149,5 @@ public class CardService {
         } catch (IOException e) {
             System.out.println("Fehler beim speichern der Kartendesigns");
         }
-    }
-
-    public boolean checkCards(String username){
-        return cardDesigns.containsKey(username);
-    }
-
-    public void removeCardStatsAndSave(String username){
-        cardDesigns.remove(username);
-        saveCardDesigns();
-    }
-
-    public String removeCardDesign(String username){
-        return cardDesigns.remove(username);
-    }
-
-    public void putCardDesign(String username, String designId){
-        cardDesigns.put(username, designId);
     }
 }

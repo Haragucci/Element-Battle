@@ -21,7 +21,7 @@ public class AccountRepository {
     private final ObjectMapper mapper = new ObjectMapper();
 
 
-    //===============================================REQUEST METHODS===============================================\\
+    //===============================================HELPING METHODS===============================================\\
 
     public Account getAccount(String username) {
         return accounts.get(username);
@@ -40,12 +40,12 @@ public class AccountRepository {
         return accounts.containsKey(username);
     }
 
-    //===============================================FILE MANAGEMENT===============================================\\
-
-
     public boolean userExists(String username) {
         return accounts.containsKey(username);
     }
+
+    //===============================================FILE MANAGEMENT===============================================\\
+
 
     public void loadAccounts() {
         try {

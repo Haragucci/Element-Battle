@@ -129,6 +129,26 @@ public class StatsService {
         }
     }
 
+    //===============================================HELPING METHODS===============================================\\
+
+
+    public boolean checkStats(String username){
+        return stats.containsKey(username);
+    }
+
+    public void removeStatsAndSave(String username){
+        stats.remove(username);
+        saveStats();
+    }
+
+    public void putStats(String username, Map<String, Object> Stats) {
+        stats.put(username, Stats);
+    }
+
+    public Map<String , Object> removeStats(String username){
+        return stats.remove(username);
+    }
+
 
     //===============================================FILE MANAGEMENT===============================================\\
 
@@ -156,22 +176,5 @@ public class StatsService {
         } else {
             stats = new HashMap<>();
         }
-    }
-
-    public boolean checkStats(String username){
-        return stats.containsKey(username);
-    }
-
-    public void removeStatsAndSave(String username){
-        stats.remove(username);
-        saveStats();
-    }
-
-    public void putStats(String username, Map<String, Object> Stats) {
-        stats.put(username, Stats);
-    }
-
-    public Map<String , Object> removeStats(String username){
-        return stats.remove(username);
     }
 }

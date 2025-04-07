@@ -133,6 +133,27 @@ public class BackgroundService {
     }
 
 
+    //===============================================HELPING METHODS===============================================\\
+
+
+    public boolean checkBackground(String username){
+        return backgrounds.containsKey(username);
+    }
+
+    public void removeBackgroundAndSave(String username){
+        backgrounds.remove(username);
+        saveBackgrounds();
+    }
+
+    public String removeBackground(String username){
+        return backgrounds.remove(username);
+    }
+
+    public void putBackground(String username, String background){
+        backgrounds.put(username, background);
+    }
+
+
     //===============================================FILE MANAGEMENT===============================================\\
 
     public void loadBackgrounds() {
@@ -153,22 +174,4 @@ public class BackgroundService {
             System.out.println("Fehler beim speichern der Hintergründe!");
         }
     }
-
-    public boolean checkBackground(String username){
-        return backgrounds.containsKey(username);
-    }
-
-    public void removeBackgroundAndSave(String username){
-        backgrounds.remove(username);
-        saveBackgrounds();
-    }
-
-    public String removeBackground(String username){
-        return backgrounds.remove(username);
-    }
-
-    public void putBackground(String username, String background){
-        backgrounds.put(username, background);
-    }
-
 }

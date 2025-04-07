@@ -91,6 +91,25 @@ public class GameService {
         ));
     }
 
+    //===============================================HELPING METHODS===============================================\\
+
+
+    public boolean checkGames(String username){
+        return games.containsKey(username);
+    }
+
+    public void removeGameAndSave(String username){
+        games.remove(username);
+        saveGame();
+    }
+
+    public void putGame(String username, Game game) {
+        games.put(username, game);
+    }
+
+    public Game removeGame(String username){
+        return games.remove(username);
+    }
 
 
     //===============================================FILE MANAGEMENT===============================================\\
@@ -127,22 +146,5 @@ public class GameService {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public boolean checkGames(String username){
-        return games.containsKey(username);
-    }
-
-    public void removeGameAndSave(String username){
-        games.remove(username);
-        saveGame();
-    }
-
-    public void putGame(String username, Game game) {
-        games.put(username, game);
-    }
-
-    public Game removeGame(String username){
-        return games.remove(username);
     }
 }
