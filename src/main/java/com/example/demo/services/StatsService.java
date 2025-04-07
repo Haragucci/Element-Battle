@@ -158,6 +158,10 @@ public class StatsService {
         }
     }
 
+    public boolean checkStats(String username){
+        return stats.containsKey(username);
+    }
+
     public void removeStats(String username){
         stats.remove(username);
         saveStats();

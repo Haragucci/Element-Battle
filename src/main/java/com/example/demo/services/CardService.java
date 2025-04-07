@@ -131,6 +131,10 @@ public class CardService {
         }
     }
 
+    public boolean checkCards(String username){
+        return cardDesigns.containsKey(username);
+    }
+
     public void removeCardStats(String username){
         cardDesigns.remove(username);
         saveCardDesigns();

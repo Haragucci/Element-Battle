@@ -154,6 +154,10 @@ public class BackgroundService {
         }
     }
 
+    public boolean checkBackground(String username){
+        return backgrounds.containsKey(username);
+    }
+
     public void removeBackground(String username){
         backgrounds.remove(username);
         saveBackgrounds();

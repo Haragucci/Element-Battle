@@ -101,25 +101,25 @@ public class AccountService {
         accountRepository.updateAccount(newUsername, updatedAccount);
         accountRepository.saveAccounts();
 
-        if (backgroundService.backgrounds.containsKey(oldUsername)) {
+        if (backgroundService.checkBackground(oldUsername)) {
             String background = backgroundService.backgrounds.remove(oldUsername);
             backgroundService.backgrounds.put(newUsername, background);
             backgroundService.saveBackgrounds();
         }
 
-        if (cardService.cardDesigns.containsKey(oldUsername)) {
+        if (cardService.checkCards(oldUsername)) {
             String cardDesign = cardService.cardDesigns.remove(oldUsername);
             cardService.cardDesigns.put(newUsername, cardDesign);
             cardService.saveCardDesigns();
         }
 
-        if (gameService.games.containsKey(oldUsername)) {
+        if (gameService.checkGames(oldUsername)) {
             Game game = gameService.games.remove(oldUsername);
             gameService.games.put(newUsername, game);
             gameService.saveGame();
         }
 
-        if(statsService.stats.containsKey(oldUsername)) {
+        if(statsService.checkStats(oldUsername)) {
             Map<String, Object> stats = statsService.stats.remove(oldUsername);
             statsService.stats.put(newUsername, stats);
             statsService.saveStats();

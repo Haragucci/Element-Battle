@@ -128,4 +128,8 @@ public class GameService {
             System.out.println(e.getMessage());
         }
     }
+
+    public boolean checkGames(String username){
+        return games.containsKey(username);
+    }
 }
