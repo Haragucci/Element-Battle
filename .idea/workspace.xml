@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="39e58791-12f3-4491-8c65-efbdec4ae57e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/InitialController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/InitialController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/services/AccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/services/BackgroundService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/services/CardService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/services/GameService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/services/HeroService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/services/StatsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/services/StatsService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/../Element-Battle-main-public - Kopie">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="demo1" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Haragucci&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Haragucci/Element-Battle.git&quot;,
+    &quot;accountId&quot;: &quot;085dfcf8-c9df-4569-8c1b-dfed32c21025&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2hLFlfNuUGTGm9MbdKOHC8VYQHf" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Gradle.Build Element-Battle-main-public.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build Element-Battle-main.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ControllerTest.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ControllerTest.testLoadAllStats.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ControllerTest.testRegisterNewUser.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ControllerTest.testRegister_Success.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [assemble].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [bootBuildImage].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [bootJar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [buildDependents].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [buildEnvironment].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [buildNeeded].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [check].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [classes].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [compileJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [compileTestJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [components].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [dependencyInsight].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [dependencyManagement].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [dependentComponents].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [help].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [init].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [jar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [javaToolchains].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [javadoc].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [model].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [outgoingVariants].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [prepareKotlinBuildScriptModel].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [processResources].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [processTestResources].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [projects].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [properties].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [resolvableConfigurations].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [resolveMainClassName].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [resolveTestMainClassName].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [tasks].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [testClasses].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [test].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Element-Battle-main [wrapper].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestController.testRegister_Success.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Demo1Application.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ElementBattleApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tillj/OneDrive - Staatliches berufliches Schulzentrum Roth/AE(OOP)/ZipManager&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\build\libs" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tillj\IdeaProjects\Element-Battle-main\src\main\java\com\example\demo\classes" />
+      <recent name="C:\Users\tillj\IdeaProjects\Element-Battle-main\src\main\java\com\example\demo\services" />
+      <recent name="C:\Users\tillj\IdeaProjects\Element-Battle-main\src\main\java\com\example\demo" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static\game" />
+      <recent name="C:\Users\tillj\Downloads\Element-Battle-main-public\src\main\resources\static" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ElementBattleApplication">
+    <configuration name="ControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.demo.ControllerTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ControllerTest.contextLoads" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.demo.ControllerTest.contextLoads&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ControllerTest.testLoadAllStats" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.demo.ControllerTest.testLoadAllStats&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ControllerTest.testRegister_Success" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.demo.ControllerTest.testRegister_Success&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestController.testRegister_Success" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.demo.TestController.testRegister_Success&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Demo1Application (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="org.example.demo1.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.Demo1Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ElementBattleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="demo1.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.ElementBattleApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.TestController.testRegister_Success" />
+        <item itemvalue="Gradle.ControllerTest.testRegister_Success" />
+        <item itemvalue="Gradle.ControllerTest.contextLoads" />
+        <item itemvalue="Gradle.ControllerTest" />
+        <item itemvalue="Gradle.ControllerTest.testLoadAllStats" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="39e58791-12f3-4491-8c65-efbdec4ae57e" name="Changes" comment="" />
+      <created>1717365603719</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717365603719</updated>
+      <workItem from="1717365605812" duration="24000" />
+      <workItem from="1717365637422" duration="131000" />
+      <workItem from="1717365613375" duration="13461000" />
+      <workItem from="1717365620890" duration="1850000" />
+      <workItem from="1717365624875" duration="76000" />
+      <workItem from="1717365608562" duration="479000" />
+      <workItem from="1720763735321" duration="6000" />
+      <workItem from="1717365607562" duration="8064000" />
+      <workItem from="1717365610437" duration="24429000" />
+      <workItem from="1717365616484" duration="15619000" />
+      <workItem from="1717365615266" duration="5529000" />
+      <workItem from="1717365610672" duration="2862000" />
+      <workItem from="1717368701125" duration="705000" />
+      <workItem from="1717365614484" duration="4582000" />
+      <workItem from="1717365615578" duration="4594000" />
+      <workItem from="1717365610562" duration="857000" />
+      <workItem from="1717365620047" duration="2157000" />
+      <workItem from="1717365625094" duration="141000" />
+      <workItem from="1717365614750" duration="801000" />
+      <workItem from="1717365613235" duration="6086000" />
+      <workItem from="1717365610843" duration="2903000" />
+      <workItem from="1717365615875" duration="1151000" />
+      <workItem from="1717365608484" duration="520000" />
+      <workItem from="1717365618297" duration="3156000" />
+      <workItem from="1717365613781" duration="78000" />
+      <workItem from="1717365615828" duration="440000" />
+      <workItem from="1717365608344" duration="4171000" />
+      <workItem from="1717365615797" duration="552000" />
+      <workItem from="1717365609719" duration="5640000" />
+      <workItem from="1717365626266" duration="1158000" />
+      <workItem from="1717365609875" duration="64000" />
+      <workItem from="1717365905718" duration="23000" />
+      <workItem from="1717367372218" duration="18000" />
+      <workItem from="1717365642875" duration="1108000" />
+      <workItem from="1717365626047" duration="3505000" />
+      <workItem from="1717365621781" duration="9142000" />
+      <workItem from="1717365619547" duration="4487000" />
+      <workItem from="1717366290156" duration="12806000" />
+      <workItem from="1717365619891" duration="5648000" />
+      <workItem from="1717365614797" duration="4850000" />
+      <workItem from="1717365615718" duration="14000" />
+      <workItem from="1717365670484" duration="5588000" />
+      <workItem from="1717365619984" duration="631000" />
+      <workItem from="1717365607953" duration="5000" />
+      <workItem from="1717365608125" duration="4000" />
+      <workItem from="1717365779953" duration="606000" />
+      <workItem from="1717365611391" duration="601000" />
+      <workItem from="1717366239172" duration="71000" />
+      <workItem from="1717365616390" duration="1368000" />
+      <workItem from="1717365614390" duration="207000" />
+      <workItem from="1717365963015" duration="2008000" />
+      <workItem from="1717368457140" duration="2411000" />
+      <workItem from="1717370977515" duration="2488000" />
+      <workItem from="1717365623234" duration="2154000" />
+      <workItem from="1717365616375" duration="453000" />
+      <workItem from="1717365619672" duration="2702000" />
+      <workItem from="1717365619343" duration="528000" />
+      <workItem from="1717369157797" duration="151000" />
+      <workItem from="1717365616437" duration="46000" />
+      <workItem from="1717365800485" duration="528000" />
+      <workItem from="1717365611531" duration="100000" />
+      <workItem from="1717365610031" duration="205000" />
+      <workItem from="1717365612984" duration="484000" />
+      <workItem from="1647903610719" duration="34000" />
+      <workItem from="1717365617672" duration="105000" />
+      <workItem from="1717365614578" duration="37000" />
+      <workItem from="1717365618250" duration="360000" />
+      <workItem from="1717365614110" duration="5000" />
+      <workItem from="1717368043765" duration="585000" />
+      <workItem from="1717365625266" duration="404000" />
+      <workItem from="1717365613157" duration="781000" />
+      <workItem from="1717365610640" duration="20000" />
+      <workItem from="1715724026234" duration="828000" />
+      <workItem from="1715724336891" duration="236000" />
+      <workItem from="1743412061983" duration="20000" />
+      <workItem from="1743412135183" duration="6000" />
+      <workItem from="1733958005734" duration="2039000" />
+      <workItem from="1733960350344" duration="7016000" />
+      <workItem from="1733958012609" duration="62000" />
+      <workItem from="1733958013656" duration="4704000" />
+      <workItem from="1741734004062" duration="4010000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

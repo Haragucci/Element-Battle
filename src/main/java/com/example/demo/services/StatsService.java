@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.classes.Account;
+import com.example.demo.repositories.AccountRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,11 @@ public class StatsService {
 
     //===============================================SERVICE INTEGRATION===============================================\\
 
-    private final AccountService accountService;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public StatsService(AccountService accountService) {
-        this.accountService = accountService;
+    public StatsService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
 
@@ -115,15 +117,15 @@ public class StatsService {
     //===============================================HELPING METHODS===============================================\\
 
     private int getCoinsForUser(String username) {
-        AccountService.Account account = accountService.accounts.get(username);
+        Account account = accountRepository.getAccount(username);
         return account != null ? account.coins() : 0;
     }
 
     private void updateCoinsForUser(String username, int newCoins) {
-        AccountService.Account account = accountService.accounts.get(username);
+        Account account = accountRepository.getAccount(username);
         if (account != null) {
-            accountService.accounts.put(username, new AccountService.Account(username, account.password(), newCoins));
-            accountService.saveAccounts();
+            accountRepository.updateAccount(username, new Account(username, account.password(), newCoins));
+            accountRepository.saveAccounts();
         }
     }
 

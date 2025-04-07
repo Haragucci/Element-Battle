@@ -1,16 +1,13 @@
 package com.example.demo.services;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.classes.Account;
+import com.example.demo.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,32 +16,26 @@ public class AccountService {
 
     //===============================================SERVICE INTEGRATION===============================================\\
 
-    private StatsService statsService;
-    private BackgroundService backgroundService;
-    private CardService cardService;
+    private final AccountRepository accountRepository;
+    private final StatsService statsService;
+    private final BackgroundService backgroundService;
+    private final CardService cardService;
+
 
     @Autowired
-    public void setStatsService(@Lazy StatsService statsService,@Lazy BackgroundService backgroundService,@Lazy CardService cardService) {
+    public AccountService(AccountRepository accountRepository, StatsService statsService, BackgroundService backgroundService,CardService cardService) {
+        this.accountRepository = accountRepository;
         this.statsService = statsService;
         this.backgroundService = backgroundService;
         this.cardService = cardService;
     }
-
-
-    //===============================================VARIABLES===============================================\\
-
-    public static final String ACCOUNTS_FILE_PATH = "files/acc.json";
-    public record Account(String username, String password, int coins) {}
-    public Map<String, Account> accounts = new HashMap<>();
-    private final ObjectMapper mapper = new ObjectMapper();
-
 
     //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> user) {
         String username = user.get("username");
         String password = user.get("password");
-        Account account = accounts.get(username);
+        Account account = accountRepository.getAccount(username);
         if (account != null && account.password().equals(password)) {
             return ResponseEntity.ok(Map.of(
                     "success", true,
@@ -61,6 +52,7 @@ public class AccountService {
             return ResponseEntity.badRequest().body("Username is required");
         }
 
+        /* FIXME
         try {
             File accountFile = new File(ACCOUNTS_FILE_PATH);
             ObjectMapper mapper = new ObjectMapper();
@@ -71,11 +63,11 @@ public class AccountService {
                 users.remove(username);
                 mapper.writeValue(accountFile, users);
 
-                accounts.remove(username);
+                accountRepository.removeAccount(username);
                 statsService.stats.remove(username);
                 cardService.cardDesigns.remove(username);
                 backgroundService.backgrounds.remove(username);
-                saveAccounts();
+                accountRepository.saveAccounts();
 
                 return ResponseEntity.ok("User deleted successfully");
             } else {
@@ -84,6 +76,9 @@ public class AccountService {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
+
+         */
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
     public ResponseEntity<Map<String, Object>> updateAccount(@RequestBody Map<String, String> updateData) {
@@ -91,7 +86,7 @@ public class AccountService {
         String newUsername = updateData.get("newUsername");
         String newPassword = updateData.get("newPassword");
 
-        Account account = accounts.get(oldUsername);
+        Account account = accountRepository.getAccount(oldUsername);
         if (account == null) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
@@ -99,29 +94,29 @@ public class AccountService {
             ));
         }
 
-        if (!oldUsername.equals(newUsername) && accounts.containsKey(newUsername)) {
+        if (!oldUsername.equals(newUsername) && accountRepository.hasAccount(newUsername)) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "message", "Neuer Benutzername bereits vergeben"
             ));
         }
 
-        accounts.remove(oldUsername);
+        accountRepository.removeAccount(oldUsername);
         Account updatedAccount = new Account(
                 newUsername,
                 newPassword != null ? newPassword : account.password(),
                 account.coins()
         );
-        accounts.put(newUsername, updatedAccount);
-        saveAccounts();
+        accountRepository.updateAccount(newUsername, updatedAccount);
+        accountRepository.saveAccounts();
 
-        if (backgroundService.backgrounds != null && backgroundService.backgrounds.containsKey(oldUsername)) {
+        if (backgroundService.backgrounds.containsKey(oldUsername)) {
             String background = backgroundService.backgrounds.remove(oldUsername);
             backgroundService.backgrounds.put(newUsername, background);
             backgroundService.saveBackgrounds();
         }
 
-        if (cardService.cardDesigns != null && cardService.cardDesigns.containsKey(oldUsername)) {
+        if (cardService.cardDesigns.containsKey(oldUsername)) {
             String cardDesign = cardService.cardDesigns.remove(oldUsername);
             cardService.cardDesigns.put(newUsername, cardDesign);
             cardService.saveCardDesigns();
@@ -137,19 +132,19 @@ public class AccountService {
         String username = user.get("username");
         String password = user.get("password");
 
-        if (accounts.containsKey(username)) {
-            Account existingAccount = accounts.get(username);
+        if (accountRepository.hasAccount(username)) {
+            Account existingAccount = accountRepository.getAccount(username);
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "message", "Benutzername existiert bereits",
                     "username", username,
-                    "coins", existingAccount.coins
+                    "coins", existingAccount.coins()
             ));
         }
 
         Account newAccount = new Account(username, password, 0);
-        accounts.put(username, newAccount);
-        saveAccounts();
+        accountRepository.updateAccount(username, newAccount);
+        accountRepository.saveAccounts();
 
         Map<String, Object> newUserStats = new HashMap<>();
         newUserStats.put("wins", 0);
@@ -178,7 +173,7 @@ public class AccountService {
             ));
         }
 
-        Account account = accounts.get(username);
+        Account account = accountRepository.getAccount(username);
         if (account == null) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
@@ -198,15 +193,15 @@ public class AccountService {
         String username = (String) request.get("username");
         int coins = (int) request.get("coins");
 
-        Account account = accounts.get(username);
+        Account account = accountRepository.getAccount(username);
         if (account != null) {
             Account updatedAccount = new Account(
                     account.username(),
                     account.password(),
                     coins
             );
-            accounts.put(username, updatedAccount);
-            saveAccounts();
+            accountRepository.updateAccount(username, updatedAccount);
+            accountRepository.saveAccounts();
 
             return ResponseEntity.ok(Map.of(
                     "success", true,
@@ -221,15 +216,15 @@ public class AccountService {
         String username = (String) request.get("username");
         int amount = (int) request.get("amount");
 
-        Account account = accounts.get(username);
+        Account account = accountRepository.getAccount(username);
         if (account != null) {
             Account updatedAccount = new Account(
                     account.username(),
                     account.password(),
                     account.coins() + amount
             );
-            accounts.put(username, updatedAccount);
-            saveAccounts();
+            accountRepository.updateAccount(username, updatedAccount);
+            accountRepository.saveAccounts();
 
             return ResponseEntity.ok(Map.of(
                     "success", true,
@@ -238,30 +233,5 @@ public class AccountService {
         }
 
         return ResponseEntity.ok(Map.of("success", false));
-    }
-
-
-    //===============================================FILE MANAGEMENT===============================================\\
-
-
-    public void loadAccounts() {
-        try {
-            File file = new File(ACCOUNTS_FILE_PATH);
-            if (file.exists()) {
-                accounts = mapper.readValue(file, new TypeReference<>() {});
-            } else {
-                System.out.println("acc.json Datei existiert nicht.");
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void saveAccounts() {
-        try {
-            mapper.writeValue(new File(ACCOUNTS_FILE_PATH), accounts);
-        } catch (IOException e) {
-            System.out.println("Fehler beim speichern der Accounts");
-        }
     }
 }

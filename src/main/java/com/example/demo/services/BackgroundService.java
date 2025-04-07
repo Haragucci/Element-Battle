@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.classes.Account;
+import com.example.demo.repositories.AccountRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,11 @@ public class BackgroundService {
 
     //===============================================SERVICE INTEGRATION===============================================\\
 
-    private final AccountService accountService;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public BackgroundService(AccountService accountService) {
-        this.accountService = accountService;
+    public BackgroundService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
         this.backgrounds = new HashMap<>();
     }
 
@@ -40,16 +42,16 @@ public class BackgroundService {
         String background = (String) request.get("background");
         int cost = (int) request.get("cost");
 
-        AccountService.Account account = accountService.accounts.get(username);
+        Account account = accountRepository.getAccount(username);
         if (account != null) {
             if (account.coins() >= cost) {
-                AccountService.Account updatedAccount = new AccountService.Account(
+                Account updatedAccount = new Account(
                         account.username(),
                         account.password(),
                         account.coins() - cost
                 );
-                accountService.accounts.put(username, updatedAccount);
-                accountService.saveAccounts();
+                accountRepository.updateAccount(username, updatedAccount);
+                accountRepository.saveAccounts();
 
                 backgrounds.put(username, background);
                 saveBackgrounds();

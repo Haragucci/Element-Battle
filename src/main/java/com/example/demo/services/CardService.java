@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.classes.Account;
+import com.example.demo.repositories.AccountRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,11 @@ public class CardService {
 
     //===============================================SERVICE INTEGRATION===============================================\\
 
-    private final AccountService accountService;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public CardService(AccountService accountService) {
-        this.accountService = accountService;
+    public CardService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
 
@@ -39,24 +41,18 @@ public class CardService {
         final int COST = 2;
 
         synchronized (this) {
-            AccountService.Account account = accountService.accounts.get(username);
+            Account account = accountRepository.getAccount(username);
             if (account != null) {
-                if (account.coins() >= COST) {
-                    AccountService.Account updatedAccount = new AccountService.Account(
-                            account.username(),
-                            account.password(),
-                            account.coins() - COST
-                    );
-                    accountService.accounts.put(username, updatedAccount);
-                    accountService.saveAccounts();
-
+                Account updatedAccount = spendCoinsOnAccount(account, COST);
+                if (updatedAccount != null) {
                     if (!cardDesigns.containsKey(username)) {
                         cardDesigns.put(username, "default");
                         saveCardDesigns();
                     }
+
                     return ResponseEntity.ok(Map.of(
                             "success", true,
-                            "coins", updatedAccount.coins(),
+                            "coins", account.coins(),
                             "activeDesign", cardDesigns.get(username)
                     ));
                 } else {
@@ -67,6 +63,21 @@ public class CardService {
 
             return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
         }
+    }
+
+    public Account spendCoinsOnAccount(Account account, int cost) {
+        if (account.coins() >= cost) {
+            Account updatedAccount = new Account(
+                    account.username(),
+                    account.password(),
+                    account.coins() - cost
+            );
+            accountRepository.updateAccount(account.username(), updatedAccount);
+            accountRepository.saveAccounts();
+            return updatedAccount;
+        }
+
+        return null;
     }
 
     public ResponseEntity<Map<String, Object>> checkUserCardDesign(@RequestBody Map<String, String> request) {
