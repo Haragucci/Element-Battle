@@ -130,4 +130,9 @@ public class CardService {
             System.out.println("Fehler beim speichern der Kartendesigns");
         }
     }
+
+    public void removeCardStats(String username){
+        cardDesigns.remove(username);
+        saveCardDesigns();
+    }
 }

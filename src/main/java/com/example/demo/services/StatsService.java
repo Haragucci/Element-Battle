@@ -157,4 +157,9 @@ public class StatsService {
             stats = new HashMap<>();
         }
     }
+
+    public void removeStats(String username){
+        stats.remove(username);
+        saveStats();
+    }
 }

@@ -154,4 +154,9 @@ public class BackgroundService {
         }
     }
 
+    public void removeBackground(String username){
+        backgrounds.remove(username);
+        saveBackgrounds();
+    }
+
 }

@@ -23,7 +23,7 @@ public class GameService {
 
     //===============================================VARIABLES===============================================\\
 
-    private final Map<String, Game> games = new HashMap<>();
+    public final Map<String, Game> games = new HashMap<>();
     private static final String GAME_FILE_PATH = "files/saved-games.json";
     private final ObjectMapper mapper = new ObjectMapper();
 

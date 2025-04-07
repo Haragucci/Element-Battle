@@ -42,6 +42,10 @@ public class AccountRepository {
     //===============================================FILE MANAGEMENT===============================================\\
 
 
+    public boolean userExists(String username) {
+        return accounts.containsKey(username);
+    }
+
     public void loadAccounts() {
         try {
             File file = new File(ACCOUNTS_FILE_PATH);

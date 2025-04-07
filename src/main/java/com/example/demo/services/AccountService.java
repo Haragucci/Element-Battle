@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.classes.Account;
+import com.example.demo.classes.Game;
 import com.example.demo.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,16 @@ public class AccountService {
     private final StatsService statsService;
     private final BackgroundService backgroundService;
     private final CardService cardService;
+    private final GameService gameService;
 
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, StatsService statsService, BackgroundService backgroundService,CardService cardService) {
+    public AccountService(AccountRepository accountRepository, StatsService statsService, BackgroundService backgroundService, CardService cardService, GameService gameService) {
         this.accountRepository = accountRepository;
         this.statsService = statsService;
         this.backgroundService = backgroundService;
         this.cardService = cardService;
+        this.gameService = gameService;
     }
 
     //===============================================REQUEST METHODS===============================================\\
@@ -51,34 +54,22 @@ public class AccountService {
         if (username == null || username.isEmpty()) {
             return ResponseEntity.badRequest().body("Username is required");
         }
-
-        /* FIXME
         try {
-            File accountFile = new File(ACCOUNTS_FILE_PATH);
-            ObjectMapper mapper = new ObjectMapper();
-            TypeReference<Map<String, Map<String, Object>>> typeRef = new TypeReference<>() {};
-            Map<String, Map<String, Object>> users = mapper.readValue(accountFile, typeRef);
 
-            if (users.containsKey(username)) {
-                users.remove(username);
-                mapper.writeValue(accountFile, users);
-
+            if (accountRepository.userExists(username)) {
                 accountRepository.removeAccount(username);
-                statsService.stats.remove(username);
-                cardService.cardDesigns.remove(username);
-                backgroundService.backgrounds.remove(username);
+                statsService.removeStats(username);
+                cardService.removeCardStats(username);
+                backgroundService.removeBackground(username);
                 accountRepository.saveAccounts();
 
                 return ResponseEntity.ok("User deleted successfully");
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
-
-         */
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
     public ResponseEntity<Map<String, Object>> updateAccount(@RequestBody Map<String, String> updateData) {
@@ -120,6 +111,18 @@ public class AccountService {
             String cardDesign = cardService.cardDesigns.remove(oldUsername);
             cardService.cardDesigns.put(newUsername, cardDesign);
             cardService.saveCardDesigns();
+        }
+
+        if (gameService.games.containsKey(oldUsername)) {
+            Game game = gameService.games.remove(oldUsername);
+            gameService.games.put(newUsername, game);
+            gameService.saveGame();
+        }
+
+        if(statsService.stats.containsKey(oldUsername)) {
+            Map<String, Object> stats = statsService.stats.remove(oldUsername);
+            statsService.stats.put(newUsername, stats);
+            statsService.saveStats();
         }
 
         return ResponseEntity.ok(Map.of(
