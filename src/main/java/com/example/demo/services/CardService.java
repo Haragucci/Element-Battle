@@ -135,8 +135,16 @@ public class CardService {
         return cardDesigns.containsKey(username);
     }
 
-    public void removeCardStats(String username){
+    public void removeCardStatsAndSave(String username){
         cardDesigns.remove(username);
         saveCardDesigns();
+    }
+
+    public String removeCardDesign(String username){
+        return cardDesigns.remove(username);
+    }
+
+    public void putCardDesign(String username, String designId){
+        cardDesigns.put(username, designId);
     }
 }

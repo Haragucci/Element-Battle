@@ -163,4 +163,12 @@ public class BackgroundService {
         saveBackgrounds();
     }
 
+    public String removeBackground(String username){
+        return backgrounds.remove(username);
+    }
+
+    public void putBackground(String username, String background){
+        backgrounds.put(username, background);
+    }
+
 }

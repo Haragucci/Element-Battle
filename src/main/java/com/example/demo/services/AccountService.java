@@ -60,7 +60,7 @@ public class AccountService {
                 accountRepository.removeAccount(username);
                 statsService.removeStatsAndSave(username);
                 gameService.removeGameAndSave(username);
-                cardService.removeCardStats(username);
+                cardService.removeCardStatsAndSave(username);
                 backgroundService.removeBackgroundAndSave(username);
                 accountRepository.saveAccounts();
 
@@ -103,14 +103,14 @@ public class AccountService {
         accountRepository.saveAccounts();
 
         if (backgroundService.checkBackground(oldUsername)) {
-            String background = backgroundService.backgrounds.remove(oldUsername);
-            backgroundService.backgrounds.put(newUsername, background);
+            String background = backgroundService.removeBackground(oldUsername);
+            backgroundService.putBackground(newUsername, background);
             backgroundService.saveBackgrounds();
         }
 
         if (cardService.checkCards(oldUsername)) {
-            String cardDesign = cardService.cardDesigns.remove(oldUsername);
-            cardService.cardDesigns.put(newUsername, cardDesign);
+            String cardDesign = cardService.removeCardDesign(oldUsername);
+            cardService.putCardDesign(newUsername, cardDesign);
             cardService.saveCardDesigns();
         }
 
