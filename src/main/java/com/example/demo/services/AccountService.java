@@ -57,12 +57,11 @@ public class AccountService {
         try {
 
             if (accountRepository.userExists(username)) {
-                accountRepository.removeAccount(username);
+                accountRepository.removeAccountAndSave(username);
                 statsService.removeStatsAndSave(username);
                 gameService.removeGameAndSave(username);
                 cardService.removeCardStatsAndSave(username);
                 backgroundService.removeBackgroundAndSave(username);
-                accountRepository.saveAccounts();
 
                 return ResponseEntity.ok("User deleted successfully");
             } else {
@@ -93,7 +92,7 @@ public class AccountService {
             ));
         }
 
-        accountRepository.removeAccount(oldUsername);
+        accountRepository.removeAccountAndSave(oldUsername);
         Account updatedAccount = new Account(
                 newUsername,
                 newPassword != null ? newPassword : account.password(),

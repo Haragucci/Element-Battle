@@ -167,8 +167,8 @@ public class StatsService {
         saveStats();
     }
 
-    public void putStats(String username, Map<String, Object> stats) {
-        stats.put(username, stats);
+    public void putStats(String username, Map<String, Object> Stats) {
+        stats.put(username, Stats);
     }
 
     public Map<String , Object> removeStats(String username){
