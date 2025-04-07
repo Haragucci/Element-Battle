@@ -158,7 +158,7 @@ public class BackgroundService {
         return backgrounds.containsKey(username);
     }
 
-    public void removeBackground(String username){
+    public void removeBackgroundAndSave(String username){
         backgrounds.remove(username);
         saveBackgrounds();
     }

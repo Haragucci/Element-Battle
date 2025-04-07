@@ -132,4 +132,17 @@ public class GameService {
     public boolean checkGames(String username){
         return games.containsKey(username);
     }
+
+    public void removeGameAndSave(String username){
+        games.remove(username);
+        saveGame();
+    }
+
+    public void putGame(String username, Game game) {
+        games.put(username, game);
+    }
+
+    public Game removeGame(String username){
+        return games.remove(username);
+    }
 }

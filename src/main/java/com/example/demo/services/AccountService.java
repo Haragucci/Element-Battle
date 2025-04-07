@@ -59,8 +59,9 @@ public class AccountService {
             if (accountRepository.userExists(username)) {
                 accountRepository.removeAccount(username);
                 statsService.removeStatsAndSave(username);
+                gameService.removeGameAndSave(username);
                 cardService.removeCardStats(username);
-                backgroundService.removeBackground(username);
+                backgroundService.removeBackgroundAndSave(username);
                 accountRepository.saveAccounts();
 
                 return ResponseEntity.ok("User deleted successfully");
@@ -114,8 +115,8 @@ public class AccountService {
         }
 
         if (gameService.checkGames(oldUsername)) {
-            Game game = gameService.games.remove(oldUsername);
-            gameService.games.put(newUsername, game);
+            Game game = gameService.removeGame(oldUsername);
+            gameService.putGame(newUsername, game);
             gameService.saveGame();
         }
 
