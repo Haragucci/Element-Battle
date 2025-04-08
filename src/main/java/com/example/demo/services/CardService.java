@@ -26,41 +26,35 @@ public class CardService {
         this.accountRepository = accountRepository;
     }
 
-
     //===============================================VARIABLES===============================================\\
 
     private static final String CARDS_FILE_PATH = "files/cards.json";
-    public Map<String, String> cardDesigns = new HashMap<>();
+    public Map<Integer, String> cardDesigns = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
-
 
     //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, Object> request) {
-        String username = (String) request.get("username");
+        int userId = ((Number) request.get("userId")).intValue();
         final int COST = 2;
 
         synchronized (this) {
-            Account account = accountRepository.getAccountByUsername(username);
+            Account account = accountRepository.getAccountById(userId);
             if (account != null) {
                 Account updatedAccount = spendCoinsOnAccount(account, COST);
                 if (updatedAccount != null) {
-                    if (!cardDesigns.containsKey(username)) {
-                        cardDesigns.put(username, "default");
-                        saveCardDesigns();
-                    }
+                    cardDesigns.putIfAbsent(userId, "default");
+                    saveCardDesigns();
 
                     return ResponseEntity.ok(Map.of(
                             "success", true,
-                            "coins", account.coins(),
-                            "activeDesign", cardDesigns.get(username)
+                            "coins", updatedAccount.coins(),
+                            "activeDesign", cardDesigns.get(userId)
                     ));
                 } else {
-                    System.out.println("Nicht genug Münzen für Benutzer: " + username + ". Aktueller Stand: " + account.coins());
                     return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
                 }
             }
-
             return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
         }
     }
@@ -84,8 +78,11 @@ public class CardService {
     public ResponseEntity<Map<String, Object>> checkUserCardDesign(@RequestBody Map<String, String> request) {
         String username = request.get("username");
 
-        boolean purchased = cardDesigns.containsKey(username);
-        String activeDesign = cardDesigns.getOrDefault(username, "");
+        Account account = accountRepository.getAccountByUsername(username);
+        int userId = account.id();
+
+        boolean purchased = cardDesigns.containsKey(userId);
+        var activeDesign = cardDesigns.getOrDefault(userId, "");
 
         return ResponseEntity.ok(Map.of(
                 "purchased", purchased,
@@ -94,41 +91,38 @@ public class CardService {
     }
 
     public ResponseEntity<Map<String, Object>> toggleCardDesign(@RequestBody Map<String, String> request) {
-        String username = request.get("username");
+        int userId = Integer.parseInt(request.get("userId"));
         String designId = request.get("designId");
 
-        if (cardDesigns != null &&cardDesigns.containsKey(username)) {
-            cardDesigns.put(username, designId);
+        if (cardDesigns.containsKey(userId)) {
+            cardDesigns.put(userId, designId);
             saveCardDesigns();
             return ResponseEntity.ok(Map.of(
                     "success", true,
-                    "activeDesign", cardDesigns.get(username)
+                    "activeDesign", cardDesigns.get(userId)
             ));
         } else {
             return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
         }
     }
 
-
-
     //===============================================HELPING METHODS===============================================\\
 
-
-    public boolean checkCards(String username){
-        return cardDesigns.containsKey(username);
+    public boolean checkCards(int userId) {
+        return cardDesigns.containsKey(userId);
     }
 
-    public void removeCardStatsAndSave(String username){
-        cardDesigns.remove(username);
+    public void removeCardStatsAndSave(int userId) {
+        cardDesigns.remove(userId);
         saveCardDesigns();
     }
 
-    public String removeCardDesign(String username){
-        return cardDesigns.remove(username);
+    public String removeCardDesign(int userId) {
+        return cardDesigns.remove(userId);
     }
 
-    public void putCardDesign(String username, String designId){
-        cardDesigns.put(username, designId);
+    public void putCardDesign(int userId, String designId) {
+        cardDesigns.put(userId, designId);
     }
 
     //===============================================FILE MANAGEMENT===============================================\\
@@ -137,18 +131,21 @@ public class CardService {
         try {
             File file = new File(CARDS_FILE_PATH);
             if (file.exists()) {
-                cardDesigns.putAll(mapper.readValue(file, new TypeReference<Map<String, String>>() {}));
+                Map<String, String> temp = mapper.readValue(file, new TypeReference<>() {});
+                temp.forEach((key, value) -> cardDesigns.put(Integer.parseInt(key), value));
             }
         } catch (IOException e) {
-            System.out.println("Fehler beim laden der Kartendesigns");
+            System.out.println("Fehler beim Laden der Kartendesigns");
         }
     }
 
     public void saveCardDesigns() {
         try {
-            mapper.writeValue(new File(CARDS_FILE_PATH), cardDesigns);
+            Map<String, String> stringKeyMap = new HashMap<>();
+            cardDesigns.forEach((key, value) -> stringKeyMap.put(String.valueOf(key), value));
+            mapper.writeValue(new File(CARDS_FILE_PATH), stringKeyMap);
         } catch (IOException e) {
-            System.out.println("Fehler beim speichern der Kartendesigns");
+            System.out.println("Fehler beim Speichern der Kartendesigns");
         }
     }
 }

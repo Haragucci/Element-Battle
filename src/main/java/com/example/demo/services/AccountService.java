@@ -112,9 +112,9 @@ public class AccountService {
             backgroundService.saveBackgrounds();
         }
 
-        if (cardService.checkCards(oldUsername)) {
-            String cardDesign = cardService.removeCardDesign(oldUsername);
-            cardService.putCardDesign(newUsername, cardDesign);
+        if (cardService.checkCards(account.id())) {
+            String cardDesign = cardService.removeCardDesign(account.id());
+            cardService.putCardDesign(account.id(), cardDesign);
             cardService.saveCardDesigns();
         }
 
