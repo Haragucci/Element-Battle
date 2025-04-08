@@ -65,9 +65,9 @@ public class AccountService {
                 int accountId = account.id();
                 accountRepository.removeAccountAndSave(accountId);
                 statsService.removeStatsAndSave(accountId);
-                gameService.removeGameAndSave(accountId);
-                cardService.removeCardStatsAndSave(accountId);
-                backgroundService.removeBackgroundAndSave(accountId);
+                //gameService.removeGameAndSave(accountId);
+                //cardService.removeCardStatsAndSave(accountId);
+                //backgroundService.removeBackgroundAndSave(accountId);
 
                 return ResponseEntity.ok("User deleted successfully");
             } else {

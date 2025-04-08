@@ -1,6 +1,6 @@
 package com.example.demo.classes;
 
-import com.example.demo.services.HeroService.Hero;
+import com.example.demo.classes.Hero;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import com.example.demo.services.HeroService.Hero;
+import com.example.demo.classes.Hero;
 
 @Service
 public class GameService {

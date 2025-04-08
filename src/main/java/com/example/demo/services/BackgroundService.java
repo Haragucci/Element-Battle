@@ -42,15 +42,16 @@ public class BackgroundService {
         String background = (String) request.get("background");
         int cost = (int) request.get("cost");
 
-        Account account = accountRepository.getAccount(username);
+        Account account = accountRepository.getAccountByUsername(username);
         if (account != null) {
             if (account.coins() >= cost) {
                 Account updatedAccount = new Account(
+                        account.id(),
                         account.username(),
                         account.password(),
                         account.coins() - cost
                 );
-                accountRepository.updateAccount(username, updatedAccount);
+                accountRepository.updateAccount(account.id(), updatedAccount);
                 accountRepository.saveAccounts();
 
                 backgrounds.put(username, background);

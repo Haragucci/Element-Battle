@@ -41,7 +41,7 @@ public class CardService {
         final int COST = 2;
 
         synchronized (this) {
-            Account account = accountRepository.getAccount(username);
+            Account account = accountRepository.getAccountByUsername(username);
             if (account != null) {
                 Account updatedAccount = spendCoinsOnAccount(account, COST);
                 if (updatedAccount != null) {
@@ -68,11 +68,12 @@ public class CardService {
     public Account spendCoinsOnAccount(Account account, int cost) {
         if (account.coins() >= cost) {
             Account updatedAccount = new Account(
+                    account.id(),
                     account.username(),
                     account.password(),
                     account.coins() - cost
             );
-            accountRepository.updateAccount(account.username(), updatedAccount);
+            accountRepository.updateAccount(account.id(), updatedAccount);
             accountRepository.saveAccounts();
             return updatedAccount;
         }

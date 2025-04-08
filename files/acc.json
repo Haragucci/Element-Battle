@@ -1,12 +1,8 @@
 {
   "1": {
-    "username": "Tilljan2",
-    "password": "tilljan2",
-    "coins": 0
-  },
-  "2": {
+    "id": 1,
     "username": "Tilljan",
     "password": "tilljan",
-    "coins": 5
+    "coins": 0
   }
 }

@@ -32,7 +32,7 @@ public class AccountRepository {
     }
 
     public void updateAccount(int id, Account account) {
-        if (userExistsById(id)) {
+        if (!userExistsById(id)) {
             accounts.put(id, account);
             saveAccounts();
         } else {
