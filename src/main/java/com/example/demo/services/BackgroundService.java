@@ -31,7 +31,7 @@ public class BackgroundService {
     //===============================================VARIABLES===============================================\\
 
     public static final String BACKGROUNDS_FILE_PATH = "files/back.json";
-    public final Map<String, String> backgrounds;
+    public final Map<Integer, String> backgrounds; // <-- int ID statt username!
     private final ObjectMapper mapper = new ObjectMapper();
 
 
@@ -44,17 +44,19 @@ public class BackgroundService {
 
         Account account = accountRepository.getAccountByUsername(username);
         if (account != null) {
+            int userId = account.id();
+
             if (account.coins() >= cost) {
                 Account updatedAccount = new Account(
-                        account.id(),
+                        userId,
                         account.username(),
                         account.password(),
                         account.coins() - cost
                 );
-                accountRepository.updateAccount(account.id(), updatedAccount);
+                accountRepository.updateAccount(userId, updatedAccount);
                 accountRepository.saveAccounts();
 
-                backgrounds.put(username, background);
+                backgrounds.put(userId, background);
                 saveBackgrounds();
 
                 return ResponseEntity.ok(Map.of(
@@ -72,7 +74,13 @@ public class BackgroundService {
 
     public ResponseEntity<Map<String, Object>> checkUserBackground(@RequestBody Map<String, String> request) {
         String username = request.get("username");
-        String background = backgrounds.get(username);
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account == null) {
+            return ResponseEntity.ok(Map.of("exists", false, "message", "Benutzer nicht gefunden"));
+        }
+
+        int userId = account.id();
+        String background = backgrounds.get(userId);
         boolean exists = background != null;
 
         Map<String, Object> response = new HashMap<>();
@@ -92,8 +100,15 @@ public class BackgroundService {
             return ResponseEntity.badRequest().body(Map.of("hasBackground", false));
         }
 
-        boolean hasBackground = backgrounds.containsKey(username);
-        boolean isActive = hasBackground && backgrounds.get(username).equals(background);
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account == null) {
+            return ResponseEntity.ok(Map.of("hasBackground", false));
+        }
+
+        int userId = account.id();
+
+        boolean hasBackground = backgrounds.containsKey(userId);
+        boolean isActive = hasBackground && backgrounds.get(userId).equals(background);
 
         return ResponseEntity.ok(Map.of(
                 "hasBackground", hasBackground,
@@ -104,13 +119,21 @@ public class BackgroundService {
     public ResponseEntity<Map<String, Object>> toggleBackground(@RequestBody Map<String, Object> request) {
         String username = (String) request.get("username");
         String background = (String) request.get("background");
-        if (backgrounds.containsKey(username)) {
-            String currentBackground = backgrounds.get(username);
+
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account == null) {
+            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
+        }
+
+        int userId = account.id();
+
+        if (backgrounds.containsKey(userId)) {
+            String currentBackground = backgrounds.get(userId);
             boolean isActive = currentBackground != null && currentBackground.equals(background);
             if (isActive) {
-                backgrounds.put(username, "");
+                backgrounds.put(userId, "");
             } else {
-                backgrounds.put(username, background);
+                backgrounds.put(userId, background);
             }
             saveBackgrounds();
             return ResponseEntity.ok(Map.of(
@@ -124,9 +147,16 @@ public class BackgroundService {
 
     public ResponseEntity<Map<String, Object>> getBackground(@RequestBody Map<String, Object> request) {
         String username = (String) request.get("username");
+        Account account = accountRepository.getAccountByUsername(username);
 
-        if (backgrounds.containsKey(username)) {
-            String background = backgrounds.get(username);
+        if (account == null) {
+            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
+        }
+
+        int userId = account.id();
+
+        if (backgrounds.containsKey(userId)) {
+            String background = backgrounds.get(userId);
             return ResponseEntity.ok(Map.of("success", true, "background", background));
         } else {
             return ResponseEntity.ok(Map.of("success", false, "message", "Kein Hintergrund für diesen Benutzer gefunden"));
@@ -138,20 +168,25 @@ public class BackgroundService {
 
 
     public boolean checkBackground(String username){
-        return backgrounds.containsKey(username);
+        Account account = accountRepository.getAccountByUsername(username);
+        return account != null && backgrounds.containsKey(account.id());
     }
 
-    public void removeBackgroundAndSave(String username){
-        backgrounds.remove(username);
+    public void removeBackgroundAndSave(int id){
+        backgrounds.remove(id);
         saveBackgrounds();
     }
 
     public String removeBackground(String username){
-        return backgrounds.remove(username);
+        Account account = accountRepository.getAccountByUsername(username);
+        return account != null ? backgrounds.remove(account.id()) : null;
     }
 
     public void putBackground(String username, String background){
-        backgrounds.put(username, background);
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account != null) {
+            backgrounds.put(account.id(), background);
+        }
     }
 
 
@@ -161,7 +196,7 @@ public class BackgroundService {
         try {
             File file = new File(BACKGROUNDS_FILE_PATH);
             if (file.exists()) {
-                backgrounds.putAll(mapper.readValue(file, new TypeReference<Map<String, String>>() {}));
+                backgrounds.putAll(mapper.readValue(file, new TypeReference<Map<Integer, String>>() {}));
             }
         } catch (IOException e) {
             System.out.println("Fehler beim laden der Hintergründe!");

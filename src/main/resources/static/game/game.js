@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 let design = 'default';
-                if (data.exists) {
-                    design = data.activeBackground || 'default';
+                if (data.purchased) {
+                    design = data.activeDesign || 'default';
                 }
                 localStorage.setItem('activeCardDesign', design);
                 updateCardDesign();

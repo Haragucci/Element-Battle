@@ -32,11 +32,20 @@ public class AccountRepository {
     }
 
     public void updateAccount(int id, Account account) {
-        if (!userExistsById(id)) {
+        if (userExistsById(id)) {
             accounts.put(id, account);
             saveAccounts();
         } else {
             throw new IllegalArgumentException("Account with id " + id + " does not exist");
+        }
+    }
+
+    public void createAccount(int id, Account account) {
+        if (!userExistsById(id)) {
+            accounts.put(id, account);
+            saveAccounts();
+        } else {
+            throw new IllegalArgumentException("Account with id " + id + " already exist");
         }
     }
 

@@ -34,22 +34,23 @@ public class CardService {
 
     //===============================================REQUEST METHODS===============================================\\
 
-    public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, Object> request) {
-        int userId = ((Number) request.get("userId")).intValue();
+    public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
         final int COST = 2;
 
+        Account account = accountRepository.getAccountByUsername(username);
+
         synchronized (this) {
-            Account account = accountRepository.getAccountById(userId);
             if (account != null) {
                 Account updatedAccount = spendCoinsOnAccount(account, COST);
                 if (updatedAccount != null) {
-                    cardDesigns.putIfAbsent(userId, "default");
+                    cardDesigns.putIfAbsent(account.id(), "default");
                     saveCardDesigns();
 
                     return ResponseEntity.ok(Map.of(
                             "success", true,
                             "coins", updatedAccount.coins(),
-                            "activeDesign", cardDesigns.get(userId)
+                            "activeDesign", cardDesigns.get(account.id())
                     ));
                 } else {
                     return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
@@ -82,7 +83,7 @@ public class CardService {
         int userId = account.id();
 
         boolean purchased = cardDesigns.containsKey(userId);
-        var activeDesign = cardDesigns.getOrDefault(userId, "");
+        String activeDesign = cardDesigns.getOrDefault(userId, "");
 
         return ResponseEntity.ok(Map.of(
                 "purchased", purchased,
@@ -91,8 +92,10 @@ public class CardService {
     }
 
     public ResponseEntity<Map<String, Object>> toggleCardDesign(@RequestBody Map<String, String> request) {
-        int userId = Integer.parseInt(request.get("userId"));
+        String username = request.get("username");
         String designId = request.get("designId");
+        Account account = accountRepository.getAccountByUsername(username);
+        int userId = account.id();
 
         if (cardDesigns.containsKey(userId)) {
             cardDesigns.put(userId, designId);

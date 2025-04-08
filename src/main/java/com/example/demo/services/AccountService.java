@@ -65,9 +65,9 @@ public class AccountService {
                 int accountId = account.id();
                 accountRepository.removeAccountAndSave(accountId);
                 statsService.removeStatsAndSave(accountId);
-                //gameService.removeGameAndSave(accountId);
-                //cardService.removeCardStatsAndSave(accountId);
-                //backgroundService.removeBackgroundAndSave(accountId);
+                gameService.removeGameAndSave(accountId);
+                cardService.removeCardStatsAndSave(accountId);
+                backgroundService.removeBackgroundAndSave(accountId);
 
                 return ResponseEntity.ok("User deleted successfully");
             } else {
@@ -118,9 +118,9 @@ public class AccountService {
             cardService.saveCardDesigns();
         }
 
-        if (gameService.checkGames(oldUsername)) {
-            Game game = gameService.removeGame(oldUsername);
-            gameService.putGame(newUsername, game);
+        if (gameService.checkGames(account.id())) {
+            Game game = gameService.removeGame(account.id());
+            gameService.putGame(account.id(), game);
             gameService.saveGame();
         }
 
@@ -154,7 +154,7 @@ public class AccountService {
 
         int newAccountId = accountRepository.generateUniqueId();
         Account newAccount = new Account(newAccountId, username, password, 0);
-        accountRepository.updateAccount(newAccountId, newAccount);
+        accountRepository.createAccount(newAccountId, newAccount);
         accountRepository.saveAccounts();
 
         Map<String, Object> newUserStats = new HashMap<>();

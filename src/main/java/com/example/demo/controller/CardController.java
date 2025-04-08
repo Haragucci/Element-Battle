@@ -27,7 +27,7 @@ public class CardController {
     }
 
     @PostMapping("/buyCardDesign")
-    public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, String> request) {
         return cardService.buyCardDesign(request);
     }
 
