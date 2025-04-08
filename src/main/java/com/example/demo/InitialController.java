@@ -35,7 +35,7 @@ public class InitialController {
 
     @PostConstruct
     public void init() {
-        heroService.loadHeroes();
+        //heroService.loadHeroes();
         accountRepository.loadAccounts();
         backgroundService.loadBackgrounds();
         cardService.loadCardDesigns();
@@ -45,7 +45,7 @@ public class InitialController {
 
     @PreDestroy
     public void shutdown() {
-        heroService.saveHeroes();
+        //heroService.saveHeroes();
         accountRepository.saveAccounts();
         backgroundService.saveBackgrounds();
         cardService.saveCardDesigns();
