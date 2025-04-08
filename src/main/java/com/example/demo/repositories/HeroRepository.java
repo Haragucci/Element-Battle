@@ -29,7 +29,7 @@ public class HeroRepository {
         File file = new File(HEROES_FILE_PATH);
         if (file.exists()) {
             try {
-                heroes = objectMapper.readValue(file, new TypeReference<List<Hero>>() {});
+                heroes = objectMapper.readValue(file, new TypeReference<>() {});
                 nextId = heroes.stream().mapToInt(Hero::id).max().orElse(0) + 1;
             } catch (IOException e) {
                 System.out.println(e.getMessage());

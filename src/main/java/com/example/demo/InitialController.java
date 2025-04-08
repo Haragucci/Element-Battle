@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.repositories.AccountRepository;
+import com.example.demo.repositories.HeroRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import com.example.demo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InitialController {
 
     //===============================================SERVICE INTEGRATION===============================================\\
-    private final HeroService heroService;
+    private final HeroRepository heroRepository;
     private final GameService gameService;
     private final StatsService statsService;
     private final BackgroundService backgroundService;
@@ -21,8 +22,8 @@ public class InitialController {
     private final AccountRepository accountRepository;
 
     @Autowired
-    public InitialController(AccountRepository accountRepository, HeroService heroService, GameService gameService, StatsService statsService, BackgroundService backgroundService, CardService cardService) {
-        this.heroService = heroService;
+    public InitialController(AccountRepository accountRepository, HeroRepository heroRepository, GameService gameService, StatsService statsService, BackgroundService backgroundService, CardService cardService) {
+        this.heroRepository = heroRepository;
         this.gameService = gameService;
         this.statsService =statsService;
         this.backgroundService = backgroundService;
@@ -35,7 +36,7 @@ public class InitialController {
 
     @PostConstruct
     public void init() {
-        //heroService.loadHeroes();
+        //heroRepository.loadHeroes();
         accountRepository.loadAccounts();
         backgroundService.loadBackgrounds();
         cardService.loadCardDesigns();
@@ -45,7 +46,7 @@ public class InitialController {
 
     @PreDestroy
     public void shutdown() {
-        //heroService.saveHeroes();
+        //heroRepository.loadHeroes();
         accountRepository.saveAccounts();
         backgroundService.saveBackgrounds();
         cardService.saveCardDesigns();
