@@ -56,7 +56,7 @@ public class AccountService {
         }
         try {
 
-            if (accountRepository.userExists(username)) {
+            if (accountRepository.userExistsByUsername(username)) {
                 accountRepository.removeAccountAndSave(username);
                 statsService.removeStatsAndSave(username);
                 gameService.removeGameAndSave(username);
@@ -85,21 +85,18 @@ public class AccountService {
             ));
         }
 
-        if (!oldUsername.equals(newUsername) && accountRepository.hasAccount(newUsername)) {
+        if (!oldUsername.equals(newUsername) && accountRepository.userExistsByUsername(newUsername)) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "message", "Neuer Benutzername bereits vergeben"
             ));
         }
-
-        accountRepository.removeAccountAndSave(oldUsername);
         Account updatedAccount = new Account(
                 newUsername,
                 newPassword != null ? newPassword : account.password(),
                 account.coins()
         );
         accountRepository.updateAccount(newUsername, updatedAccount);
-        accountRepository.saveAccounts();
 
         if (backgroundService.checkBackground(oldUsername)) {
             String background = backgroundService.removeBackground(oldUsername);
@@ -135,7 +132,7 @@ public class AccountService {
         String username = user.get("username");
         String password = user.get("password");
 
-        if (accountRepository.hasAccount(username)) {
+        if (accountRepository.userExistsByUsername(username)) {
             Account existingAccount = accountRepository.getAccount(username);
             return ResponseEntity.ok(Map.of(
                     "success", false,

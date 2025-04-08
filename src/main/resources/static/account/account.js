@@ -45,47 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    function createConfetti() {
-        const confettiCount = 300;
-        const confettiContainer = document.createElement('div');
-        confettiContainer.style.position = 'fixed';
-        confettiContainer.style.top = '0';
-        confettiContainer.style.left = '0';
-        confettiContainer.style.width = '100%';
-        confettiContainer.style.height = '100%';
-        confettiContainer.style.pointerEvents = 'none';
-        confettiContainer.style.zIndex = '9999';
-
-        for (let i = 0; i < confettiCount; i++) {
-            const confetti = document.createElement('div');
-            confetti.style.position = 'absolute';
-            confetti.style.width = '10px';
-            confetti.style.height = '10px';
-            confetti.style.backgroundColor = getRandomColor();
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.top = '-10px';
-            confetti.style.borderRadius = '50%';
-            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-            confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear`;
-            confettiContainer.appendChild(confetti);
-        }
-
-        document.body.appendChild(confettiContainer);
-
-        setTimeout(() => {
-            document.body.removeChild(confettiContainer);
-        }, 5000);
-    }
-
-    function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
     document.getElementById('del-button').addEventListener('click', function (e) {
         e.preventDefault();
         if (confirm('Sind Sie sicher, dass Sie Ihren Account löschen möchten?')) {

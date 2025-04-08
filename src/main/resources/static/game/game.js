@@ -28,13 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let isBattleInProgress = false;
 
-    function loadCoins() {
-        const coins = parseInt(localStorage.getItem('coins')) || 0;
-        coinsSpan.textContent = coins.toString();
-    }
-
     window.onload = function() {
-        loadCoins();
         updateUserInfo();
     };
 
@@ -122,8 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 let design = 'default';
-                if (data.purchased) {
-                    design = data.activeDesign || 'default';
+                if (data.exists) {
+                    design = data.activeBackground || 'default';
                 }
                 localStorage.setItem('activeCardDesign', design);
                 updateCardDesign();
@@ -1208,7 +1202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializeDragAndDrop() {
         const playerCards = document.querySelectorAll('.player-card');
         playerCards.forEach(card => {
-            card.setAttribute('draggable', true);
+            card.setAttribute('draggable', "true");
             card.addEventListener('dragstart', dragStart);
             card.addEventListener('dragend', dragEnd);
         });

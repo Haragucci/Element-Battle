@@ -28,19 +28,23 @@ public class AccountRepository {
     }
 
     public void removeAccountAndSave(String username) {
-        accounts.remove(username);
-        saveAccounts();
+        if (userExistsByUsername(username)) {
+            accounts.remove(username);
+            saveAccounts();
+        }
+        else throw new IllegalArgumentException("Username " + username + " does not exist");
+
     }
 
     public void updateAccount(String username, Account account) {
-        accounts.put(username, account);
+        if(userExistsByUsername(username)) {
+            accounts.put(username, account);
+            saveAccounts();
+        }
+        else throw new IllegalArgumentException("Username " + username + " does not exist");
     }
 
-    public boolean hasAccount(String username) {
-        return accounts.containsKey(username);
-    }
-
-    public boolean userExists(String username) {
+    public boolean userExistsByUsername(String username) {
         return accounts.containsKey(username);
     }
 
