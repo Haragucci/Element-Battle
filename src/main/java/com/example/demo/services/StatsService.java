@@ -4,7 +4,6 @@ import com.example.demo.classes.Account;
 import com.example.demo.repositories.AccountRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,61 +18,66 @@ import java.util.stream.Collectors;
 @Service
 public class StatsService {
 
-    //===============================================SERVICE INTEGRATION===============================================\\
-
+    public Map<Integer, Map<String, Object>> stats = new HashMap<>();
+    public static final String STATS_FILE_PATH = "files/stats.json";
+    private final ObjectMapper mapper = new ObjectMapper();
     private final AccountRepository accountRepository;
 
-    @Autowired
     public StatsService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-
-    //===============================================VARIABLES===============================================\\
-
-    public Map<String, Map<String, Object>> stats = new HashMap<>();
-    public static final String STATS_FILE_PATH = "files/stats.json";
-    public Map<String, Object> loadUserStats(String username) {return new HashMap<>(stats.getOrDefault(username, new HashMap<>()));}
-    private final ObjectMapper mapper = new ObjectMapper();
-
+    public Map<String, Object> loadUserStats(int userId) {
+        return new HashMap<>(stats.getOrDefault(userId, new HashMap<>()));
+    }
 
     //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
 
-        String username = (String) statsUpdate.get("username");
+        int userId = ((Number) statsUpdate.get("userId")).intValue();
         int wins = ((Number) statsUpdate.getOrDefault("win", 0)).intValue();
         int losses = ((Number) statsUpdate.getOrDefault("lose", 0)).intValue();
         int damage = ((Number) statsUpdate.getOrDefault("damage", 0)).intValue();
         int directDamage = ((Number) statsUpdate.getOrDefault("directDamage", 0)).intValue();
         int coinsEarned = ((Number) statsUpdate.getOrDefault("coins", 0)).intValue();
 
-        Map<String, Object> userStats = loadUserStats(username);
+        Map<String, Object> userStats = loadUserStats(userId);
 
         userStats.put("wins", ((Number) userStats.getOrDefault("wins", 0)).intValue() + wins);
         userStats.put("lose", ((Number) userStats.getOrDefault("lose", 0)).intValue() + losses);
         userStats.put("damage", ((Number) userStats.getOrDefault("damage", 0)).intValue() + damage);
         userStats.put("direkt-damage", ((Number) userStats.getOrDefault("direkt-damage", 0)).intValue() + directDamage);
 
-        int currentCoins = getCoinsForUser(username);
+        int currentCoins = getCoinsForUser(userId);
         int newCoins = currentCoins + coinsEarned;
-        updateCoinsForUser(username, newCoins);
+        updateCoinsForUser(userId, newCoins);
         userStats.put("coins", newCoins);
 
         int totalGames = ((Number) userStats.get("wins")).intValue() + ((Number) userStats.get("lose")).intValue();
         double winrate = totalGames > 0 ? (((Number) userStats.get("wins")).doubleValue() / totalGames) * 100 : 0;
         userStats.put("winrate", winrate);
 
-        saveUserStats(username, userStats);
+        saveUserStats(userId, userStats);
 
-        return ResponseEntity.ok(Map.of("success", true, "message", "Statistiken aktualisiert", "updatedStats", userStats));
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", "Statistiken aktualisiert",
+                "updatedStats", userStats
+        ));
     }
+
 
     public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {
         List<Map<String, Object>> leaderboard = stats.entrySet().stream()
                 .map(entry -> {
                     Map<String, Object> playerStats = new HashMap<>(entry.getValue());
-                    playerStats.put("username", entry.getKey());
+                    int userId = entry.getKey();
+                    Account account = accountRepository.getAccountById(userId);
+                    if (account != null) {
+                        playerStats.put("username", account.username());
+                    }
+                    playerStats.put("userId", userId);
                     return playerStats;
                 })
                 .sorted((a, b) -> Integer.compare(
@@ -86,16 +90,19 @@ public class StatsService {
         return ResponseEntity.ok(leaderboard);
     }
 
+
     public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         if (username == null || username.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of(
                     "success", false,
-                    "message", "Benutzername ist erforderlich"
+                    "message", "Username ist erforderlich"
             ));
         }
 
-        Map<String, Object> userStats = loadUserStats(username);
+        Account account = accountRepository.getAccountByUsername(username);
+
+        Map<String, Object> userStats = loadUserStats(account.id());
         if (userStats.isEmpty()) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
@@ -103,7 +110,7 @@ public class StatsService {
             ));
         }
 
-        int coins = getCoinsForUser(username);
+        int coins = getCoinsForUser(account.id());
         userStats.put("coins", coins);
 
         return ResponseEntity.ok(Map.of(
@@ -112,43 +119,37 @@ public class StatsService {
         ));
     }
 
-
-
     //===============================================HELPING METHODS===============================================\\
 
-    private int getCoinsForUser(String username) {
-        Account account = accountRepository.getAccount(username);
+    private int getCoinsForUser(int userId) {
+        Account account = accountRepository.getAccountById(userId);
         return account != null ? account.coins() : 0;
     }
 
-    private void updateCoinsForUser(String username, int newCoins) {
-        Account account = accountRepository.getAccount(username);
+    private void updateCoinsForUser(int userId, int newCoins) {
+        Account account = accountRepository.getAccountById(userId);
         if (account != null) {
-            accountRepository.updateAccount(username, new Account(username, account.password(), newCoins));
+            accountRepository.updateAccount(userId, new Account(userId ,account.username(), account.password(), newCoins));
             accountRepository.saveAccounts();
         }
     }
 
-    //===============================================HELPING METHODS===============================================\\
-
-
-    public boolean checkStats(String username){
-        return stats.containsKey(username);
+    public boolean checkStats(int userId) {
+        return stats.containsKey(userId);
     }
 
-    public void removeStatsAndSave(String username){
-        stats.remove(username);
+    public void removeStatsAndSave(int userId) {
+        stats.remove(userId);
         saveStats();
     }
 
-    public void putStats(String username, Map<String, Object> Stats) {
-        stats.put(username, Stats);
+    public void putStats(int userId, Map<String, Object> statsMap) {
+        stats.put(userId, statsMap);
     }
 
-    public Map<String , Object> removeStats(String username){
-        return stats.remove(username);
+    public Map<String, Object> removeStats(int userId) {
+        return stats.remove(userId);
     }
-
 
     //===============================================FILE MANAGEMENT===============================================\\
 
@@ -160,8 +161,8 @@ public class StatsService {
         }
     }
 
-    public void saveUserStats(String username, Map<String, Object> userStats) {
-        stats.put(username, new HashMap<>(userStats));
+    public void saveUserStats(int userId, Map<String, Object> userStats) {
+        stats.put(userId, new HashMap<>(userStats));
         saveStats();
     }
 
@@ -178,3 +179,4 @@ public class StatsService {
         }
     }
 }
+

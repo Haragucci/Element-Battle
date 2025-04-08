@@ -87,19 +87,24 @@ public class HeroRepository {
     }
 
     public boolean deleteAll() {
-        heroes.clear();
         if (heroes.isEmpty()){
             saveData();
             return true;
         }
-        return false;
+        else {
+            heroes.clear();
+            saveData();
+            return false;
+        }
     }
 
     public boolean resetId(){
-        nextId = 1;
         if(nextId== 1){
             return true;
         }
-        else return false;
+        else {
+            nextId = 1;
+            return false;
+        }
     }
 }
