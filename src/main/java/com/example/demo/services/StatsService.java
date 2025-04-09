@@ -83,11 +83,8 @@ public class StatsService {
             try {
                 if (accountRepository.accountExistsById(userId)) {
                     Account account = accountRepository.getAccountById(userId);
-                    if (account != null) {
                         playerStats.put("username", account.username());
-                    } else {
-                        playerStats.put("username", "Unbekannt");
-                    }
+
                 } else {
                     playerStats.put("username", "Unbekannt");
                 }

@@ -4,5 +4,11 @@
     "username" : "Tilljan",
     "password" : "tilljan",
     "coins" : 3
+  },
+  "2" : {
+    "id" : 2,
+    "username" : "Tilljan23",
+    "password" : "tilljan2",
+    "coins" : 0
   }
 }

@@ -52,6 +52,7 @@ public class BackgroundRepository {
             return background;
         }
     }
+
     public String createBackground(int userId, String background) {
         if (backgrounds.containsKey(userId)) {
             throw new IllegalArgumentException("User " + userId + " already exists");

@@ -5,7 +5,6 @@ import com.example.demo.repositories.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -115,7 +114,7 @@ public class AccountService {
                     "success", true,
                     "message", "Kontoinformationen erfolgreich aktualisiert"
             ));
-        }catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of());
         }
     }
@@ -138,7 +137,7 @@ public class AccountService {
             }
 
             Account newAccount = new Account(0, username, password, 0);
-            newAccount = accountRepository.createAccount(newAccount);
+            Account newAccount2 = accountRepository.createAccount(newAccount);
 
             Map<String, Object> newUserStats = new HashMap<>();
             newUserStats.put("wins", 0);
@@ -148,7 +147,7 @@ public class AccountService {
             newUserStats.put("lose", 0);
             newUserStats.put("winrate", 0.0);
 
-            statsRepository.createStats(newAccount.id(), newUserStats);
+            statsRepository.createStats(newAccount2.id(), newUserStats);
 
             return ResponseEntity.ok(Map.of(
                     "success", true,
@@ -156,7 +155,7 @@ public class AccountService {
                     "coins", 0
             ));
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of("success", false));
         }
     }
@@ -194,7 +193,7 @@ public class AccountService {
         int coins = (int) request.get("coins");
 
         try {
-            if(accountRepository.accountExistsByUsername(username)) {
+            if (accountRepository.accountExistsByUsername(username)) {
                 Account account = accountRepository.getAccountByUsername(username);
 
                 Account updatedAccount = new Account(
@@ -216,7 +215,7 @@ public class AccountService {
                         "message", "Benutzer nicht gefunden"
                 ));
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
                     "message", e.getMessage()
@@ -227,10 +226,9 @@ public class AccountService {
     public ResponseEntity<Map<String, Object>> addCoins(Map<String, Object> request) {
         String username = (String) request.get("username");
 
-        try
-        {
+        try {
             int amount = (int) request.get("amount");
-            if(accountRepository.accountExistsByUsername(username)) {
+            if (accountRepository.accountExistsByUsername(username)) {
                 Account account = accountRepository.getAccountByUsername(username);
 
                 Account updatedAccount = new Account(
@@ -246,9 +244,10 @@ public class AccountService {
                         "success", true,
                         "coins", updatedAccount.coins()
                 ));
+            } else {
+                return ResponseEntity.ok(Map.of("success", false));
             }
-            else{return ResponseEntity.ok(Map.of("success", false));}
-        }catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of("message", e.getMessage()));
         }
     }

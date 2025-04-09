@@ -105,11 +105,9 @@ public class HeroRepository {
     }
 
     public boolean resetId() {
-        if (nextId == 1) {
-            return true;
-        } else {
+        if (nextId != 1) {
             nextId = 1;
-            return true;
         }
+        return true;
     }
 }

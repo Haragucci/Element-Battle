@@ -50,9 +50,9 @@ public class AccountRepository {
         if (!accountExistsByUsername(account.username())) {
             int id = counter++;
             Account account1 = new Account(id, account.username(), account.password(), account.coins());
-            accounts.put(id, account1);
+            accounts.put(account1.id(), account1);
             saveAccounts();
-            return account;
+            return account1;
         } else {
             throw new IllegalArgumentException("Account with id " + account.username() + " already exist");
         }

@@ -6,7 +6,6 @@ import com.example.demo.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class CardService {
                 Account account = accountRepository.getAccountByUsername(username);
                 Account updatedAccount = spendCoinsOnAccount(account, COST);
                 if (updatedAccount != null) {
-                    cardRepository.setCardDesign(account.id(), "default");
+                    cardRepository.createCardDesign(account.id(), "default");
 
                     return ResponseEntity.ok(Map.of(
                             "success", true,

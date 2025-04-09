@@ -9,8 +9,6 @@ import com.example.demo.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,7 +47,12 @@ public class GameService {
                         request.getComputerHP()
                 );
 
-                gameRepository.updateGame(userId ,game);
+                if (!gameRepository.gameExistsByUserId(account.id())){
+                    gameRepository.createGame(account.id(), game);
+                }
+                else {
+                    gameRepository.updateGame(userId ,game);
+                }
                 return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
             }
             else {return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));}

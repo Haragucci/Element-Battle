@@ -66,17 +66,6 @@ public class StatsRepository {
             return statsMap;
         }
     }
-    public Map<String, Object> updateStats(int userId, Map<String, Object> statsMap) {
-        if(!statsExistsByUserId(userId)) {
-            throw new RuntimeException("User does not exist");
-        }
-        else {
-            stats.put(userId, statsMap);
-            saveStats();
-            return statsMap;
-        }
-    }
-
 
     public Map<Integer, Map<String, Object>> getAllStats() {
         return stats;
