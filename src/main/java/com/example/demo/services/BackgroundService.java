@@ -123,70 +123,55 @@ public class BackgroundService {
         String username = (String) request.get("username");
         String background = (String) request.get("background");
 
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account == null) {
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
-        }
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
 
-        int userId = account.id();
+                int userId = account.id();
 
-        if (backgroundRepository.backgroundExistsById(userId)) {
-            String currentBackground = backgroundRepository.getBackground(userId);
-            boolean isActive = currentBackground != null && currentBackground.equals(background);
-            if (isActive) {
-                backgroundRepository.updateBackground(userId, "");
-            } else {
-                backgroundRepository.updateBackground(userId, background);
+                if (backgroundRepository.backgroundExistsById(userId)) {
+                    String currentBackground = backgroundRepository.getBackground(userId);
+                    boolean isActive = currentBackground != null && currentBackground.equals(background);
+                    if (isActive) {
+                        backgroundRepository.updateBackground(userId, "");
+                    } else {
+                        backgroundRepository.updateBackground(userId, background);
+                    }
+                    return ResponseEntity.ok(Map.of(
+                            "success", true,
+                            "isActive", !isActive
+                    ));
+                } else {
+                    return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keinen Hintergrund"));
+                }
             }
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "isActive", !isActive
-            ));
-        } else {
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keinen Hintergrund"));
+            else {return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));}
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
         }
     }
 
     public ResponseEntity<Map<String, Object>> getBackground(@RequestBody Map<String, Object> request) {
         String username = (String) request.get("username");
-        Account account = accountRepository.getAccountByUsername(username);
 
-        if (account == null) {
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
+        try{
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
+
+                int userId = account.id();
+
+                if (backgroundRepository.backgroundExistsById(userId)) {
+                    String background = backgroundRepository.getBackground(userId);
+                    return ResponseEntity.ok(Map.of("success", true, "background", background));
+                } else {
+                    return ResponseEntity.ok(Map.of("success", false, "message", "Kein Hintergrund für diesen Benutzer gefunden"));
+                }
+            }
+            else {return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));}
+
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
         }
 
-        int userId = account.id();
-
-        if (backgroundRepository.backgroundExistsById(userId)) {
-            String background = backgroundRepository.getBackground(userId);
-            return ResponseEntity.ok(Map.of("success", true, "background", background));
-        } else {
-            return ResponseEntity.ok(Map.of("success", false, "message", "Kein Hintergrund für diesen Benutzer gefunden"));
-        }
-    }
-
-    //===============================================HELPING METHODS===============================================\\
-
-    public boolean checkBackground(String username) {
-        Account account = accountRepository.getAccountByUsername(username);
-        return account != null && backgroundRepository.backgroundExistsById(account.id());
-    }
-
-    public String removeBackground(String username) {
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account != null) {
-            int userId = account.id();
-            String removed = backgroundRepository.getBackground(userId);
-            backgroundRepository.deleteBackground(userId);
-            return removed;
-        }
-        return null;
-    }
-
-    public void putBackground(String username, String background) {
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account != null) {
-            backgroundRepository.updateBackground(account.id(), background);
-        }
     }
 }

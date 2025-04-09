@@ -22,43 +22,57 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
-    public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> buyCardDesign(Map<String, String> request) {
         String username = request.get("username");
         final int COST = 2;
 
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account != null) {
-            Account updatedAccount = spendCoinsOnAccount(account, COST);
-            if (updatedAccount != null) {
-                cardRepository.setCardDesign(account.id(), "default");
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
+                Account updatedAccount = spendCoinsOnAccount(account, COST);
+                if (updatedAccount != null) {
+                    cardRepository.setCardDesign(account.id(), "default");
 
-                return ResponseEntity.ok(Map.of(
-                        "success", true,
-                        "coins", updatedAccount.coins(),
-                        "activeDesign", "default"
-                ));
+                    return ResponseEntity.ok(Map.of(
+                            "success", true,
+                            "coins", updatedAccount.coins(),
+                            "activeDesign", "default"
+                    ));
+                } else {
+                    return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
+                }
+
             } else {
-                return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
+                return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
             }
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false, "message", e.getMessage()));
         }
-        return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
     }
 
     public Account spendCoinsOnAccount(Account account, int cost) {
-        if (account.coins() >= cost) {
-            Account updatedAccount = new Account(
-                    account.id(),
-                    account.username(),
-                    account.password(),
-                    account.coins() - cost
-            );
-            accountRepository.updateAccount(updatedAccount);
-            return updatedAccount;
+        try{
+            if(accountRepository.accountExistsByUsername(account.username())){
+                if (account.coins() >= cost) {
+                    Account updatedAccount = new Account(
+                            account.id(),
+                            account.username(),
+                            account.password(),
+                            account.coins() - cost
+                    );
+                    accountRepository.updateAccount(updatedAccount);
+                    return updatedAccount;
+                }
+                else {return account;}
+            }
+            else {return account;}
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return account;
         }
-        return null;
     }
 
-    public ResponseEntity<Map<String, Object>> checkUserCardDesign(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> checkUserCardDesign(Map<String, String> request) {
         String username = request.get("username");
         if (username == null) {
             return ResponseEntity.ok(Map.of(
@@ -66,56 +80,50 @@ public class CardService {
                     "activeDesign", ""
             ));
         }
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
 
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account == null) {
+                String activeDesign = "";
+                int userId = account.id();
+                boolean purchased = cardRepository.cardDesignExistsByUserId(userId);
+                if (purchased) {
+                    activeDesign = cardRepository.getCardDesign(userId);
+                }
+                return ResponseEntity.ok(Map.of(
+                        "purchased", purchased,
+                        "activeDesign", activeDesign
+                ));
+            }
+            else {return ResponseEntity.ok(Map.of("purchased", false, "activeDesign", ""));}
+        }catch (Exception e){
             return ResponseEntity.ok(Map.of("purchased", false, "activeDesign", ""));
         }
-
-        String activeDesign = "";
-        int userId = account.id();
-        boolean purchased = cardRepository.cardDesignExistsByUserId(userId);
-        if(purchased) {
-            activeDesign = cardRepository.getCardDesign(userId);
-        }
-        return ResponseEntity.ok(Map.of(
-                "purchased", purchased,
-                "activeDesign", activeDesign
-        ));
     }
 
-    public ResponseEntity<Map<String, Object>> toggleCardDesign(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> toggleCardDesign(Map<String, String> request) {
         String username = request.get("username");
         String designId = request.get("designId");
 
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account == null) {
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
+
+                int userId = account.id();
+                if (cardRepository.cardDesignExistsByUserId(userId)) {
+                    cardRepository.setCardDesign(userId, designId);
+                    return ResponseEntity.ok(Map.of(
+                            "success", true,
+                            "activeDesign", designId
+                    ));
+                } else {
+                    return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
+                }
+            }
+            else {return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));}
+        }catch (Exception e){
+            return ResponseEntity.ok(Map.of("success", false, "message", e.getMessage()));
         }
 
-        int userId = account.id();
-        if (cardRepository.cardDesignExistsByUserId(userId)) {
-            cardRepository.setCardDesign(userId, designId);
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "activeDesign", designId
-            ));
-        } else {
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
-        }
-    }
-
-    public boolean checkCards(int userId) {
-        return cardRepository.cardDesignExistsByUserId(userId);
-    }
-
-    public String removeCardDesign(int userId) {
-        String design = cardRepository.getCardDesign(userId);
-        cardRepository.deleteCardDesign(userId);
-        return design;
-    }
-
-    public void putCardDesign(int userId, String designId) {
-        cardRepository.setCardDesign(userId, designId);
     }
 }

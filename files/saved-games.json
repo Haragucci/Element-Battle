@@ -15,13 +15,6 @@
       "type" : "Erde",
       "extra" : "Erdbeben und Steinschatten!"
     }, {
-      "id" : 20,
-      "name" : "Thor Donnergroll",
-      "HP" : 14,
-      "Damage" : 8,
-      "type" : "Elektro",
-      "extra" : "Donnerhall und elektrische Eruption!"
-    }, {
       "id" : 30,
       "name" : "Blizzara Frostfeuer",
       "HP" : 9,
@@ -37,13 +30,6 @@
       "type" : "Pflanze",
       "extra" : "Blütenzauber und Fruchtbarkeitsernte!"
     }, {
-      "id" : 31,
-      "name" : "Zephyrus Windrufer",
-      "HP" : 9,
-      "Damage" : 14,
-      "type" : "Luft",
-      "extra" : "Ruft die Winde und Stürme herbei!"
-    }, {
       "id" : 26,
       "name" : "Glacies Frostschild",
       "HP" : 10,
@@ -58,7 +44,7 @@
       "type" : "Feuer",
       "extra" : "Brennt mit der Hitze von tausend Sonnen!"
     } ],
-    "firstAttack" : "Computer",
+    "firstAttack" : "Spieler",
     "playerHP" : 25,
     "computerHP" : 25
   }
