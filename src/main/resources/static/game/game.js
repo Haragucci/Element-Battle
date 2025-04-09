@@ -252,9 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUserInfo();
 
     function logout() {
-        localStorage.removeItem('username');
-        localStorage.removeItem('coins');
-        localStorage.setItem('activeCardDesign', 'default');
+        localStorage.clear();
         updateUserInfo();
         window.location.reload();
 

@@ -56,7 +56,7 @@ public class CardRepository {
         try {
             Map<String, String> stringKeyMap = new HashMap<>();
             cardDesigns.forEach((key, value) -> stringKeyMap.put(String.valueOf(key), value));
-            mapper.writeValue(new File(CARDS_FILE_PATH), stringKeyMap);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(CARDS_FILE_PATH), stringKeyMap);
         } catch (IOException e) {
             System.out.println("Fehler beim Speichern der Kartendesigns");
         }

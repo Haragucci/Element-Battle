@@ -1,1 +1,65 @@
-{"1":{"playerCards":[{"id":26,"name":"Glacies Frostschild","HP":10,"Damage":12,"type":"Eis","extra":"Eisige Kältepeitsche!"},{"id":23,"name":"Atlas Felsenfaust","HP":10,"Damage":8,"type":"Erde","extra":"Erdbeben und Steinschatten!"},{"id":20,"name":"Thor Donnergroll","HP":14,"Damage":8,"type":"Elektro","extra":"Donnerhall und elektrische Eruption!"},{"id":30,"name":"Blizzara Frostfeuer","HP":9,"Damage":9,"type":"Eis","extra":"Frostbeulen und gefrorene Schicksale!"}],"computerCards":[{"id":13,"name":"Gaia Grünhüter","HP":12,"Damage":9,"type":"Pflanze","extra":"Blütenzauber und Fruchtbarkeitsernte!"},{"id":31,"name":"Zephyrus Windrufer","HP":9,"Damage":14,"type":"Luft","extra":"Ruft die Winde und Stürme herbei!"},{"id":26,"name":"Glacies Frostschild","HP":10,"Damage":12,"type":"Eis","extra":"Eisige Kältepeitsche!"},{"id":2,"name":"Pyra Glutsturm","HP":11,"Damage":10,"type":"Feuer","extra":"Brennt mit der Hitze von tausend Sonnen!"}],"firstAttack":"Computer","playerHP":25,"computerHP":25},"2":{"playerCards":[{"id":14,"name":"Verdura Blattsturm","HP":13,"Damage":14,"type":"Pflanze","extra":"Wurzeln, die bis in die Tiefen reichen!"},{"id":24,"name":"Terra Erdenschild","HP":12,"Damage":12,"type":"Erde","extra":"Felsen, die wie Wasser fließen!"},{"id":2,"name":"Pyra Glutsturm","HP":11,"Damage":10,"type":"Feuer","extra":"Brennt mit der Hitze von tausend Sonnen!"},{"id":35,"name":"Caelus Wolke","HP":12,"Damage":12,"type":"Luft","extra":"Sphärenklänge und Windgesang!"},{"id":23,"name":"Atlas Felsenfaust","HP":10,"Damage":8,"type":"Erde","extra":"Erdbeben und Steinschatten!"}],"computerCards":[{"id":1,"name":"Ignis Flammenherz","HP":12,"Damage":12,"type":"Feuer","extra":"Entfesselt ein feuriges Inferno!"},{"id":26,"name":"Glacies Frostschild","HP":10,"Damage":12,"type":"Eis","extra":"Eisige Kältepeitsche!"},{"id":5,"name":"Helios Sonnentänzer","HP":13,"Damage":14,"type":"Feuer","extra":"Herrscht über Vulkan und Flamme!"},{"id":12,"name":"Sylva Blattwerk","HP":9,"Damage":12,"type":"Pflanze","extra":"Meister der Photosynthese und des Waldwachstums."},{"id":35,"name":"Caelus Wolke","HP":12,"Damage":12,"type":"Luft","extra":"Sphärenklänge und Windgesang!"}],"firstAttack":"Spieler","playerHP":25,"computerHP":25}}
+{
+  "1" : {
+    "playerCards" : [ {
+      "id" : 26,
+      "name" : "Glacies Frostschild",
+      "HP" : 10,
+      "Damage" : 12,
+      "type" : "Eis",
+      "extra" : "Eisige Kältepeitsche!"
+    }, {
+      "id" : 23,
+      "name" : "Atlas Felsenfaust",
+      "HP" : 10,
+      "Damage" : 8,
+      "type" : "Erde",
+      "extra" : "Erdbeben und Steinschatten!"
+    }, {
+      "id" : 20,
+      "name" : "Thor Donnergroll",
+      "HP" : 14,
+      "Damage" : 8,
+      "type" : "Elektro",
+      "extra" : "Donnerhall und elektrische Eruption!"
+    }, {
+      "id" : 30,
+      "name" : "Blizzara Frostfeuer",
+      "HP" : 9,
+      "Damage" : 9,
+      "type" : "Eis",
+      "extra" : "Frostbeulen und gefrorene Schicksale!"
+    } ],
+    "computerCards" : [ {
+      "id" : 13,
+      "name" : "Gaia Grünhüter",
+      "HP" : 12,
+      "Damage" : 9,
+      "type" : "Pflanze",
+      "extra" : "Blütenzauber und Fruchtbarkeitsernte!"
+    }, {
+      "id" : 31,
+      "name" : "Zephyrus Windrufer",
+      "HP" : 9,
+      "Damage" : 14,
+      "type" : "Luft",
+      "extra" : "Ruft die Winde und Stürme herbei!"
+    }, {
+      "id" : 26,
+      "name" : "Glacies Frostschild",
+      "HP" : 10,
+      "Damage" : 12,
+      "type" : "Eis",
+      "extra" : "Eisige Kältepeitsche!"
+    }, {
+      "id" : 2,
+      "name" : "Pyra Glutsturm",
+      "HP" : 11,
+      "Damage" : 10,
+      "type" : "Feuer",
+      "extra" : "Brennt mit der Hitze von tausend Sonnen!"
+    } ],
+    "firstAttack" : "Computer",
+    "playerHP" : 25,
+    "computerHP" : 25
+  }
+}

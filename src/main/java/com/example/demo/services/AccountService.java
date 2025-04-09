@@ -1,9 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.classes.Account;
-import com.example.demo.classes.Game;
-import com.example.demo.repositories.AccountRepository;
-import com.example.demo.repositories.StatsRepository;
+import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,19 +17,19 @@ public class AccountService {
     //===============================================SERVICE INTEGRATION===============================================\\
 
     private final AccountRepository accountRepository;
-    private final BackgroundService backgroundService;
-    private final CardService cardService;
-    private final GameService gameService;
-    private final StatsRepository statsRepositroy;
+    private final StatsRepository statsRepository;
+    private final BackgroundRepository backgroundRepository;
+    private final CardRepository cardRepository;
+    private final GameRepository gameRepository;
 
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, StatsRepository statsRepository, BackgroundService backgroundService, CardService cardService, GameService gameService) {
+    public AccountService(AccountRepository accountRepository, StatsRepository statsRepository, BackgroundRepository backgroundRepository, CardRepository cardRepository, GameRepository gameRepository) {
         this.accountRepository = accountRepository;
-        this.statsRepositroy = statsRepository;
-        this.backgroundService = backgroundService;
-        this.cardService = cardService;
-        this.gameService = gameService;
+        this.statsRepository = statsRepository;
+        this.backgroundRepository = backgroundRepository;
+        this.cardRepository = cardRepository;
+        this.gameRepository = gameRepository;
     }
 
     //===============================================REQUEST METHODS===============================================\\
@@ -64,11 +62,12 @@ public class AccountService {
 
             if (account != null) {
                 int accountId = account.id();
-                accountRepository.removeAccountAndSave(accountId);
-                statsRepositroy.deleteStatsByUserId(accountId);
-                gameService.removeGameAndSave(accountId);
-                cardService.removeCardStatsAndSave(accountId);
-                backgroundService.removeBackgroundAndSave(accountId);
+                accountRepository.deleteAccount(accountId);
+                statsRepository.deleteStatsByUserId(accountId);
+                backgroundRepository.removeBackground(accountId);
+                cardRepository.removeCardDesign(accountId);
+                gameRepository.removeGame(accountId);
+
 
                 return ResponseEntity.ok("User deleted successfully");
             } else {
@@ -107,12 +106,6 @@ public class AccountService {
         );
         accountRepository.updateAccount(updatedAccount.id(), updatedAccount);
 
-        if (gameService.checkGames(account.id())) {
-            Game game = gameService.removeGame(account.id());
-            gameService.putGame(account.id(), game);
-            gameService.saveGame();
-        }
-
         return ResponseEntity.ok(Map.of(
                 "success", true,
                 "message", "Kontoinformationen erfolgreich aktualisiert"
@@ -148,7 +141,7 @@ public class AccountService {
         newUserStats.put("lose", 0);
         newUserStats.put("winrate", 0.0);
 
-        statsRepositroy.putStats(newAccountId, newUserStats);
+        statsRepository.putStats(newAccountId, newUserStats);
 
         return ResponseEntity.ok(Map.of(
                 "success", true,

@@ -73,10 +73,12 @@ public class CardService {
             return ResponseEntity.ok(Map.of("purchased", false, "activeDesign", ""));
         }
 
+        String activeDesign = "";
         int userId = account.id();
         boolean purchased = cardRepository.hasCardDesign(userId);
-        String activeDesign = cardRepository.getCardDesign(userId);
-
+        if(purchased) {
+            activeDesign = cardRepository.getCardDesign(userId);
+        }
         return ResponseEntity.ok(Map.of(
                 "purchased", purchased,
                 "activeDesign", activeDesign
@@ -106,10 +108,6 @@ public class CardService {
 
     public boolean checkCards(int userId) {
         return cardRepository.hasCardDesign(userId);
-    }
-
-    public void removeCardStatsAndSave(int userId) {
-        cardRepository.removeCardDesign(userId);
     }
 
     public String removeCardDesign(int userId) {

@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 @Service
 public class AccountRepository {
 
@@ -18,37 +17,39 @@ public class AccountRepository {
     private Map<Integer, Account> accounts = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
+    private int counter = 1;
+
 
     public AccountRepository() {
         loadAccounts();
     }
 
-    public Account getAccount(int id) {
-        return accounts.get(id);
-    }
-
-    public void removeAccountAndSave(int id) {
-        if (userExistsById(id)) {
+    public Account deleteAccount(int id) {
+        if (accountExistsById(id)) {
+            Account account = getAccountById(id);
             accounts.remove(id);
             saveAccounts();
+            return account;
         } else {
             throw new IllegalArgumentException("Account with id " + id + " does not exist");
         }
     }
 
-    public void updateAccount(int id, Account account) {
-        if (userExistsById(id)) {
+    public Account updateAccount(int id, Account account) {
+        if (accountExistsById(id)) {
             accounts.put(id, account);
             saveAccounts();
+            return account;
         } else {
             throw new IllegalArgumentException("Account with id " + id + " does not exist");
         }
     }
 
-    public void createAccount(int id, Account account) {
-        if (!userExistsById(id)) {
+    public Account createAccount(int id, Account account) {
+        if (!accountExistsById(id)) {
             accounts.put(id, account);
             saveAccounts();
+            return account;
         } else {
             throw new IllegalArgumentException("Account with id " + id + " already exist");
         }
@@ -60,10 +61,13 @@ public class AccountRepository {
     }
 
     public Account getAccountById(int id) {
-        return accounts.get(id);
+        return accounts.values().stream()
+                .filter(account -> account.id() == id)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Account with id "+ id + " does not exist"));
     }
 
-    public boolean userExistsById(int id) {
+    public boolean accountExistsById(int id) {
         return accounts.containsKey(id);
     }
 
@@ -71,18 +75,19 @@ public class AccountRepository {
         return accounts.values().stream()
                 .filter(account -> account.username().equals(username))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("Account with name " + username + " does not exist"));
     }
 
     public int generateUniqueId() {
-        return accounts.size() + 1;
+        return counter++;
     }
 
     public void loadAccounts() {
         try {
             File file = new File(ACCOUNTS_FILE_PATH);
             if (file.exists()) {
-                accounts = mapper.readValue(file, new TypeReference<Map<Integer, Account>>() {});
+                accounts = mapper.readValue(file, new TypeReference<>() {});
+                counter = accounts.values().stream().mapToInt(Account::id).max().orElse(0) + 1;
             } else {
                 System.out.println("acc.json Datei existiert nicht.");
             }
@@ -94,7 +99,7 @@ public class AccountRepository {
     @PreDestroy
     public void saveAccounts() {
         try {
-            mapper.writeValue(new File(ACCOUNTS_FILE_PATH), accounts);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(ACCOUNTS_FILE_PATH), accounts);
         } catch (IOException e) {
             System.out.println("Fehler beim Speichern der Accounts");
         }

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class HeroRepository {
@@ -35,11 +34,9 @@ public class HeroRepository {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 heroes = new ArrayList<>();
-                nextId = 1;
             }
         } else {
             heroes = new ArrayList<>();
-            nextId = 1;
         }
     }
 

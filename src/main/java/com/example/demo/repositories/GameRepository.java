@@ -1,4 +1,80 @@
 package com.example.demo.repositories;
 
+import com.example.demo.classes.Game;
+import com.example.demo.classes.Hero;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PreDestroy;
+import org.springframework.stereotype.Repository;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+
+@Repository
 public class GameRepository {
+
+    private static final String GAME_FILE_PATH = "files/saved-games.json";
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final Map<Integer, Game> games;
+
+    public GameRepository() {
+       games = loadAllGames();
+    }
+
+    public boolean checkGames(int userId) {
+        return games.containsKey(userId);
+    }
+
+    public void putGame(int userId, Game game) {
+        games.put(userId, game);
+        saveAllGames();
+    }
+
+    public Game removeGame(int userId) {
+        Game game = games.remove(userId);
+        saveAllGames();
+        return game;
+    }
+
+    public Game getGame(int userId) {
+        return games.get(userId);
+    }
+
+    public Map<Integer, Game> loadAllGames() {
+        Map<Integer, Game> games = new HashMap<>();
+        try {
+            File file = new File(GAME_FILE_PATH);
+            if (!file.exists()) return games;
+
+            JsonNode rootNode = mapper.readTree(file);
+            rootNode.fields().forEachRemaining(entry -> {
+                int userId = Integer.parseInt(entry.getKey());
+                JsonNode gameData = entry.getValue();
+
+                List<Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<>() {});
+                List<Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<>() {});
+                String firstAttack = gameData.get("firstAttack").asText();
+                int playerHP = gameData.get("playerHP").asInt();
+                int computerHP = gameData.get("computerHP").asInt();
+
+                Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
+                games.put(userId, game);
+            });
+        } catch (IOException e) {
+            System.out.println("Fehler beim Laden der Spiele: " + e.getMessage());
+        }
+
+        return games;
+    }
+
+    @PreDestroy
+    public void saveAllGames() {
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(GAME_FILE_PATH), games);
+        } catch (IOException e) {
+            System.out.println("Fehler beim Speichern der Spiele: " + e.getMessage());
+        }
+    }
 }

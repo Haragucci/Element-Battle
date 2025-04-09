@@ -83,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 alert(data);
                 if (data === 'User deleted successfully'){
-                    window.location.href = 'login.html';
+                    localStorage.clear();
+                    window.location.href = '../login/login.html';
                 }
             })
             .catch(error => {

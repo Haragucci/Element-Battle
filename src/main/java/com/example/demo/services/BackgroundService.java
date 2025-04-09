@@ -158,10 +158,6 @@ public class BackgroundService {
         return account != null && backgroundRepository.hasBackground(account.id());
     }
 
-    public void removeBackgroundAndSave(int id) {
-        backgroundRepository.removeBackground(id);
-    }
-
     public String removeBackground(String username) {
         Account account = accountRepository.getAccountByUsername(username);
         if (account != null) {

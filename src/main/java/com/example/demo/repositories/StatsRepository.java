@@ -50,11 +50,12 @@ public class StatsRepository {
     @PreDestroy
     public void saveStats() {
         try {
-            mapper.writeValue(new File(STATS_FILE_PATH), stats);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(STATS_FILE_PATH), stats);
         } catch (IOException e) {
             System.out.println("Fehler beim Speichern der Statistiken: " + e.getMessage());
         }
     }
+
 
     public void loadStats() {
         File file = new File(STATS_FILE_PATH);
