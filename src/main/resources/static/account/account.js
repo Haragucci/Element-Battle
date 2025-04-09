@@ -230,7 +230,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    createConfetti();
 
                     originalUsername = newUsername;
                     if (newPassword !== '' && newPassword !== '*'.repeat(actualPassword.length)) {

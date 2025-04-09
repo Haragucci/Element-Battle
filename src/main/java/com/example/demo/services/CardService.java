@@ -2,62 +2,46 @@ package com.example.demo.services;
 
 import com.example.demo.classes.Account;
 import com.example.demo.repositories.AccountRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class CardService {
 
-    //===============================================SERVICE INTEGRATION===============================================\\
-
     private final AccountRepository accountRepository;
+    private final CardRepository cardRepository;
 
     @Autowired
-    public CardService(AccountRepository accountRepository) {
+    public CardService(AccountRepository accountRepository, CardRepository cardRepository) {
         this.accountRepository = accountRepository;
+        this.cardRepository = cardRepository;
     }
-
-    //===============================================VARIABLES===============================================\\
-
-    private static final String CARDS_FILE_PATH = "files/cards.json";
-    public Map<Integer, String> cardDesigns = new HashMap<>();
-    private final ObjectMapper mapper = new ObjectMapper();
-
-    //===============================================REQUEST METHODS===============================================\\
 
     public ResponseEntity<Map<String, Object>> buyCardDesign(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         final int COST = 2;
 
         Account account = accountRepository.getAccountByUsername(username);
+        if (account != null) {
+            Account updatedAccount = spendCoinsOnAccount(account, COST);
+            if (updatedAccount != null) {
+                cardRepository.setCardDesign(account.id(), "default");
 
-        synchronized (this) {
-            if (account != null) {
-                Account updatedAccount = spendCoinsOnAccount(account, COST);
-                if (updatedAccount != null) {
-                    cardDesigns.putIfAbsent(account.id(), "default");
-                    saveCardDesigns();
-
-                    return ResponseEntity.ok(Map.of(
-                            "success", true,
-                            "coins", updatedAccount.coins(),
-                            "activeDesign", cardDesigns.get(account.id())
-                    ));
-                } else {
-                    return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
-                }
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "coins", updatedAccount.coins(),
+                        "activeDesign", "default"
+                ));
+            } else {
+                return ResponseEntity.ok(Map.of("success", false, "message", "Nicht genug Münzen"));
             }
-            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
         }
+        return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
     }
 
     public Account spendCoinsOnAccount(Account account, int cost) {
@@ -72,18 +56,26 @@ public class CardService {
             accountRepository.saveAccounts();
             return updatedAccount;
         }
-
         return null;
     }
 
     public ResponseEntity<Map<String, Object>> checkUserCardDesign(@RequestBody Map<String, String> request) {
         String username = request.get("username");
+        if (username == null) {
+            return ResponseEntity.ok(Map.of(
+                    "purchased", false,
+                    "activeDesign", ""
+            ));
+        }
 
         Account account = accountRepository.getAccountByUsername(username);
-        int userId = account.id();
+        if (account == null) {
+            return ResponseEntity.ok(Map.of("purchased", false, "activeDesign", ""));
+        }
 
-        boolean purchased = cardDesigns.containsKey(userId);
-        String activeDesign = cardDesigns.getOrDefault(userId, "");
+        int userId = account.id();
+        boolean purchased = cardRepository.hasCardDesign(userId);
+        String activeDesign = cardRepository.getCardDesign(userId);
 
         return ResponseEntity.ok(Map.of(
                 "purchased", purchased,
@@ -94,61 +86,39 @@ public class CardService {
     public ResponseEntity<Map<String, Object>> toggleCardDesign(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String designId = request.get("designId");
-        Account account = accountRepository.getAccountByUsername(username);
-        int userId = account.id();
 
-        if (cardDesigns.containsKey(userId)) {
-            cardDesigns.put(userId, designId);
-            saveCardDesigns();
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account == null) {
+            return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer nicht gefunden"));
+        }
+
+        int userId = account.id();
+        if (cardRepository.hasCardDesign(userId)) {
+            cardRepository.setCardDesign(userId, designId);
             return ResponseEntity.ok(Map.of(
                     "success", true,
-                    "activeDesign", cardDesigns.get(userId)
+                    "activeDesign", designId
             ));
         } else {
             return ResponseEntity.ok(Map.of("success", false, "message", "Benutzer hat keine Kartendesigns gekauft"));
         }
     }
 
-    //===============================================HELPING METHODS===============================================\\
-
     public boolean checkCards(int userId) {
-        return cardDesigns.containsKey(userId);
+        return cardRepository.hasCardDesign(userId);
     }
 
     public void removeCardStatsAndSave(int userId) {
-        cardDesigns.remove(userId);
-        saveCardDesigns();
+        cardRepository.removeCardDesign(userId);
     }
 
     public String removeCardDesign(int userId) {
-        return cardDesigns.remove(userId);
+        String design = cardRepository.getCardDesign(userId);
+        cardRepository.removeCardDesign(userId);
+        return design;
     }
 
     public void putCardDesign(int userId, String designId) {
-        cardDesigns.put(userId, designId);
-    }
-
-    //===============================================FILE MANAGEMENT===============================================\\
-
-    public void loadCardDesigns() {
-        try {
-            File file = new File(CARDS_FILE_PATH);
-            if (file.exists()) {
-                Map<String, String> temp = mapper.readValue(file, new TypeReference<>() {});
-                temp.forEach((key, value) -> cardDesigns.put(Integer.parseInt(key), value));
-            }
-        } catch (IOException e) {
-            System.out.println("Fehler beim Laden der Kartendesigns");
-        }
-    }
-
-    public void saveCardDesigns() {
-        try {
-            Map<String, String> stringKeyMap = new HashMap<>();
-            cardDesigns.forEach((key, value) -> stringKeyMap.put(String.valueOf(key), value));
-            mapper.writeValue(new File(CARDS_FILE_PATH), stringKeyMap);
-        } catch (IOException e) {
-            System.out.println("Fehler beim Speichern der Kartendesigns");
-        }
+        cardRepository.setCardDesign(userId, designId);
     }
 }

@@ -3,6 +3,7 @@ package com.example.demo.repositories;
 import com.example.demo.classes.Account;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -17,6 +18,10 @@ public class AccountRepository {
     private Map<Integer, Account> accounts = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
+
+    public AccountRepository() {
+        loadAccounts();
+    }
 
     public Account getAccount(int id) {
         return accounts.get(id);
@@ -86,6 +91,7 @@ public class AccountRepository {
         }
     }
 
+    @PreDestroy
     public void saveAccounts() {
         try {
             mapper.writeValue(new File(ACCOUNTS_FILE_PATH), accounts);

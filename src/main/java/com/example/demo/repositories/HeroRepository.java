@@ -3,6 +3,7 @@ package com.example.demo.repositories;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.demo.classes.Hero;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -42,6 +43,7 @@ public class HeroRepository {
         }
     }
 
+    @PreDestroy
     private void saveData() {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(HEROES_FILE_PATH), heroes);

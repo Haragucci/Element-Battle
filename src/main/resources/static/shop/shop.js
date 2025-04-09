@@ -249,13 +249,16 @@ function updateCoins(newCoins) {
 }
 
 function loadCardDesignStatus() {
+    const buyCardDesign = document.getElementById('buyCardDesign')
     const username = localStorage.getItem('username');
     const togglesContainer = document.getElementById('cardDesignToggles');
     if (!username) {
         console.error('Kein Benutzer angemeldet');
         togglesContainer.style.display='block';
+        buyCardDesign.disabled = true;
         return;
     }
+
 
     fetch('/checkUserCardDesign', {
         method: 'POST',

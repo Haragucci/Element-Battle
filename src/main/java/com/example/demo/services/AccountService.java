@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.classes.Account;
 import com.example.demo.classes.Game;
 import com.example.demo.repositories.AccountRepository;
+import com.example.demo.repositories.StatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,16 @@ public class AccountService {
     //===============================================SERVICE INTEGRATION===============================================\\
 
     private final AccountRepository accountRepository;
-    private final StatsService statsService;
     private final BackgroundService backgroundService;
     private final CardService cardService;
     private final GameService gameService;
+    private final StatsRepository statsRepositroy;
 
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, StatsService statsService, BackgroundService backgroundService, CardService cardService, GameService gameService) {
+    public AccountService(AccountRepository accountRepository, StatsRepository statsRepository, BackgroundService backgroundService, CardService cardService, GameService gameService) {
         this.accountRepository = accountRepository;
-        this.statsService = statsService;
+        this.statsRepositroy = statsRepository;
         this.backgroundService = backgroundService;
         this.cardService = cardService;
         this.gameService = gameService;
@@ -64,7 +65,7 @@ public class AccountService {
             if (account != null) {
                 int accountId = account.id();
                 accountRepository.removeAccountAndSave(accountId);
-                statsService.removeStatsAndSave(accountId);
+                statsRepositroy.deleteStatsByUserId(accountId);
                 gameService.removeGameAndSave(accountId);
                 cardService.removeCardStatsAndSave(accountId);
                 backgroundService.removeBackgroundAndSave(accountId);
@@ -106,28 +107,10 @@ public class AccountService {
         );
         accountRepository.updateAccount(updatedAccount.id(), updatedAccount);
 
-        if (backgroundService.checkBackground(oldUsername)) {
-            String background = backgroundService.removeBackground(oldUsername);
-            backgroundService.putBackground(newUsername, background);
-            backgroundService.saveBackgrounds();
-        }
-
-        if (cardService.checkCards(account.id())) {
-            String cardDesign = cardService.removeCardDesign(account.id());
-            cardService.putCardDesign(account.id(), cardDesign);
-            cardService.saveCardDesigns();
-        }
-
         if (gameService.checkGames(account.id())) {
             Game game = gameService.removeGame(account.id());
             gameService.putGame(account.id(), game);
             gameService.saveGame();
-        }
-
-        if (statsService.checkStats(account.id())) {
-            Map<String, Object> stats = statsService.removeStats(account.id());
-            statsService.putStats(account.id(), stats);
-            statsService.saveStats();
         }
 
         return ResponseEntity.ok(Map.of(
@@ -165,7 +148,7 @@ public class AccountService {
         newUserStats.put("lose", 0);
         newUserStats.put("winrate", 0.0);
 
-        statsService.saveUserStats(newAccountId, newUserStats);
+        statsRepositroy.putStats(newAccountId, newUserStats);
 
         return ResponseEntity.ok(Map.of(
                 "success", true,

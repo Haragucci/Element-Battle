@@ -38,9 +38,9 @@ public class InitialController {
     public void init() {
         //heroRepository.loadHeroes();
         accountRepository.loadAccounts();
-        backgroundService.loadBackgrounds();
-        cardService.loadCardDesigns();
-        statsService.loadStats();
+        //backgroundService.loadBackgrounds();
+        //cardService.loadCardDesigns();
+        //statsService.loadStats();
         gameService.loadGame();
     }
 
@@ -48,9 +48,9 @@ public class InitialController {
     public void shutdown() {
         //heroRepository.loadHeroes();
         accountRepository.saveAccounts();
-        backgroundService.saveBackgrounds();
-        cardService.saveCardDesigns();
-        statsService.saveStats();
+        //backgroundService.saveBackgrounds();
+        //cardService.saveCardDesigns();
+        //statsService.saveStats();
         gameService.saveGame();
     }
 }
