@@ -35,7 +35,8 @@ public class AccountRepository {
         }
     }
 
-    public Account updateAccount(int id, Account account) {
+    public Account updateAccount(Account account) {
+        int id = account.id();
         if (accountExistsById(id)) {
             accounts.put(id, account);
             saveAccounts();
@@ -45,17 +46,19 @@ public class AccountRepository {
         }
     }
 
-    public Account createAccount(int id, Account account) {
-        if (!accountExistsById(id)) {
-            accounts.put(id, account);
+    public Account createAccount(Account account) {
+        if (!accountExistsByUsername(account.username())) {
+            int id = counter++;
+            Account account1 = new Account(id, account.username(), account.password(), account.coins());
+            accounts.put(id, account1);
             saveAccounts();
             return account;
         } else {
-            throw new IllegalArgumentException("Account with id " + id + " already exist");
+            throw new IllegalArgumentException("Account with id " + account.username() + " already exist");
         }
     }
 
-    public boolean userExistsByUsername(String username) {
+    public boolean accountExistsByUsername(String username) {
         return accounts.values().stream()
                 .anyMatch(account -> account.username().equals(username));
     }
@@ -78,11 +81,7 @@ public class AccountRepository {
                 .orElseThrow(() -> new IllegalArgumentException("Account with name " + username + " does not exist"));
     }
 
-    public int generateUniqueId() {
-        return counter++;
-    }
-
-    public void loadAccounts() {
+    private void loadAccounts() {
         try {
             File file = new File(ACCOUNTS_FILE_PATH);
             if (file.exists()) {
@@ -97,7 +96,7 @@ public class AccountRepository {
     }
 
     @PreDestroy
-    public void saveAccounts() {
+    private void saveAccounts() {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(ACCOUNTS_FILE_PATH), accounts);
         } catch (IOException e) {

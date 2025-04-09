@@ -23,26 +23,53 @@ public class GameRepository {
        games = loadAllGames();
     }
 
-    public boolean checkGames(int userId) {
+    public boolean gameExistsByUserId(int userId) {
         return games.containsKey(userId);
     }
 
-    public void putGame(int userId, Game game) {
-        games.put(userId, game);
-        saveAllGames();
+    public Game createGame(int userId, Game game) {
+        if(gameExistsByUserId(userId)) {
+            throw new IllegalArgumentException("Game already exists");
+        }
+        else {
+            games.put(userId, game);
+            saveAllGames();
+            return game;
+        }
     }
 
-    public Game removeGame(int userId) {
-        Game game = games.remove(userId);
-        saveAllGames();
-        return game;
+    public Game updateGame(int userId, Game game) {
+        if(!gameExistsByUserId(userId)) {
+            throw new IllegalArgumentException("Game does not exist");
+        }
+        else {
+            games.put(userId, game);
+            saveAllGames();
+            return game;
+        }
+    }
+
+    public Game deleteGame(int userId) {
+        if(!gameExistsByUserId(userId)) {
+            throw new IllegalArgumentException("Game does not exist");
+        }
+        else {
+            Game game = games.remove(userId);
+            saveAllGames();
+            return game;
+        }
     }
 
     public Game getGame(int userId) {
-        return games.get(userId);
+        if(!gameExistsByUserId(userId)) {
+            throw new IllegalArgumentException("Game does not exist");
+        }
+        else {
+            return games.get(userId);
+        }
     }
 
-    public Map<Integer, Game> loadAllGames() {
+    private Map<Integer, Game> loadAllGames() {
         Map<Integer, Game> games = new HashMap<>();
         try {
             File file = new File(GAME_FILE_PATH);
@@ -70,7 +97,7 @@ public class GameRepository {
     }
 
     @PreDestroy
-    public void saveAllGames() {
+    private void saveAllGames() {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(GAME_FILE_PATH), games);
         } catch (IOException e) {

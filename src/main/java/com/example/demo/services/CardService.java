@@ -52,8 +52,7 @@ public class CardService {
                     account.password(),
                     account.coins() - cost
             );
-            accountRepository.updateAccount(account.id(), updatedAccount);
-            accountRepository.saveAccounts();
+            accountRepository.updateAccount(updatedAccount);
             return updatedAccount;
         }
         return null;
@@ -75,7 +74,7 @@ public class CardService {
 
         String activeDesign = "";
         int userId = account.id();
-        boolean purchased = cardRepository.hasCardDesign(userId);
+        boolean purchased = cardRepository.cardDesignExistsByUserId(userId);
         if(purchased) {
             activeDesign = cardRepository.getCardDesign(userId);
         }
@@ -95,7 +94,7 @@ public class CardService {
         }
 
         int userId = account.id();
-        if (cardRepository.hasCardDesign(userId)) {
+        if (cardRepository.cardDesignExistsByUserId(userId)) {
             cardRepository.setCardDesign(userId, designId);
             return ResponseEntity.ok(Map.of(
                     "success", true,
@@ -107,12 +106,12 @@ public class CardService {
     }
 
     public boolean checkCards(int userId) {
-        return cardRepository.hasCardDesign(userId);
+        return cardRepository.cardDesignExistsByUserId(userId);
     }
 
     public String removeCardDesign(int userId) {
         String design = cardRepository.getCardDesign(userId);
-        cardRepository.removeCardDesign(userId);
+        cardRepository.deleteCardDesign(userId);
         return design;
     }
 

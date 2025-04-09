@@ -50,7 +50,7 @@ public class GameService {
                 request.getComputerHP()
         );
 
-        gameRepository.putGame(userId ,game);
+        gameRepository.updateGame(userId ,game);
         return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
     }
 
@@ -61,8 +61,8 @@ public class GameService {
         }
 
         int userId = account.id();
-        if (gameRepository.checkGames(userId)) {
-            gameRepository.removeGame(userId);
+        if (gameRepository.gameExistsByUserId(userId)) {
+            gameRepository.deleteGame(userId);
             return ResponseEntity.ok("Spielstand für Benutzer '" + username + "' gelöscht.");
         } else {
             return ResponseEntity.notFound().build();
@@ -77,7 +77,7 @@ public class GameService {
         }
 
         int userId = account.id();
-        if (!gameRepository.checkGames(userId)) {
+        if (!gameRepository.gameExistsByUserId(userId)) {
             return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
         }
 

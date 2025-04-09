@@ -21,22 +21,49 @@ public class CardRepository {
         loadCardDesigns();
     }
 
-    public boolean hasCardDesign(int userId) {
+    public boolean cardDesignExistsByUserId(int userId) {
         return cardDesigns.containsKey(userId);
     }
 
     public String getCardDesign(int userId) {
-        return cardDesigns.get(userId);
+        if (!cardDesignExistsByUserId(userId)) {
+            throw new IllegalArgumentException("User does not have a card design");
+        }
+        else {
+            return cardDesigns.get(userId);
+        }
     }
 
-    public void setCardDesign(int userId, String designId) {
-        cardDesigns.put(userId, designId);
-        saveCardDesigns();
+    public String setCardDesign(int userId, String designId) {
+        if(!cardDesignExistsByUserId(userId)) {
+            throw new RuntimeException("Card Design dont exists");
+        }
+        else {
+            cardDesigns.put(userId, designId);
+            saveCardDesigns();
+            return designId;
+        }
+    }
+    public String createCardDesign(int userId, String designId) {
+        if(cardDesignExistsByUserId(userId)) {
+            throw new RuntimeException("Card Design already exists");
+        }
+        else {
+            cardDesigns.put(userId, designId);
+            saveCardDesigns();
+            return designId;
+        }
     }
 
-    public void removeCardDesign(int userId) {
-        cardDesigns.remove(userId);
-        saveCardDesigns();
+    public String deleteCardDesign(int userId) {
+        if(!cardDesignExistsByUserId(userId)) {
+            throw new RuntimeException("Card Design does not exist");
+        }
+        else{
+            String card = cardDesigns.remove(userId);
+            saveCardDesigns();
+            return card;
+        }
     }
 
     private void loadCardDesigns() {

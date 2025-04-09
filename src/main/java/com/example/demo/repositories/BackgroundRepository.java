@@ -22,12 +22,8 @@ public class BackgroundRepository {
         loadBackgrounds();
     }
 
-    public Map<Integer, String> getBackgrounds() {
-        return backgrounds;
-    }
-
     @PreDestroy
-    public void save() {
+    private void save() {
         try {
             mapper.writeValue(new File(BACKGROUNDS_FILE_PATH), backgrounds);
         } catch (IOException e) {
@@ -46,21 +42,48 @@ public class BackgroundRepository {
         }
     }
 
-    public void setBackground(int userId, String background) {
-        backgrounds.put(userId, background);
-        save();
+    public String updateBackground(int userId, String background) {
+        if(!backgrounds.containsKey(userId)) {
+            throw new IllegalArgumentException("User already Exists!");
+        }
+        else {
+            backgrounds.put(userId, background);
+            save();
+            return background;
+        }
+    }
+    public String createBackground(int userId, String background) {
+        if (backgrounds.containsKey(userId)) {
+            throw new IllegalArgumentException("User " + userId + " already exists");
+        }
+        else {
+            backgrounds.put(userId, background);
+            save();
+            return background;
+        }
     }
 
     public String getBackground(int userId) {
-        return backgrounds.get(userId);
+        if(!backgrounds.containsKey(userId)) {
+            throw new IllegalArgumentException("User does not exist");
+        }
+        else {
+            return backgrounds.get(userId);
+        }
     }
 
-    public boolean hasBackground(int userId) {
+    public boolean backgroundExistsById(int userId) {
         return backgrounds.containsKey(userId);
     }
 
-    public void removeBackground(int userId) {
-        backgrounds.remove(userId);
-        save();
+    public String deleteBackground(int userId) {
+        if(!backgroundExistsById(userId)) {
+            throw new IllegalArgumentException("User does not exist");
+        }
+        else {
+            String background = backgrounds.remove(userId);
+            save();
+            return background;
+        }
     }
 }

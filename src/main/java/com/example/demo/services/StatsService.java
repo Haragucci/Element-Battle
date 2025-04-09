@@ -55,7 +55,7 @@ public class StatsService {
         double winrate = totalGames > 0 ? (((Number) userStats.get("wins")).doubleValue() / totalGames) * 100 : 0;
         userStats.put("winrate", winrate);
 
-        statsRepository.saveUserStats(userId, userStats);
+        statsRepository.updateUserStats(userId, userStats);
 
         return ResponseEntity.ok(Map.of(
                 "success", true,
@@ -123,13 +123,12 @@ public class StatsService {
     private void updateCoinsForUser(int userId, int newCoins) {
         Account account = accountRepository.getAccountById(userId);
         if (account != null) {
-            accountRepository.updateAccount(userId, new Account(userId ,account.username(), account.password(), newCoins));
-            accountRepository.saveAccounts();
+            accountRepository.updateAccount(new Account(userId ,account.username(), account.password(), newCoins));
         }
     }
 
     public boolean checkStats(int userId) {
-        return statsRepository.exists(userId);
+        return statsRepository.statsExistsByUserId(userId);
     }
 
     public void removeStatsAndSave(int userId) {
@@ -137,7 +136,7 @@ public class StatsService {
     }
 
     public void putStats(int userId, Map<String, Object> statsMap) {
-        statsRepository.putStats(userId, statsMap);
+        statsRepository.updateStats(userId, statsMap);
     }
 
     public Map<String, Object> removeStats(int userId) {

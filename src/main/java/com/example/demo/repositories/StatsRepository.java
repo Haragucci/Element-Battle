@@ -22,33 +22,68 @@ public class StatsRepository {
     }
 
     public Map<String, Object> getStatsByUserId(int userId) {
-        return new HashMap<>(stats.getOrDefault(userId, new HashMap<>()));
+        if(stats.containsKey(userId)) {
+            return new HashMap<>(stats.get(userId));
+        }
+        else {
+            throw new IllegalArgumentException("User id " + userId + " does not exist");
+        }
     }
 
-    public void saveUserStats(int userId, Map<String, Object> userStats) {
-        stats.put(userId, new HashMap<>(userStats));
-        saveStats();
+    public Map<String, Object> updateUserStats(int userId, Map<String, Object> userStats) {
+        if (!statsExistsByUserId(userId)) {
+            throw new IllegalArgumentException("User not found");
+        }
+        else {
+            Map<String, Object> statlist = stats.put(userId, userStats);
+            saveStats();
+            return statlist;
+        }
     }
 
-    public void deleteStatsByUserId(int userId) {
-        stats.remove(userId);
-        saveStats();
+    public Map<String, Object> deleteStatsByUserId(int userId) {
+        if(!statsExistsByUserId(userId)) {
+            throw new IllegalArgumentException("User not found");
+        }
+        else {
+            Map<String, Object> statlist = stats.remove(userId);
+            saveStats();
+            return statlist;
+        }
     }
 
-    public boolean exists(int userId) {
+    public boolean statsExistsByUserId(int userId) {
         return stats.containsKey(userId);
     }
 
-    public void putStats(int userId, Map<String, Object> statsMap) {
-        stats.put(userId, statsMap);
+    public Map<String, Object> createStats(int userId, Map<String, Object> statsMap) {
+        if(statsExistsByUserId(userId)) {
+            throw new RuntimeException("User already exists");
+        }
+        else {
+            stats.put(userId, statsMap);
+            saveStats();
+            return statsMap;
+        }
     }
+    public Map<String, Object> updateStats(int userId, Map<String, Object> statsMap) {
+        if(!statsExistsByUserId(userId)) {
+            throw new RuntimeException("User does not exist");
+        }
+        else {
+            stats.put(userId, statsMap);
+            saveStats();
+            return statsMap;
+        }
+    }
+
 
     public Map<Integer, Map<String, Object>> getAllStats() {
         return stats;
     }
 
     @PreDestroy
-    public void saveStats() {
+    private void saveStats() {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(STATS_FILE_PATH), stats);
         } catch (IOException e) {
@@ -57,7 +92,7 @@ public class StatsRepository {
     }
 
 
-    public void loadStats() {
+    private void loadStats() {
         File file = new File(STATS_FILE_PATH);
         if (file.exists()) {
             try {
