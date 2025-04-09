@@ -29,7 +29,8 @@ public class HeroRepository {
         File file = new File(HEROES_FILE_PATH);
         if (file.exists()) {
             try {
-                heroes = objectMapper.readValue(file, new TypeReference<>() {});
+                heroes = objectMapper.readValue(file, new TypeReference<>() {
+                });
                 nextId = heroes.stream().mapToInt(Hero::id).max().orElse(0) + 1;
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -87,7 +88,7 @@ public class HeroRepository {
     }
 
     public Hero delete(int id) {
-        Hero heroToDelete = findById(id); // throws if not found
+        Hero heroToDelete = findById(id);
         try {
             heroes.remove(heroToDelete);
             saveData();
@@ -98,23 +99,14 @@ public class HeroRepository {
     }
 
     public boolean deleteAll() {
-        try {
-            if (heroes.isEmpty()) {
-                saveData();
-                throw new UnsupportedOperationException("No heroes to delete.");
-            } else {
-                heroes.clear();
-                saveData();
-                return true;
-            }
-        } catch (Exception e) {
-            throw new IllegalStateException("Failed to delete all heroes: " + e.getMessage(), e);
-        }
+        heroes.clear();
+        saveData();
+        return true;
     }
 
     public boolean resetId() {
         if (nextId == 1) {
-            throw new UnsupportedOperationException("ID is already at initial state.");
+            return true;
         } else {
             nextId = 1;
             return true;
