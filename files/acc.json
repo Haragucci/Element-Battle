@@ -1,8 +1,8 @@
 {
-  "1" : {
-    "id" : 1,
+  "3" : {
+    "id" : 3,
     "username" : "Tilljan",
     "password" : "tilljan",
-    "coins" : 3
+    "coins" : 0
   }
 }

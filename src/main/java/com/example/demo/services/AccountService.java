@@ -61,9 +61,9 @@ public class AccountService {
         }
 
         try {
-            Account account = accountRepository.getAccountByUsername(username);
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
 
-            if (account != null) {
                 int accountId = account.id();
                 accountRepository.deleteAccount(accountId);
                 statsRepository.deleteStatsByUserId(accountId);
@@ -73,6 +73,7 @@ public class AccountService {
 
 
                 return ResponseEntity.ok("User deleted successfully");
+
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }

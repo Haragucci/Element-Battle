@@ -51,7 +51,7 @@ public class GameRepository {
 
     public Game deleteGame(int userId) {
         if(!gameExistsByUserId(userId)) {
-            throw new IllegalArgumentException("Game does not exist");
+            return null;
         }
         else {
             Game game = games.remove(userId);

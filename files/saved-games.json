@@ -77,5 +77,84 @@
     "computerHP" : 25,
     "totalDamageDealt" : 0,
     "totalDirectDamageDealt" : 0
+  },
+  "3" : {
+    "playerCards" : [ {
+      "id" : 15,
+      "name" : "Arborea Waldwisperer",
+      "HP" : 11,
+      "Damage" : 13,
+      "type" : "Pflanze",
+      "extra" : "Beherrscht den Wald in seiner ganzen Pracht!"
+    }, {
+      "id" : 12,
+      "name" : "Sylva Blattwerk",
+      "HP" : 9,
+      "Damage" : 12,
+      "type" : "Pflanze",
+      "extra" : "Meister der Photosynthese und des Waldwachstums."
+    }, {
+      "id" : 20,
+      "name" : "Thor Donnergroll",
+      "HP" : 14,
+      "Damage" : 8,
+      "type" : "Elektro",
+      "extra" : "Donnerhall und elektrische Eruption!"
+    }, {
+      "id" : 30,
+      "name" : "Blizzara Frostfeuer",
+      "HP" : 9,
+      "Damage" : 9,
+      "type" : "Eis",
+      "extra" : "Frostbeulen und gefrorene Schicksale!"
+    }, {
+      "id" : 9,
+      "name" : "Hydra Aquadonner",
+      "HP" : 12,
+      "Damage" : 12,
+      "type" : "Wasser",
+      "extra" : "Ruft die Meeresgötter zu Hilfe!"
+    } ],
+    "computerCards" : [ {
+      "id" : 24,
+      "name" : "Terra Erdenschild",
+      "HP" : 12,
+      "Damage" : 12,
+      "type" : "Erde",
+      "extra" : "Felsen, die wie Wasser fließen!"
+    }, {
+      "id" : 23,
+      "name" : "Atlas Felsenfaust",
+      "HP" : 10,
+      "Damage" : 8,
+      "type" : "Erde",
+      "extra" : "Erdbeben und Steinschatten!"
+    }, {
+      "id" : 4,
+      "name" : "Inferno Feuerschlag",
+      "HP" : 9,
+      "Damage" : 13,
+      "type" : "Feuer",
+      "extra" : "Tanzt um Feuerstürme herum!"
+    }, {
+      "id" : 6,
+      "name" : "Aqualis Meeresrufer",
+      "HP" : 11,
+      "Damage" : 11,
+      "type" : "Wasser",
+      "extra" : "Beherrscht die Wellen und Meerestiere."
+    }, {
+      "id" : 11,
+      "name" : "Flora Rankengriff",
+      "HP" : 10,
+      "Damage" : 10,
+      "type" : "Pflanze",
+      "extra" : "Umschlingt Gegner mit Ranken!"
+    } ],
+    "firstAttack" : "Spieler",
+    "playerHP" : 25,
+    "computerHP" : 25,
+    "totalDamageDealt" : 0,
+    "totalDirectDamageDealt" : 0
   }
 }

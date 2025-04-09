@@ -57,7 +57,7 @@ public class CardRepository {
 
     public String deleteCardDesign(int userId) {
         if(!cardDesignExistsByUserId(userId)) {
-            throw new RuntimeException("Card Design does not exist");
+            return "Card Design does not exist";
         }
         else{
             String card = cardDesigns.remove(userId);

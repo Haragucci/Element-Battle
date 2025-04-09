@@ -79,7 +79,7 @@ public class BackgroundRepository {
 
     public String deleteBackground(int userId) {
         if(!backgroundExistsById(userId)) {
-            throw new IllegalArgumentException("User does not exist");
+            return "User " + userId + " does not exist";
         }
         else {
             String background = backgrounds.remove(userId);
