@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function savePlayerGame() {
         const username = localStorage.getItem('username');
-        firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer"
+        firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer";
 
         if (!username || playerHand.length === 0 || computerHand.length === 0) {
             console.error('Fehlende Daten für das Speichern des Spiels!');
@@ -61,9 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const requestData = {
             username: username,
-            firstAttack:firstAttacker,
-            PHP:playerHP,
-            CHP:computerHP,
+            firstAttack: firstAttacker,
+            PHP: playerHP,
+            CHP: computerHP,
+            totalDamageDealt: totalDamageDealt,
+            totalDirectDamageDealt: totalDirectDamageDealt,
             playerCards: playerHand.map(hero => ({
                 id: hero.id,
                 name: hero.name,
@@ -97,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Fehler beim Speichern des Spiels:', error);
             });
     }
+
 
     function checkAndUpdateUserCardDesign() {
         const username = localStorage.getItem('username');
@@ -1255,6 +1258,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     computerHand = data.Computercards;
                     playerHP = data.PHP;
                     computerHP = data.CHP;
+                    totalDamageDealt = data.totalDamageDealt;
+                    totalDirectDamageDealt = data.totalDirectDamageDealt;
                     isPlayerFirstAttacker = data.firstAttack === "Spieler";
                     generatedGame = false;
                     savePlayerGame();
@@ -1269,6 +1274,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             allHeroes = heroes;
                             playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
                             computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                            totalDirectDamageDealt = 0;
+                            totalDamageDealt = 0;
                             if (username){
                                 savePlayerGame();
                             }

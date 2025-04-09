@@ -39,29 +39,34 @@ public class GameService {
                 Account account = accountRepository.getAccountByUsername(username);
 
                 int userId = account.id();
+
                 Game game = new Game(
                         request.getPlayercards(),
                         request.getComputercards(),
                         request.getFirstAttack(),
                         request.getPlayerHP(),
-                        request.getComputerHP()
+                        request.getComputerHP(),
+                        request.getTotalDamageDealt(),
+                        request.getTotalDirectDamageDealt()
                 );
 
                 if (!gameRepository.gameExistsByUserId(account.id())){
                     gameRepository.createGame(account.id(), game);
                 }
                 else {
-                    gameRepository.updateGame(userId ,game);
+                    gameRepository.updateGame(userId, game);
                 }
                 return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
             }
-            else {return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));}
+            else {
+                return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));
+            }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
-
     }
+
 
     public ResponseEntity<String> deleteGame(String username) {
         Account account = accountRepository.getAccountByUsername(username);
@@ -96,13 +101,18 @@ public class GameService {
                         "Computercards", toHeroMap(game.computerCards()),
                         "firstAttack", game.firstAttack(),
                         "PHP", game.playerHP(),
-                        "CHP", game.computerHP()
+                        "CHP", game.computerHP(),
+                        "totalDamageDealt", game.totalDamageDealt(),
+                        "totalDirectDamageDealt", game.totalDirectDamageDealt()
                 ));
-            }else {return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));}
-        }catch (Exception e){
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));
+            }
+        } catch (Exception e){
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
+
 
     //===============================================HELPING METHODS===============================================\\
 

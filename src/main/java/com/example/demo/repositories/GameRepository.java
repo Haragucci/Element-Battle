@@ -85,16 +85,18 @@ public class GameRepository {
                 String firstAttack = gameData.get("firstAttack").asText();
                 int playerHP = gameData.get("playerHP").asInt();
                 int computerHP = gameData.get("computerHP").asInt();
+                int totalDamageDealt = gameData.get("totalDamageDealt").asInt();
+                int totalDirectDamageDealt = gameData.get("totalDirectDamageDealt").asInt();
 
-                Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
+                Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP, totalDamageDealt, totalDirectDamageDealt);
                 games.put(userId, game);
             });
         } catch (IOException e) {
             System.out.println("Fehler beim Laden der Spiele: " + e.getMessage());
         }
-
         return games;
     }
+
 
     @PreDestroy
     private void saveAllGames() {
