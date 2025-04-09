@@ -50,14 +50,22 @@ public class HeroRepository {
     }
 
     public Hero add(Hero hero) {
-        Hero newHero = new Hero(nextId++, hero.name(), hero.HP(), hero.Damage(), hero.type(), hero.extra());
-        heroes.add(newHero);
-        saveData();
-        return newHero;
+        try {
+            Hero newHero = new Hero(nextId++, hero.name(), hero.HP(), hero.Damage(), hero.type(), hero.extra());
+            heroes.add(newHero);
+            saveData();
+            return newHero;
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to add hero: " + e.getMessage(), e);
+        }
     }
 
     public List<Hero> getAll() {
-        return new ArrayList<>(heroes);
+        try {
+            return new ArrayList<>(heroes);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to retrieve hero list: " + e.getMessage(), e);
+        }
     }
 
     public Hero update(Hero updatedHero) {
@@ -79,31 +87,37 @@ public class HeroRepository {
     }
 
     public Hero delete(int id) {
-        Hero heroToDelete = findById(id);
-        heroes.remove(heroToDelete);
-        saveData();
-        return heroToDelete;
+        Hero heroToDelete = findById(id); // throws if not found
+        try {
+            heroes.remove(heroToDelete);
+            saveData();
+            return heroToDelete;
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to delete hero with id: " + id, e);
+        }
     }
 
     public boolean deleteAll() {
-        if (heroes.isEmpty()){
-            saveData();
-            return true;
-        }
-        else {
-            heroes.clear();
-            saveData();
-            return false;
+        try {
+            if (heroes.isEmpty()) {
+                saveData();
+                throw new UnsupportedOperationException("No heroes to delete.");
+            } else {
+                heroes.clear();
+                saveData();
+                return true;
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to delete all heroes: " + e.getMessage(), e);
         }
     }
 
-    public boolean resetId(){
-        if(nextId== 1){
-            return true;
-        }
-        else {
+    public boolean resetId() {
+        if (nextId == 1) {
+            throw new UnsupportedOperationException("ID is already at initial state.");
+        } else {
             nextId = 1;
-            return false;
+            return true;
         }
     }
 }

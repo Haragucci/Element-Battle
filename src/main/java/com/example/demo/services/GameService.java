@@ -34,27 +34,33 @@ public class GameService {
 
     //===============================================REQUEST METHODS===============================================\\
 
-    public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
+    public ResponseEntity<Map<String, Object>> saveGame(GameRequest request) {
         String username = request.getUsername();
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account == null) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));
+        try {
+            if(accountRepository.accountExistsByUsername(username)){
+                Account account = accountRepository.getAccountByUsername(username);
+
+                int userId = account.id();
+                Game game = new Game(
+                        request.getPlayercards(),
+                        request.getComputercards(),
+                        request.getFirstAttack(),
+                        request.getPlayerHP(),
+                        request.getComputerHP()
+                );
+
+                gameRepository.updateGame(userId ,game);
+                return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
+            }
+            else {return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));}
+
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
 
-        int userId = account.id();
-        Game game = new Game(
-                request.getPlayercards(),
-                request.getComputercards(),
-                request.getFirstAttack(),
-                request.getPlayerHP(),
-                request.getComputerHP()
-        );
-
-        gameRepository.updateGame(userId ,game);
-        return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
     }
 
-    public ResponseEntity<String> deleteGame(@PathVariable String username) {
+    public ResponseEntity<String> deleteGame(String username) {
         Account account = accountRepository.getAccountByUsername(username);
         if (account == null) {
             return ResponseEntity.notFound().build();
@@ -69,27 +75,30 @@ public class GameService {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> checkGame(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> checkGame(Map<String, String> request) {
         String username = request.get("username");
-        Account account = accountRepository.getAccountByUsername(username);
-        if (account == null) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));
+        try {
+            if(accountRepository.accountExistsByUsername(username)){
+                Account account = accountRepository.getAccountByUsername(username);
+
+                int userId = account.id();
+                if (!gameRepository.gameExistsByUserId(userId)) {
+                    return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
+                }
+
+                Game game = gameRepository.getGame(userId);
+
+                return ResponseEntity.ok(Map.of(
+                        "Playercards", toHeroMap(game.playerCards()),
+                        "Computercards", toHeroMap(game.computerCards()),
+                        "firstAttack", game.firstAttack(),
+                        "PHP", game.playerHP(),
+                        "CHP", game.computerHP()
+                ));
+            }else {return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));}
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
-
-        int userId = account.id();
-        if (!gameRepository.gameExistsByUserId(userId)) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
-        }
-
-        Game game = gameRepository.getGame(userId);
-
-        return ResponseEntity.ok(Map.of(
-                "Playercards", toHeroMap(game.playerCards()),
-                "Computercards", toHeroMap(game.computerCards()),
-                "firstAttack", game.firstAttack(),
-                "PHP", game.playerHP(),
-                "CHP", game.computerHP()
-        ));
     }
 
     //===============================================HELPING METHODS===============================================\\

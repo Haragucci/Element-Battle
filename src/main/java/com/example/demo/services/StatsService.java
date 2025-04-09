@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class StatsService {
@@ -29,63 +29,84 @@ public class StatsService {
         return statsRepository.getStatsByUserId(userId);
     }
 
-    public ResponseEntity<Map<String, Object>> updateStats(@RequestBody Map<String, Object> statsUpdate) {
+    public ResponseEntity<Map<String, Object>> updateStats(Map<String, Object> statsUpdate) {
         String userName = statsUpdate.get("username").toString();
-        Account account = accountRepository.getAccountByUsername(userName);
-        int userId = account.id();
-        int wins = ((Number) statsUpdate.getOrDefault("win", 0)).intValue();
-        int losses = ((Number) statsUpdate.getOrDefault("lose", 0)).intValue();
-        int damage = ((Number) statsUpdate.getOrDefault("damage", 0)).intValue();
-        int directDamage = ((Number) statsUpdate.getOrDefault("directDamage", 0)).intValue();
-        int coinsEarned = ((Number) statsUpdate.getOrDefault("coins", 0)).intValue();
+        try {
+            if (accountRepository.accountExistsByUsername(userName)) {
+                Account account = accountRepository.getAccountByUsername(userName);
+                int userId = account.id();
+                int wins = ((Number) statsUpdate.getOrDefault("win", 0)).intValue();
+                int losses = ((Number) statsUpdate.getOrDefault("lose", 0)).intValue();
+                int damage = ((Number) statsUpdate.getOrDefault("damage", 0)).intValue();
+                int directDamage = ((Number) statsUpdate.getOrDefault("directDamage", 0)).intValue();
+                int coinsEarned = ((Number) statsUpdate.getOrDefault("coins", 0)).intValue();
 
-        Map<String, Object> userStats = loadUserStats(userId);
+                Map<String, Object> userStats = loadUserStats(userId);
 
-        userStats.put("wins", ((Number) userStats.getOrDefault("wins", 0)).intValue() + wins);
-        userStats.put("lose", ((Number) userStats.getOrDefault("lose", 0)).intValue() + losses);
-        userStats.put("damage", ((Number) userStats.getOrDefault("damage", 0)).intValue() + damage);
-        userStats.put("direkt-damage", ((Number) userStats.getOrDefault("direkt-damage", 0)).intValue() + directDamage);
+                userStats.put("wins", ((Number) userStats.getOrDefault("wins", 0)).intValue() + wins);
+                userStats.put("lose", ((Number) userStats.getOrDefault("lose", 0)).intValue() + losses);
+                userStats.put("damage", ((Number) userStats.getOrDefault("damage", 0)).intValue() + damage);
+                userStats.put("direkt-damage", ((Number) userStats.getOrDefault("direkt-damage", 0)).intValue() + directDamage);
 
-        int currentCoins = getCoinsForUser(userId);
-        int newCoins = currentCoins + coinsEarned;
-        updateCoinsForUser(userId, newCoins);
-        userStats.put("coins", newCoins);
+                int currentCoins = getCoinsForUser(userId);
+                int newCoins = currentCoins + coinsEarned;
+                updateCoinsForUser(userId, newCoins);
+                userStats.put("coins", newCoins);
 
-        int totalGames = ((Number) userStats.get("wins")).intValue() + ((Number) userStats.get("lose")).intValue();
-        double winrate = totalGames > 0 ? (((Number) userStats.get("wins")).doubleValue() / totalGames) * 100 : 0;
-        userStats.put("winrate", winrate);
+                int totalGames = ((Number) userStats.get("wins")).intValue() + ((Number) userStats.get("lose")).intValue();
+                double winrate = totalGames > 0 ? (((Number) userStats.get("wins")).doubleValue() / totalGames) * 100 : 0;
+                userStats.put("winrate", winrate);
 
-        statsRepository.updateUserStats(userId, userStats);
+                statsRepository.updateUserStats(userId, userStats);
 
-        return ResponseEntity.ok(Map.of(
-                "success", true,
-                "message", "Statistiken aktualisiert",
-                "updatedStats", userStats
-        ));
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "message", "Statistiken aktualisiert",
+                        "updatedStats", userStats
+                ));
+            } else {
+                return ResponseEntity.ok(Map.of("message", "Account not found!"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("message", "Account not found!"));
+        }
     }
 
     public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {
         Map<Integer, Map<String, Object>> allStats = statsRepository.getAllStats();
-        List<Map<String, Object>> leaderboard = allStats.entrySet().stream()
-                .map(entry -> {
-                    Map<String, Object> playerStats = new HashMap<>(entry.getValue());
-                    int userId = entry.getKey();
+        List<Map<String, Object>> leaderboard = new ArrayList<>();
+
+        for (Map.Entry<Integer, Map<String, Object>> entry : allStats.entrySet()) {
+            Map<String, Object> playerStats = new HashMap<>(entry.getValue());
+            int userId = entry.getKey();
+
+            try {
+                if (accountRepository.accountExistsById(userId)) {
                     Account account = accountRepository.getAccountById(userId);
                     if (account != null) {
                         playerStats.put("username", account.username());
+                    } else {
+                        playerStats.put("username", "Unbekannt");
                     }
-                    playerStats.put("userId", userId);
-                    return playerStats;
-                })
-                .sorted((a, b) -> Integer.compare(
-                        ((Number) b.getOrDefault("wins", 0)).intValue(),
-                        ((Number) a.getOrDefault("wins", 0)).intValue()
-                ))
-                .limit(5)
-                .collect(Collectors.toList());
+                } else {
+                    playerStats.put("username", "Unbekannt");
+                }
+            } catch (Exception e) {
+                playerStats.put("username", "Fehler beim Abruf");
+            }
 
-        return ResponseEntity.ok(leaderboard);
+            playerStats.put("userId", userId);
+            leaderboard.add(playerStats);
+        }
+
+        leaderboard.sort((a, b) -> Integer.compare(
+                ((Number) b.getOrDefault("wins", 0)).intValue(),
+                ((Number) a.getOrDefault("wins", 0)).intValue()
+        ));
+
+        return ResponseEntity.ok(leaderboard.stream().limit(5).toList());
     }
+
 
     public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
         String username = request.get("username");
@@ -96,53 +117,56 @@ public class StatsService {
             ));
         }
 
-        Account account = accountRepository.getAccountByUsername(username);
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
 
-        Map<String, Object> userStats = statsRepository.getStatsByUserId(account.id());
-        if (userStats.isEmpty()) {
-            return ResponseEntity.ok(Map.of(
-                    "success", false,
-                    "message", "Keine Statistiken für diesen Benutzer gefunden"
-            ));
+                Map<String, Object> userStats = statsRepository.getStatsByUserId(account.id());
+                if (userStats.isEmpty()) {
+                    return ResponseEntity.ok(Map.of(
+                            "success", false,
+                            "message", "Keine Statistiken für diesen Benutzer gefunden"
+                    ));
+                }
+
+                int coins = getCoinsForUser(account.id());
+                userStats.put("coins", coins);
+
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "stats", userStats
+                ));
+            } else {
+                return ResponseEntity.ok(Map.of("message", false));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
 
-        int coins = getCoinsForUser(account.id());
-        userStats.put("coins", coins);
-
-        return ResponseEntity.ok(Map.of(
-                "success", true,
-                "stats", userStats
-        ));
     }
 
     private int getCoinsForUser(int userId) {
-        Account account = accountRepository.getAccountById(userId);
-        return account != null ? account.coins() : 0;
-    }
-
-    private void updateCoinsForUser(int userId, int newCoins) {
-        Account account = accountRepository.getAccountById(userId);
-        if (account != null) {
-            accountRepository.updateAccount(new Account(userId ,account.username(), account.password(), newCoins));
+        try {
+            if (accountRepository.accountExistsById(userId)) {
+                Account account = accountRepository.getAccountById(userId);
+                return account.coins();
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            return 0;
         }
     }
 
-    public boolean checkStats(int userId) {
-        return statsRepository.statsExistsByUserId(userId);
-    }
-
-    public void removeStatsAndSave(int userId) {
-        statsRepository.deleteStatsByUserId(userId);
-    }
-
-    public void putStats(int userId, Map<String, Object> statsMap) {
-        statsRepository.updateStats(userId, statsMap);
-    }
-
-    public Map<String, Object> removeStats(int userId) {
-        Map<String, Object> removed = statsRepository.getStatsByUserId(userId);
-        statsRepository.deleteStatsByUserId(userId);
-        return removed;
+    private void updateCoinsForUser(int userId, int newCoins) {
+        try {
+            if (accountRepository.accountExistsById(userId)) {
+                Account account = accountRepository.getAccountById(userId);
+                accountRepository.updateAccount(new Account(userId, account.username(), account.password(), newCoins));
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
 

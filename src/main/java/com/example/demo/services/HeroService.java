@@ -1,21 +1,14 @@
 package com.example.demo.services;
 
 import com.example.demo.repositories.HeroRepository;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.demo.classes.Hero;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.NoSuchElementException;
 
 @Service
 public class HeroService {
@@ -39,59 +32,79 @@ public class HeroService {
 
     //===============================================REQUEST METHODS===============================================\\
 
-    public List<Hero> showHero(){
-        return heroRepository.getAll();
+    public List<Hero> showHero() {
+        try {
+            return heroRepository.getAll();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
-    public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
-        return ResponseEntity.ok(heroRepository.add(hero));
+    public ResponseEntity<Hero> createHero(Hero hero) {
+        try {
+            Hero newHero = heroRepository.add(hero);
+            return ResponseEntity.ok(newHero);
+        } catch (Exception e) {
+            return ResponseEntity.ok(hero);
+        }
     }
 
     public String createProfiles() {
-        heroRepository.resetId();
-        if(heroRepository.deleteAll()) {
+        try {
+            heroRepository.resetId();
+            heroRepository.deleteAll();
 
             for (int i = 0; i < heroNames.size(); i++) {
-                String name = heroNames.get(i);
-                String element = heroTypes.get(i);
-                int hp = hpValues.get(i);
-                int damage = damageValues.get(i);
-                String description = extras.get(i);
-
                 Hero hero = new Hero(
                         0,
-                        name,
-                        hp,
-                        damage,
-                        element,
-                        description
+                        heroNames.get(i),
+                        hpValues.get(i),
+                        damageValues.get(i),
+                        heroTypes.get(i),
+                        extras.get(i)
                 );
                 heroRepository.add(hero);
             }
+            return "Profile wurden erfolgreich erstellt!";
+        } catch (Exception e) {
+            return "Fehler beim Erstellen der Profile: " + e.getMessage();
         }
-        return "Profile wurden erfolgreich erstellt!";
     }
 
-    public String delhero(@RequestBody(required = false) Hero herodel, @RequestParam(value = "id", required = false) Integer id) {
-        heroRepository.delete(id);
-        return "Hero was deleted!";
+    public String delhero(Hero herodel, Integer id) {
+        if (id == null) return "ID fehlt!";
+        try {
+            heroRepository.delete(id);
+            return "Hero wurde gelöscht!";
+        } catch (NoSuchElementException e) {
+            return "Hero mit ID " + id + " nicht gefunden!";
+        } catch (Exception e) {
+            return "Fehler beim Löschen des Helden: " + e.getMessage();
+        }
     }
 
     public String deleteAllHeroes() {
-        heroRepository.deleteAll();
-        heroRepository.resetId();
-        return "Alle Helden wurden gelöscht!";
+        try {
+            heroRepository.deleteAll();
+            heroRepository.resetId();
+            return "Alle Helden wurden gelöscht!";
+        } catch (Exception e) {
+            return "Fehler beim Löschen aller Helden: " + e.getMessage();
+        }
     }
 
-    public String editHero(@RequestBody Hero heroe) {
+    public String editHero(Hero heroe) {
         if (heroe.HP() < 0 || heroe.HP() > 100 || heroe.Damage() < 0 || heroe.Damage() > 100 || heroe.type() == null) {
-            return "Fehlgeschlagen!";
+            return "Ungültige Werte!";
         }
 
-        if (heroe.id() >= 0) {
+        try {
             heroRepository.update(heroe);
+            return "Held wurde aktualisiert!";
+        } catch (NoSuchElementException e) {
+            return "Held mit ID " + heroe.id() + " nicht gefunden!";
+        } catch (Exception e) {
+            return "Fehler beim Aktualisieren: " + e.getMessage();
         }
-
-        return "Fehlgeschlagen!";
     }
 }
