@@ -1296,8 +1296,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         });
                     }
-                    let maxRoundNumber = Math.max(...data.battlelogs.map(log => log.roundNumber));
-                    roundCounter= maxRoundNumber+1;
+                    let maxRoundNumber = data.battlelogs.length > 0
+                        ? Math.max(...data.battlelogs.map(log => log.roundNumber))
+                        : 0;
+                    roundCounter = maxRoundNumber + 1;
+
                     savePlayerGame();
                     startGameWithAttacker(data.firstAttack);
                 }

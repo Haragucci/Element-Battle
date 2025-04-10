@@ -317,17 +317,6 @@ button[type="submit"]:disabled {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-@media (max-width: 600px) {
-    #hero-list ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #hero-list li {
-        max-width: 100%;
-    }
-}
-
 #hero-list li div {
     margin-bottom: 10px;
 }
@@ -478,104 +467,6 @@ input[type="text"] {
     transform: translateY(-2px);
 }
 
-@media (min-width: 768px) {
-    .but {
-        width: 100%;
-    }
-}
-
-@media (min-width: 1024px) {
-    .but {
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        font-size: 14px;
-    }
-
-    header {
-        position: static;
-        padding: 5px 0;
-    }
-
-    .nav-left,
-    .nav-center,
-    .nav-buttons {
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-title {
-        font-size: 1.2em;
-        margin-bottom: 5px;
-    }
-
-    .nav-buttons .but {
-        width: 90%;
-        margin: 5px auto;
-    }
-
-    .logo {
-        height: 30px;
-        margin-bottom: 5px;
-    }
-
-    main {
-        margin-top: 10px;
-        padding: 10px;
-    }
-
-    .form-container {
-        width: 90%;
-        margin-top: 10px;
-        padding: 15px;
-    }
-
-    .input-group {
-        margin-bottom: 10px;
-    }
-
-    .input-group label {
-        font-size: 16px;
-    }
-
-    .input-group input,
-    .input-group select {
-        font-size: 14px;
-    }
-
-    #hero-list li {
-        width: 90%;
-        margin: 10px auto;
-    }
-
-    #hero-list li.editing {
-        width: 90%;
-        max-width: none;
-    }
-
-    .but,
-    #search-bar {
-        width: 90%;
-        max-width: none;
-        margin: 10px auto;
-    }
-
-    #delete-all-button {
-        width: 90%;
-        margin: 10px auto;
-    }
-
-    .heroshow-select,
-    .heroshow-input {
-        width: 100%;
-        font-size: 16px;
-    }
-}
-
 #delete-all-button {
     height: 44px;
     background-color: #f44336;
@@ -670,19 +561,5 @@ form .but:hover {
 .heroshow-input:focus {
     border-color: #4CAF50;
     outline: none;
-}
-
-@media (max-width: 320px) {
-    .nav-title {
-        font-size: 1em;
-    }
-
-    .logo {
-        height: 25px;
-    }
-
-    .form-container {
-        padding: 10px;
-    }
 }
 

@@ -143,37 +143,6 @@ header nav {
     font-weight: bold;
 }
 
-@media (max-width: 768px) {
-    .nav-right {
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    #userInfo, #authButtons {
-        margin-top: 5px;
-    }
-
-    .nav-buttons .but,
-    .nav-right .but {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-
-    .game-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .left-panel, .right-panel {
-        width: 100%;
-    }
-
-    .center-panel {
-        width: 100%;
-        padding: 15px;
-    }
-}
-
 main {
     flex-grow: 1;
     display: flex;
@@ -581,17 +550,5 @@ p#turn-info {
 .element-relationship.premium-design-3.erde { background: linear-gradient(135deg, #d2b48c, #c19a6b); color: #8b4513; }
 .element-relationship.premium-design-3.eis { background: linear-gradient(135deg, #b0e0e6, #87ceeb); color: #4682b4; }
 .element-relationship.premium-design-3.luft { background: linear-gradient(135deg, #f0f8ff, #87ceeb); color: #4169e1; }
-
-@media (max-width: 600px) {
-    .card {
-        width: 80px;
-        height: 120px;
-        font-size: 10px;
-    }
-
-    .player-field, .computer-field {
-        height: 150px;
-    }
-}
 
 

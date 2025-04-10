@@ -315,39 +315,6 @@ input[type="text"].editing, input[type="password"].editing {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 1200px) {
-    .content-wrapper {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .account-container, .stats-container, .leaderboard-container {
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 600px) {
-    .form-container {
-        padding: 20px;
-    }
-
-    h2 {
-        font-size: 24px;
-    }
-
-    input[type="text"], input[type="password"] {
-        font-size: 14px;
-    }
-
-    .save-btn {
-        font-size: 16px;
-    }
-
-    .stat-value {
-        font-size: 24px;
-    }
-}
-
 .save-success {
     animation: blink-success 2s ease-in-out;
 }
