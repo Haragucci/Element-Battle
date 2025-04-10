@@ -47,7 +47,8 @@ public class GameService {
                         request.getPlayerHP(),
                         request.getComputerHP(),
                         request.getTotalDamageDealt(),
-                        request.getTotalDirectDamageDealt()
+                        request.getTotalDirectDamageDealt(),
+                        request.getBattlelogs()
                 );
 
                 if (!gameRepository.gameExistsByUserId(account.id())){
@@ -88,8 +89,8 @@ public class GameService {
         try {
             if(accountRepository.accountExistsByUsername(username)){
                 Account account = accountRepository.getAccountByUsername(username);
-
                 int userId = account.id();
+
                 if (!gameRepository.gameExistsByUserId(userId)) {
                     return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
                 }
@@ -103,15 +104,17 @@ public class GameService {
                         "PHP", game.playerHP(),
                         "CHP", game.computerHP(),
                         "totalDamageDealt", game.totalDamageDealt(),
-                        "totalDirectDamageDealt", game.totalDirectDamageDealt()
+                        "totalDirectDamageDealt", game.totalDirectDamageDealt(),
+                        "battlelogs", game.battlelogs()
                 ));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));
             }
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+            return ResponseEntity.ok(Map.of("message", e.getMessage()));
         }
     }
+
 
 
     //===============================================HELPING METHODS===============================================\\

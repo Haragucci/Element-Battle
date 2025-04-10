@@ -1,134 +1,27 @@
 {
   "1" : {
     "playerCards" : [ {
-      "id" : 8,
-      "name" : "Aquara Wasserschild",
-      "HP" : 13,
-      "Damage" : 14,
-      "type" : "Wasser",
-      "extra" : "Tiefseeabenteuer und Ozeansymphonie!"
-    }, {
-      "id" : 22,
-      "name" : "Gaia Erdenwächter",
-      "HP" : 13,
-      "Damage" : 13,
-      "type" : "Erde",
-      "extra" : "Mutter der Erde und der Natur."
-    }, {
-      "id" : 26,
-      "name" : "Glacies Frostschild",
+      "id" : 7,
+      "name" : "Nerina Wellenweber",
       "HP" : 10,
-      "Damage" : 12,
-      "type" : "Eis",
-      "extra" : "Eisige Kältepeitsche!"
-    }, {
-      "id" : 10,
-      "name" : "Poseidon Meereswoge",
-      "HP" : 9,
-      "Damage" : 13,
-      "type" : "Wasser",
-      "extra" : "Wasserwirbel und Strudelmeisterschaft!"
-    }, {
-      "id" : 24,
-      "name" : "Terra Erdenschild",
-      "HP" : 12,
-      "Damage" : 12,
-      "type" : "Erde",
-      "extra" : "Felsen, die wie Wasser fließen!"
-    } ],
-    "computerCards" : [ {
-      "id" : 5,
-      "name" : "Helios Sonnentänzer",
-      "HP" : 13,
-      "Damage" : 14,
-      "type" : "Feuer",
-      "extra" : "Herrscht über Vulkan und Flamme!"
-    }, {
-      "id" : 10,
-      "name" : "Poseidon Meereswoge",
-      "HP" : 9,
-      "Damage" : 13,
-      "type" : "Wasser",
-      "extra" : "Wasserwirbel und Strudelmeisterschaft!"
-    }, {
-      "id" : 2,
-      "name" : "Pyra Glutsturm",
-      "HP" : 11,
-      "Damage" : 10,
-      "type" : "Feuer",
-      "extra" : "Brennt mit der Hitze von tausend Sonnen!"
-    }, {
-      "id" : 19,
-      "name" : "Jolt Elektrosturm",
-      "HP" : 10,
-      "Damage" : 10,
-      "type" : "Elektro",
-      "extra" : "Ladung, die die Luft zum Zerreißen bringt!"
-    }, {
-      "id" : 12,
-      "name" : "Sylva Blattwerk",
-      "HP" : 9,
-      "Damage" : 12,
-      "type" : "Pflanze",
-      "extra" : "Meister der Photosynthese und des Waldwachstums."
-    } ],
-    "firstAttack" : "Spieler",
-    "playerHP" : 25,
-    "computerHP" : 25,
-    "totalDamageDealt" : 0,
-    "totalDirectDamageDealt" : 0
-  },
-  "3" : {
-    "playerCards" : [ {
-      "id" : 15,
-      "name" : "Arborea Waldwisperer",
-      "HP" : 11,
-      "Damage" : 13,
-      "type" : "Pflanze",
-      "extra" : "Beherrscht den Wald in seiner ganzen Pracht!"
-    }, {
-      "id" : 12,
-      "name" : "Sylva Blattwerk",
-      "HP" : 9,
-      "Damage" : 12,
-      "type" : "Pflanze",
-      "extra" : "Meister der Photosynthese und des Waldwachstums."
-    }, {
-      "id" : 20,
-      "name" : "Thor Donnergroll",
-      "HP" : 14,
-      "Damage" : 8,
-      "type" : "Elektro",
-      "extra" : "Donnerhall und elektrische Eruption!"
-    }, {
-      "id" : 30,
-      "name" : "Blizzara Frostfeuer",
-      "HP" : 9,
       "Damage" : 9,
-      "type" : "Eis",
-      "extra" : "Frostbeulen und gefrorene Schicksale!"
-    }, {
-      "id" : 9,
-      "name" : "Hydra Aquadonner",
-      "HP" : 12,
-      "Damage" : 12,
       "type" : "Wasser",
-      "extra" : "Ruft die Meeresgötter zu Hilfe!"
+      "extra" : "Beruhigt und kontrolliert die Gezeiten."
+    }, {
+      "id" : 13,
+      "name" : "Gaia Grünhüter",
+      "HP" : 12,
+      "Damage" : 9,
+      "type" : "Pflanze",
+      "extra" : "Blütenzauber und Fruchtbarkeitsernte!"
     } ],
     "computerCards" : [ {
-      "id" : 24,
-      "name" : "Terra Erdenschild",
-      "HP" : 12,
-      "Damage" : 12,
-      "type" : "Erde",
-      "extra" : "Felsen, die wie Wasser fließen!"
-    }, {
-      "id" : 23,
-      "name" : "Atlas Felsenfaust",
+      "id" : 11,
+      "name" : "Flora Rankengriff",
       "HP" : 10,
-      "Damage" : 8,
-      "type" : "Erde",
-      "extra" : "Erdbeben und Steinschatten!"
+      "Damage" : 10,
+      "type" : "Pflanze",
+      "extra" : "Umschlingt Gegner mit Ranken!"
     }, {
       "id" : 4,
       "name" : "Inferno Feuerschlag",
@@ -136,25 +29,78 @@
       "Damage" : 13,
       "type" : "Feuer",
       "extra" : "Tanzt um Feuerstürme herum!"
-    }, {
-      "id" : 6,
-      "name" : "Aqualis Meeresrufer",
-      "HP" : 11,
-      "Damage" : 11,
-      "type" : "Wasser",
-      "extra" : "Beherrscht die Wellen und Meerestiere."
-    }, {
-      "id" : 11,
-      "name" : "Flora Rankengriff",
-      "HP" : 10,
-      "Damage" : 10,
-      "type" : "Pflanze",
-      "extra" : "Umschlingt Gegner mit Ranken!"
     } ],
-    "firstAttack" : "Spieler",
-    "playerHP" : 25,
-    "computerHP" : 25,
-    "totalDamageDealt" : 0,
-    "totalDirectDamageDealt" : 0
+    "firstAttack" : "Computer",
+    "playerHP" : 21,
+    "computerHP" : 19,
+    "totalDamageDealt" : 27,
+    "totalDirectDamageDealt" : 6,
+    "battlelogs" : [ {
+      "attackerCard" : {
+        "id" : 25,
+        "name" : "Golem Felsensturm",
+        "HP" : 11,
+        "Damage" : 14,
+        "type" : "Erde",
+        "extra" : "Wurzeln, die sich tief in die Erde graben!"
+      },
+      "defenderCard" : {
+        "id" : 9,
+        "name" : "Hydra Aquadonner",
+        "HP" : 0,
+        "Damage" : 12,
+        "type" : "Wasser",
+        "extra" : "Ruft die Meeresgötter zu Hilfe!"
+      },
+      "damage" : 14,
+      "directDamage" : 2,
+      "attacker" : "Spieler",
+      "roundNumber" : 1,
+      "isEffectiv" : 1
+    }, {
+      "attackerCard" : {
+        "id" : 29,
+        "name" : "Chillara Frosthauch",
+        "HP" : 11,
+        "Damage" : 13,
+        "type" : "Eis",
+        "extra" : "Glitzerndes Eis und kristalline Eleganz!"
+      },
+      "defenderCard" : {
+        "id" : 4,
+        "name" : "Inferno Feuerschlag",
+        "HP" : 0,
+        "Damage" : 13,
+        "type" : "Feuer",
+        "extra" : "Tanzt um Feuerstürme herum!"
+      },
+      "damage" : 13,
+      "directDamage" : 4,
+      "attacker" : "Computer",
+      "roundNumber" : 2,
+      "isEffectiv" : 1
+    }, {
+      "attackerCard" : {
+        "id" : 10,
+        "name" : "Poseidon Meereswoge",
+        "HP" : 9,
+        "Damage" : 13,
+        "type" : "Wasser",
+        "extra" : "Wasserwirbel und Strudelmeisterschaft!"
+      },
+      "defenderCard" : {
+        "id" : 10,
+        "name" : "Poseidon Meereswoge",
+        "HP" : 0,
+        "Damage" : 13,
+        "type" : "Wasser",
+        "extra" : "Wasserwirbel und Strudelmeisterschaft!"
+      },
+      "damage" : 13,
+      "directDamage" : 4,
+      "attacker" : "Spieler",
+      "roundNumber" : 3,
+      "isEffectiv" : 1
+    } ]
   }
 }

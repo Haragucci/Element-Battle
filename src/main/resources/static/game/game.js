@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let totalDamageDealt = 0;
     let totalDirectDamageDealt = 0;
 
+    let battlelogs = [];
     let playerHP = 25;
     let computerHP = 25;
     let allHeroes = [];
@@ -81,7 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 Damage: hero.Damage,
                 type: hero.type,
                 extra: hero.extra
-            }))
+            })),
+            battlelogs: battlelogs
         };
 
         fetch('/saveGame', {
@@ -99,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Fehler beim Speichern des Spiels:', error);
             });
     }
+
 
 
     function checkAndUpdateUserCardDesign() {
@@ -581,6 +584,16 @@ document.addEventListener('DOMContentLoaded', function() {
         resultElement.innerText = resultText;
         battleLog.appendChild(resultElement);
         battleLog.scrollTop = battleLog.scrollHeight;
+
+        battlelogs.push({
+            attackerCard: attackerCard,
+            defenderCard: defenderCard,
+            damage: damage,
+            directDamage: directDamage,
+            attacker: attacker,
+            roundNumber: roundNumber,
+            isEffectiv: isEffective
+        });
     }
 
     function createCard(name, hp, damage, element, description) {
@@ -1262,9 +1275,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     totalDirectDamageDealt = data.totalDirectDamageDealt;
                     isPlayerFirstAttacker = data.firstAttack === "Spieler";
                     generatedGame = false;
+
+                    if (data.battlelogs) {
+                        data.battlelogs.forEach(log => {
+                            if (log.attackerCard && log.defenderCard) {
+                                displayBattleResult(
+                                    log.attackerCard,
+                                    log.defenderCard,
+                                    log.damage,
+                                    log.directDamage,
+                                    log.attacker,
+                                    log.roundNumber,
+                                    log.isEffectiv
+                                );
+                            }
+                        });
+                    }
+                    let maxRoundNumber = Math.max(...data.battlelogs.map(log => log.roundNumber));
+                    roundCounter= maxRoundNumber+1;
                     savePlayerGame();
                     startGameWithAttacker(data.firstAttack);
-                } else {
+                }
+                else {
                     console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
                     fetch('/heroshow', {
                         method: 'GET'

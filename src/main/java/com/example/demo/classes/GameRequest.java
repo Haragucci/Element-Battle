@@ -1,6 +1,6 @@
 package com.example.demo.classes;
 
-import com.example.demo.classes.Hero;
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,6 +14,7 @@ public class GameRequest {
     private final List<Hero> computerCards;
     private final int totalDamageDealt;
     private final int totalDirectDamageDealt;
+    private final List<Battlelog> Battlelogs;
 
     @JsonCreator
     public GameRequest(
@@ -24,7 +25,8 @@ public class GameRequest {
             @JsonProperty("playerCards") List<Hero> playerCards,
             @JsonProperty("computerCards") List<Hero> computerCards,
             @JsonProperty("totalDamageDealt") int totalDamageDealt,
-            @JsonProperty("totalDirectDamageDealt") int totalDirectDamageDealt) {
+            @JsonProperty("totalDirectDamageDealt") int totalDirectDamageDealt,
+            @JsonProperty("battlelogs") List<Battlelog> battlelogs){
         this.username = username;
         this.firstAttack = firstAttack;
         this.playerHP = playerHP;
@@ -33,6 +35,7 @@ public class GameRequest {
         this.computerCards = computerCards;
         this.totalDamageDealt = totalDamageDealt;
         this.totalDirectDamageDealt = totalDirectDamageDealt;
+        this.Battlelogs = battlelogs;
     }
 
     public String getUsername() {
@@ -71,6 +74,8 @@ public class GameRequest {
         return totalDirectDamageDealt;
     }
 
+    public List<Battlelog> getBattlelogs() { return Battlelogs; }
+
     @Override
     public String toString() {
         return "GameRequest{" +
@@ -82,6 +87,7 @@ public class GameRequest {
                 ", computerCards=" + computerCards +
                 ", totalDamageDealt=" + totalDamageDealt +
                 ", totalDirectDamageDealt=" + totalDirectDamageDealt +
+                ", Battlelogs=" + Battlelogs +
                 '}';
     }
 }

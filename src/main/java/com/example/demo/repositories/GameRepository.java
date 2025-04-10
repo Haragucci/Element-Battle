@@ -1,5 +1,6 @@
 package com.example.demo.repositories;
 
+import com.example.demo.classes.Battlelog;
 import com.example.demo.classes.Game;
 import com.example.demo.classes.Hero;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -87,8 +88,9 @@ public class GameRepository {
                 int computerHP = gameData.get("computerHP").asInt();
                 int totalDamageDealt = gameData.get("totalDamageDealt").asInt();
                 int totalDirectDamageDealt = gameData.get("totalDirectDamageDealt").asInt();
+                List<Battlelog> battlelogs = mapper.convertValue(gameData.get("battlelogs"), new TypeReference<>() {});
 
-                Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP, totalDamageDealt, totalDirectDamageDealt);
+                Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP, totalDamageDealt, totalDirectDamageDealt, battlelogs);
                 games.put(userId, game);
             });
         } catch (IOException e) {
@@ -96,7 +98,6 @@ public class GameRepository {
         }
         return games;
     }
-
 
     @PreDestroy
     private void saveAllGames() {

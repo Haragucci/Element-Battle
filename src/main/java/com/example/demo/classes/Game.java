@@ -1,6 +1,5 @@
 package com.example.demo.classes;
 
-import com.example.demo.classes.Hero;
 import java.util.List;
 
 public record Game(
@@ -10,6 +9,7 @@ public record Game(
         int playerHP,
         int computerHP,
         int totalDamageDealt,
-        int totalDirectDamageDealt
+        int totalDirectDamageDealt,
+        List<Battlelog> battlelogs
 ) {
 }
