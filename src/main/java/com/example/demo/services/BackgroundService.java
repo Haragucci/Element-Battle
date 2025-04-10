@@ -46,7 +46,7 @@ public class BackgroundService {
                     );
                     accountRepository.updateAccount(updatedAccount);
 
-                    backgroundRepository.createBackground(userId, background);
+                    backgroundRepository.createBackground(userId, "background1");
 
                     return ResponseEntity.ok(Map.of(
                             "success", true,

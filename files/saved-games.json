@@ -1,21 +1,6 @@
 {
   "1" : {
     "playerCards" : [ {
-      "id" : 7,
-      "name" : "Nerina Wellenweber",
-      "HP" : 10,
-      "Damage" : 9,
-      "type" : "Wasser",
-      "extra" : "Beruhigt und kontrolliert die Gezeiten."
-    }, {
-      "id" : 13,
-      "name" : "Gaia Grünhüter",
-      "HP" : 12,
-      "Damage" : 9,
-      "type" : "Pflanze",
-      "extra" : "Blütenzauber und Fruchtbarkeitsernte!"
-    } ],
-    "computerCards" : [ {
       "id" : 11,
       "name" : "Flora Rankengriff",
       "HP" : 10,
@@ -23,34 +8,49 @@
       "type" : "Pflanze",
       "extra" : "Umschlingt Gegner mit Ranken!"
     }, {
-      "id" : 4,
-      "name" : "Inferno Feuerschlag",
-      "HP" : 9,
-      "Damage" : 13,
+      "id" : 3,
+      "name" : "Vulcan Feuerschild",
+      "HP" : 14,
+      "Damage" : 8,
       "type" : "Feuer",
-      "extra" : "Tanzt um Feuerstürme herum!"
+      "extra" : "Schmiedet Schwerter aus flüssiger Lava!"
+    } ],
+    "computerCards" : [ {
+      "id" : 3,
+      "name" : "Vulcan Feuerschild",
+      "HP" : 14,
+      "Damage" : 8,
+      "type" : "Feuer",
+      "extra" : "Schmiedet Schwerter aus flüssiger Lava!"
+    }, {
+      "id" : 33,
+      "name" : "Aeolus Sturmbote",
+      "HP" : 13,
+      "Damage" : 10,
+      "type" : "Luft",
+      "extra" : "Flügel aus Wolken und federleichter Tanz!"
     } ],
     "firstAttack" : "Computer",
-    "playerHP" : 21,
-    "computerHP" : 19,
-    "totalDamageDealt" : 27,
-    "totalDirectDamageDealt" : 6,
+    "playerHP" : 23,
+    "computerHP" : 23,
+    "totalDamageDealt" : 26,
+    "totalDirectDamageDealt" : 2,
     "battlelogs" : [ {
       "attackerCard" : {
-        "id" : 25,
-        "name" : "Golem Felsensturm",
-        "HP" : 11,
+        "id" : 17,
+        "name" : "Electra Blitzschlag",
+        "HP" : 8,
         "Damage" : 14,
-        "type" : "Erde",
-        "extra" : "Wurzeln, die sich tief in die Erde graben!"
+        "type" : "Elektro",
+        "extra" : "Elektrisiert das Schlachtfeld mit einem Funken."
       },
       "defenderCard" : {
-        "id" : 9,
-        "name" : "Hydra Aquadonner",
-        "HP" : 0,
+        "id" : 1,
+        "name" : "Ignis Flammenherz",
+        "HP" : 12,
         "Damage" : 12,
-        "type" : "Wasser",
-        "extra" : "Ruft die Meeresgötter zu Hilfe!"
+        "type" : "Feuer",
+        "extra" : "Entfesselt ein feuriges Inferno!"
       },
       "damage" : 14,
       "directDamage" : 2,
@@ -67,37 +67,37 @@
         "extra" : "Glitzerndes Eis und kristalline Eleganz!"
       },
       "defenderCard" : {
-        "id" : 4,
-        "name" : "Inferno Feuerschlag",
-        "HP" : 0,
+        "id" : 15,
+        "name" : "Arborea Waldwisperer",
+        "HP" : 11,
         "Damage" : 13,
-        "type" : "Feuer",
-        "extra" : "Tanzt um Feuerstürme herum!"
+        "type" : "Pflanze",
+        "extra" : "Beherrscht den Wald in seiner ganzen Pracht!"
       },
       "damage" : 13,
-      "directDamage" : 4,
+      "directDamage" : 2,
       "attacker" : "Computer",
       "roundNumber" : 2,
       "isEffectiv" : 1
     }, {
       "attackerCard" : {
-        "id" : 10,
-        "name" : "Poseidon Meereswoge",
-        "HP" : 9,
-        "Damage" : 13,
-        "type" : "Wasser",
-        "extra" : "Wasserwirbel und Strudelmeisterschaft!"
+        "id" : 1,
+        "name" : "Ignis Flammenherz",
+        "HP" : 12,
+        "Damage" : 12,
+        "type" : "Feuer",
+        "extra" : "Entfesselt ein feuriges Inferno!"
       },
       "defenderCard" : {
-        "id" : 10,
-        "name" : "Poseidon Meereswoge",
-        "HP" : 0,
-        "Damage" : 13,
-        "type" : "Wasser",
-        "extra" : "Wasserwirbel und Strudelmeisterschaft!"
+        "id" : 24,
+        "name" : "Terra Erdenschild",
+        "HP" : 12,
+        "Damage" : 12,
+        "type" : "Erde",
+        "extra" : "Felsen, die wie Wasser fließen!"
       },
-      "damage" : 13,
-      "directDamage" : 4,
+      "damage" : 12,
+      "directDamage" : 0,
       "attacker" : "Spieler",
       "roundNumber" : 3,
       "isEffectiv" : 1

@@ -585,15 +585,18 @@ document.addEventListener('DOMContentLoaded', function() {
         battleLog.appendChild(resultElement);
         battleLog.scrollTop = battleLog.scrollHeight;
 
+
+
         battlelogs.push({
-            attackerCard: attackerCard,
-            defenderCard: defenderCard,
+            attackerCard: Object.assign({}, attackerCard),
+            defenderCard: Object.assign({}, defenderCard),
             damage: damage,
             directDamage: directDamage,
             attacker: attacker,
             roundNumber: roundNumber,
             isEffectiv: isEffective
         });
+
     }
 
     function createCard(name, hp, damage, element, description) {
