@@ -6,7 +6,6 @@ import com.example.demo.repositories.BackgroundRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,7 +89,7 @@ public class BackgroundService {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> hasBackground(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> hasBackground(Map<String, String> request) {
         String username = request.get("username");
         String background = request.get("background");
 
@@ -119,7 +118,7 @@ public class BackgroundService {
 
     }
 
-    public ResponseEntity<Map<String, Object>> toggleBackground(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> toggleBackground(Map<String, Object> request) {
         String username = (String) request.get("username");
         String background = (String) request.get("background");
 
@@ -151,7 +150,7 @@ public class BackgroundService {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> getBackground(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> getBackground(Map<String, Object> request) {
         String username = (String) request.get("username");
 
         try{

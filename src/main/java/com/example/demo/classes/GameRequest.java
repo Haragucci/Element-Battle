@@ -1,6 +1,5 @@
 package com.example.demo.classes;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +13,7 @@ public class GameRequest {
     private final List<Hero> computerCards;
     private final int totalDamageDealt;
     private final int totalDirectDamageDealt;
-    private final List<Battlelog> Battlelogs;
+    private final List<Battlelog> battlelogs;
 
     @JsonCreator
     public GameRequest(
@@ -35,7 +34,7 @@ public class GameRequest {
         this.computerCards = computerCards;
         this.totalDamageDealt = totalDamageDealt;
         this.totalDirectDamageDealt = totalDirectDamageDealt;
-        this.Battlelogs = battlelogs;
+        this.battlelogs = battlelogs;
     }
 
     public String getUsername() {
@@ -74,7 +73,7 @@ public class GameRequest {
         return totalDirectDamageDealt;
     }
 
-    public List<Battlelog> getBattlelogs() { return Battlelogs; }
+    public List<Battlelog> getBattlelogs() { return battlelogs; }
 
     @Override
     public String toString() {
@@ -87,7 +86,7 @@ public class GameRequest {
                 ", computerCards=" + computerCards +
                 ", totalDamageDealt=" + totalDamageDealt +
                 ", totalDirectDamageDealt=" + totalDirectDamageDealt +
-                ", Battlelogs=" + Battlelogs +
+                ", battlelogs=" + battlelogs +
                 '}';
     }
 }

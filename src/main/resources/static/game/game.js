@@ -825,6 +825,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let message;
         let color;
         let isPlayerWinner = false;
+        battlelogs = [];
+        roundCounter = 1;
 
         if (playerHP <= 0 && computerHP <= 0) {
             message = 'Unentschieden!';
