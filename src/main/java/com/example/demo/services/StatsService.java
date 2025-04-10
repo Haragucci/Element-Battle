@@ -6,7 +6,6 @@ import com.example.demo.repositories.StatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +104,7 @@ public class StatsService {
     }
 
 
-    public ResponseEntity<Map<String, Object>> getUserStats(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> getUserStats(Map<String, String> request) {
         String username = request.get("username");
         if (username == null || username.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of(
