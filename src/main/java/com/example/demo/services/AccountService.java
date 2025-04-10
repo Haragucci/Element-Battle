@@ -1,13 +1,10 @@
 package com.example.demo.services;
 
 import com.example.demo.classes.Account;
-import com.example.demo.classes.Game;
-import com.example.demo.repositories.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.repositories.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,52 +15,65 @@ public class AccountService {
     //===============================================SERVICE INTEGRATION===============================================\\
 
     private final AccountRepository accountRepository;
-    private final StatsService statsService;
-    private final BackgroundService backgroundService;
-    private final CardService cardService;
-    private final GameService gameService;
+    private final StatsRepository statsRepository;
+    private final BackgroundRepository backgroundRepository;
+    private final CardRepository cardRepository;
+    private final GameRepository gameRepository;
 
-
-    @Autowired
-    public AccountService(AccountRepository accountRepository, StatsService statsService, BackgroundService backgroundService, CardService cardService, GameService gameService) {
+    public AccountService(AccountRepository accountRepository, StatsRepository statsRepository, BackgroundRepository backgroundRepository, CardRepository cardRepository, GameRepository gameRepository) {
         this.accountRepository = accountRepository;
-        this.statsService = statsService;
-        this.backgroundService = backgroundService;
-        this.cardService = cardService;
-        this.gameService = gameService;
+        this.statsRepository = statsRepository;
+        this.backgroundRepository = backgroundRepository;
+        this.cardRepository = cardRepository;
+        this.gameRepository = gameRepository;
     }
 
     //===============================================REQUEST METHODS===============================================\\
 
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> user) {
+    public ResponseEntity<Map<String, Object>> login(Map<String, String> user) {
         String username = user.get("username");
         String password = user.get("password");
-        Account account = accountRepository.getAccount(username);
-        if (account != null && account.password().equals(password)) {
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "username", username,
-                    "coins", account.coins()
-            ));
+
+        try {
+            Account account = accountRepository.getAccountByUsername(username);
+
+            if (account.password().equals(password)) {
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "username", username,
+                        "coins", account.coins()
+                ));
+            } else {
+                return ResponseEntity.ok(Map.of("success", false));
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false));
         }
-        return ResponseEntity.ok(Map.of("success", false));
     }
 
-    public ResponseEntity<String> deleteUser(@RequestBody Map<String, String> payload) {
+
+    public ResponseEntity<String> deleteUser(Map<String, String> payload) {
         String username = payload.get("username");
+
         if (username == null || username.isEmpty()) {
             return ResponseEntity.badRequest().body("Username is required");
         }
-        try {
 
-            if (accountRepository.userExistsByUsername(username)) {
-                accountRepository.removeAccountAndSave(username);
-                statsService.removeStatsAndSave(username);
-                gameService.removeGameAndSave(username);
-                cardService.removeCardStatsAndSave(username);
-                backgroundService.removeBackgroundAndSave(username);
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
+
+                int accountId = account.id();
+                accountRepository.deleteAccount(accountId);
+                statsRepository.deleteStatsByUserId(accountId);
+                backgroundRepository.deleteBackground(accountId);
+                cardRepository.deleteCardDesign(accountId);
+                gameRepository.deleteGame(accountId);
+
 
                 return ResponseEntity.ok("User deleted successfully");
+
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
@@ -72,98 +82,86 @@ public class AccountService {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> updateAccount(@RequestBody Map<String, String> updateData) {
+    public ResponseEntity<Map<String, Object>> updateAccount(Map<String, String> updateData) {
         String oldUsername = updateData.get("oldUsername");
         String newUsername = updateData.get("newUsername");
         String newPassword = updateData.get("newPassword");
 
-        Account account = accountRepository.getAccount(oldUsername);
-        if (account == null) {
+        try {
+            Account oldAccount = accountRepository.getAccountByUsername(oldUsername);
+            if (oldAccount == null) {
+                return ResponseEntity.ok(Map.of(
+                        "success", false,
+                        "message", "Benutzer nicht gefunden"
+                ));
+            }
+
+            if (!oldUsername.equals(newUsername) && accountRepository.accountExistsByUsername(newUsername)) {
+                return ResponseEntity.ok(Map.of(
+                        "success", false,
+                        "message", "Neuer Benutzername bereits vergeben"
+                ));
+            }
+
+            Account updatedAccount = new Account(
+                    oldAccount.id(),
+                    newUsername != null && !newUsername.isEmpty() ? newUsername : oldUsername,
+                    newPassword != null && !newPassword.isEmpty() ? newPassword : oldAccount.password(),
+                    oldAccount.coins()
+            );
+            accountRepository.updateAccount(updatedAccount);
+
             return ResponseEntity.ok(Map.of(
-                    "success", false,
-                    "message", "Benutzer nicht gefunden"
+                    "success", true,
+                    "message", "Kontoinformationen erfolgreich aktualisiert"
             ));
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of());
         }
-
-        if (!oldUsername.equals(newUsername) && accountRepository.userExistsByUsername(newUsername)) {
-            return ResponseEntity.ok(Map.of(
-                    "success", false,
-                    "message", "Neuer Benutzername bereits vergeben"
-            ));
-        }
-        Account updatedAccount = new Account(
-                newUsername,
-                newPassword != null ? newPassword : account.password(),
-                account.coins()
-        );
-        accountRepository.updateAccount(newUsername, updatedAccount);
-
-        if (backgroundService.checkBackground(oldUsername)) {
-            String background = backgroundService.removeBackground(oldUsername);
-            backgroundService.putBackground(newUsername, background);
-            backgroundService.saveBackgrounds();
-        }
-
-        if (cardService.checkCards(oldUsername)) {
-            String cardDesign = cardService.removeCardDesign(oldUsername);
-            cardService.putCardDesign(newUsername, cardDesign);
-            cardService.saveCardDesigns();
-        }
-
-        if (gameService.checkGames(oldUsername)) {
-            Game game = gameService.removeGame(oldUsername);
-            gameService.putGame(newUsername, game);
-            gameService.saveGame();
-        }
-
-        if(statsService.checkStats(oldUsername)) {
-            Map<String, Object> stats = statsService.removeStats(oldUsername);
-            statsService.putStats(newUsername, stats);
-            statsService.saveStats();
-        }
-
-        return ResponseEntity.ok(Map.of(
-                "success", true,
-                "message", "Kontoinformationen erfolgreich aktualisiert"
-        ));
     }
 
-    public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> user) {
+
+    public ResponseEntity<Map<String, Object>> register(Map<String, String> user) {
         String username = user.get("username");
         String password = user.get("password");
+        Account existingAccount;
 
-        if (accountRepository.userExistsByUsername(username)) {
-            Account existingAccount = accountRepository.getAccount(username);
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                existingAccount = accountRepository.getAccountByUsername(username);
+                return ResponseEntity.ok(Map.of(
+                        "success", false,
+                        "message", "Benutzername existiert bereits",
+                        "username", username,
+                        "coins", existingAccount.coins()
+                ));
+            }
+
+            Account newAccount = new Account(0, username, password, 0);
+            Account newAccount2 = accountRepository.createAccount(newAccount);
+
+            Map<String, Object> newUserStats = new HashMap<>();
+            newUserStats.put("wins", 0);
+            newUserStats.put("coins", 0);
+            newUserStats.put("damage", 0);
+            newUserStats.put("direkt-damage", 0);
+            newUserStats.put("lose", 0);
+            newUserStats.put("winrate", 0.0);
+
+            statsRepository.createStats(newAccount2.id(), newUserStats);
+
             return ResponseEntity.ok(Map.of(
-                    "success", false,
-                    "message", "Benutzername existiert bereits",
+                    "success", true,
                     "username", username,
-                    "coins", existingAccount.coins()
+                    "coins", 0
             ));
+
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("success", false));
         }
-
-        Account newAccount = new Account(username, password, 0);
-        accountRepository.updateAccount(username, newAccount);
-        accountRepository.saveAccounts();
-
-        Map<String, Object> newUserStats = new HashMap<>();
-        newUserStats.put("wins", 0);
-        newUserStats.put("coins", 0);
-        newUserStats.put("damage", 0);
-        newUserStats.put("direkt-damage", 0);
-        newUserStats.put("lose", 0);
-        newUserStats.put("winrate", 0.0);
-
-        statsService.saveUserStats(username, newUserStats);
-
-        return ResponseEntity.ok(Map.of(
-                "success", true,
-                "username", username,
-                "coins", 0
-        ));
     }
 
-    public ResponseEntity<Map<String, Object>> getUserInfo(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> getUserInfo(Map<String, String> request) {
         String username = request.get("username");
 
         if (username == null || username.isEmpty()) {
@@ -173,7 +171,8 @@ public class AccountService {
             ));
         }
 
-        Account account = accountRepository.getAccount(username);
+        Account account = accountRepository.getAccountByUsername(username);
+
         if (account == null) {
             return ResponseEntity.ok(Map.of(
                     "success", false,
@@ -189,49 +188,68 @@ public class AccountService {
         ));
     }
 
-    public ResponseEntity<Map<String, Object>> updateCoins(@RequestBody Map<String, Object> request) {
+
+    public ResponseEntity<Map<String, Object>> updateCoins(Map<String, Object> request) {
         String username = (String) request.get("username");
         int coins = (int) request.get("coins");
 
-        Account account = accountRepository.getAccount(username);
-        if (account != null) {
-            Account updatedAccount = new Account(
-                    account.username(),
-                    account.password(),
-                    coins
-            );
-            accountRepository.updateAccount(username, updatedAccount);
-            accountRepository.saveAccounts();
+        try {
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
 
+                Account updatedAccount = new Account(
+                        account.id(),
+                        account.username(),
+                        account.password(),
+                        coins
+                );
+
+                accountRepository.updateAccount(updatedAccount);
+
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "coins", updatedAccount.coins()
+                ));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                        "success", false,
+                        "message", "Benutzer nicht gefunden"
+                ));
+            }
+        } catch (Exception e) {
             return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "coins", updatedAccount.coins()
+                    "success", false,
+                    "message", e.getMessage()
             ));
         }
-
-        return ResponseEntity.ok(Map.of("success", false));
     }
 
-    public ResponseEntity<Map<String, Object>> addCoins(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> addCoins(Map<String, Object> request) {
         String username = (String) request.get("username");
-        int amount = (int) request.get("amount");
 
-        Account account = accountRepository.getAccount(username);
-        if (account != null) {
-            Account updatedAccount = new Account(
-                    account.username(),
-                    account.password(),
-                    account.coins() + amount
-            );
-            accountRepository.updateAccount(username, updatedAccount);
-            accountRepository.saveAccounts();
+        try {
+            int amount = (int) request.get("amount");
+            if (accountRepository.accountExistsByUsername(username)) {
+                Account account = accountRepository.getAccountByUsername(username);
 
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "coins", updatedAccount.coins()
-            ));
+                Account updatedAccount = new Account(
+                        account.id(),
+                        account.username(),
+                        account.password(),
+                        account.coins() + amount
+                );
+
+                accountRepository.updateAccount(updatedAccount);
+
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "coins", updatedAccount.coins()
+                ));
+            } else {
+                return ResponseEntity.ok(Map.of("success", false));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("message", e.getMessage()));
         }
-
-        return ResponseEntity.ok(Map.of("success", false));
     }
 }

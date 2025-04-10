@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch("/createProfiles")
             .then(response => response.text())
             .then(data=> {
-                data.includes("");//Nur damit keine Fehler angezeigt werden
+                data.includes("");
                 createProfilesButton.classList.add('blink-success');
                 setTimeout(() => createProfilesButton.classList.remove('blink-success'), 1000);
             })

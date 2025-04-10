@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let totalDamageDealt = 0;
     let totalDirectDamageDealt = 0;
 
+    let battlelogs = [];
     let playerHP = 25;
     let computerHP = 25;
     let allHeroes = [];
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function savePlayerGame() {
         const username = localStorage.getItem('username');
-        firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer"
+        firstAttacker = isPlayerFirstAttacker ? "Spieler" : "Computer";
 
         if (!username || playerHand.length === 0 || computerHand.length === 0) {
             console.error('Fehlende Daten für das Speichern des Spiels!');
@@ -61,9 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const requestData = {
             username: username,
-            firstAttack:firstAttacker,
-            PHP:playerHP,
-            CHP:computerHP,
+            firstAttack: firstAttacker,
+            PHP: playerHP,
+            CHP: computerHP,
+            totalDamageDealt: totalDamageDealt,
+            totalDirectDamageDealt: totalDirectDamageDealt,
             playerCards: playerHand.map(hero => ({
                 id: hero.id,
                 name: hero.name,
@@ -79,7 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 Damage: hero.Damage,
                 type: hero.type,
                 extra: hero.extra
-            }))
+            })),
+            battlelogs: battlelogs
         };
 
         fetch('/saveGame', {
@@ -97,6 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Fehler beim Speichern des Spiels:', error);
             });
     }
+
+
 
     function checkAndUpdateUserCardDesign() {
         const username = localStorage.getItem('username');
@@ -116,8 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 let design = 'default';
-                if (data.exists) {
-                    design = data.activeBackground || 'default';
+                if (data.purchased) {
+                    design = data.activeDesign || 'default';
                 }
                 localStorage.setItem('activeCardDesign', design);
                 updateCardDesign();
@@ -252,9 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUserInfo();
 
     function logout() {
-        localStorage.removeItem('username');
-        localStorage.removeItem('coins');
-        localStorage.setItem('activeCardDesign', 'default');
+        localStorage.clear();
         updateUserInfo();
         window.location.reload();
 
@@ -580,6 +584,19 @@ document.addEventListener('DOMContentLoaded', function() {
         resultElement.innerText = resultText;
         battleLog.appendChild(resultElement);
         battleLog.scrollTop = battleLog.scrollHeight;
+
+
+
+        battlelogs.push({
+            attackerCard: Object.assign({}, attackerCard),
+            defenderCard: Object.assign({}, defenderCard),
+            damage: damage,
+            directDamage: directDamage,
+            attacker: attacker,
+            roundNumber: roundNumber,
+            isEffectiv: isEffective
+        });
+
     }
 
     function createCard(name, hp, damage, element, description) {
@@ -808,6 +825,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let message;
         let color;
         let isPlayerWinner = false;
+        battlelogs = [];
+        roundCounter = 1;
 
         if (playerHP <= 0 && computerHP <= 0) {
             message = 'Unentschieden!';
@@ -1257,11 +1276,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     computerHand = data.Computercards;
                     playerHP = data.PHP;
                     computerHP = data.CHP;
+                    totalDamageDealt = data.totalDamageDealt;
+                    totalDirectDamageDealt = data.totalDirectDamageDealt;
                     isPlayerFirstAttacker = data.firstAttack === "Spieler";
                     generatedGame = false;
+
+                    if (data.battlelogs) {
+                        data.battlelogs.forEach(log => {
+                            if (log.attackerCard && log.defenderCard) {
+                                displayBattleResult(
+                                    log.attackerCard,
+                                    log.defenderCard,
+                                    log.damage,
+                                    log.directDamage,
+                                    log.attacker,
+                                    log.roundNumber,
+                                    log.isEffectiv
+                                );
+                            }
+                        });
+                    }
+                    let maxRoundNumber = Math.max(...data.battlelogs.map(log => log.roundNumber));
+                    roundCounter= maxRoundNumber+1;
                     savePlayerGame();
                     startGameWithAttacker(data.firstAttack);
-                } else {
+                }
+                else {
                     console.log('Kein gespeichertes Spiel gefunden. Generiere neue Karten.');
                     fetch('/heroshow', {
                         method: 'GET'
@@ -1271,6 +1311,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             allHeroes = heroes;
                             playerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
                             computerHand = allHeroes.sort(() => 0.5 - Math.random()).slice(0, 5);
+                            totalDirectDamageDealt = 0;
+                            totalDamageDealt = 0;
                             if (username){
                                 savePlayerGame();
                             }

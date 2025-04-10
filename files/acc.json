@@ -1,12 +1,8 @@
 {
-  "Tilljan2": {
-    "username": "Tilljan2",
-    "password": "tilljan2",
-    "coins": 0
-  },
-  "Tilljan": {
-    "username": "Tilljan",
-    "password": "tilljan",
-    "coins": 5
+  "1" : {
+    "id" : 1,
+    "username" : "Tilljan",
+    "password" : "tilljan",
+    "coins" : 2
   }
 }

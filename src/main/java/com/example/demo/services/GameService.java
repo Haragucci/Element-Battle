@@ -1,150 +1,134 @@
 package com.example.demo.services;
 
+import com.example.demo.classes.Account;
 import com.example.demo.classes.Game;
 import com.example.demo.classes.GameRequest;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.classes.Hero;
+import com.example.demo.repositories.AccountRepository;
+import com.example.demo.repositories.GameRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
-import com.example.demo.services.HeroService.Hero;
 
 @Service
 public class GameService {
 
+    //===============================================SERVICE===============================================\\
+
+    private final AccountRepository accountRepository;
+    private final GameRepository gameRepository;
+
     //===============================================VARIABLES===============================================\\
 
-    public final Map<String, Game> games = new HashMap<>();
-    private static final String GAME_FILE_PATH = "files/saved-games.json";
-    private final ObjectMapper mapper = new ObjectMapper();
 
+    @Autowired
+    public GameService(AccountRepository accountRepository, GameRepository gameRepository) {
+        this.accountRepository = accountRepository;
+        this.gameRepository = gameRepository;
+    }
 
     //===============================================REQUEST METHODS===============================================\\
 
-    public ResponseEntity<Map<String, Object>> saveGame(@RequestBody GameRequest request) {
+    public ResponseEntity<Map<String, Object>> saveGame(GameRequest request) {
         String username = request.getUsername();
-        String firstAttack = request.getFirstAttack();
-        int playerHP = request.getPlayerHP();
-        int computerHP = request.getComputerHP();
-        List<Hero> playerCards = request.getPlayercards();
-        List<Hero> computerCards = request.getComputercards();
+        try {
+            if(accountRepository.accountExistsByUsername(username)){
+                Account account = accountRepository.getAccountByUsername(username);
 
+                int userId = account.id();
 
-        if (username == null || playerCards == null || computerCards == null) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Fehlende Daten!"));
+                Game game = new Game(
+                        request.getPlayercards(),
+                        request.getComputercards(),
+                        request.getFirstAttack(),
+                        request.getPlayerHP(),
+                        request.getComputerHP(),
+                        request.getTotalDamageDealt(),
+                        request.getTotalDirectDamageDealt(),
+                        request.getBattlelogs()
+                );
+
+                if (!gameRepository.gameExistsByUserId(account.id())){
+                    gameRepository.createGame(account.id(), game);
+                }
+                else {
+                    gameRepository.updateGame(userId, game);
+                }
+                return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
+            }
+            else {
+                return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
-
-        Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
-        games.put(username, game);
-        saveGame();
-
-        return ResponseEntity.ok(Map.of("message", "Spiel gespeichert!"));
     }
 
-    public ResponseEntity<String> deleteGame(@PathVariable String username) {
-        if (games.containsKey(username)) {
-            games.remove(username);
-            saveGame();
+
+    public ResponseEntity<String> deleteGame(String username) {
+        Account account = accountRepository.getAccountByUsername(username);
+        if (account == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        int userId = account.id();
+        if (gameRepository.gameExistsByUserId(userId)) {
+            gameRepository.deleteGame(userId);
             return ResponseEntity.ok("Spielstand für Benutzer '" + username + "' gelöscht.");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    public ResponseEntity<Map<String, Object>> checkGame(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> checkGame(Map<String, String> request) {
         String username = request.get("username");
+        try {
+            if(accountRepository.accountExistsByUsername(username)){
+                Account account = accountRepository.getAccountByUsername(username);
+                int userId = account.id();
 
-        if (username == null || !games.containsKey(username)) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
+                if (!gameRepository.gameExistsByUserId(userId)) {
+                    return ResponseEntity.badRequest().body(Map.of("message", "Kein gespeichertes Spiel gefunden!"));
+                }
+
+                Game game = gameRepository.getGame(userId);
+
+                return ResponseEntity.ok(Map.of(
+                        "Playercards", toHeroMap(game.playerCards()),
+                        "Computercards", toHeroMap(game.computerCards()),
+                        "firstAttack", game.firstAttack(),
+                        "PHP", game.playerHP(),
+                        "CHP", game.computerHP(),
+                        "totalDamageDealt", game.totalDamageDealt(),
+                        "totalDirectDamageDealt", game.totalDirectDamageDealt(),
+                        "battlelogs", game.battlelogs()
+                ));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden!"));
+            }
+        } catch (Exception e){
+            return ResponseEntity.ok(Map.of("message", e.getMessage()));
         }
-        Game game = games.get(username);
-
-        return ResponseEntity.ok(Map.of(
-                "Playercards", game.playerCards().stream().map(hero -> Map.of(
-                        "id", hero.id(),
-                        "name", hero.name(),
-                        "HP", hero.HP(),
-                        "Damage", hero.Damage(),
-                        "type", hero.type(),
-                        "extra", hero.extra()
-                )).collect(Collectors.toList()),
-                "Computercards", game.computerCards().stream().map(hero -> Map.of(
-                        "id", hero.id(),
-                        "name", hero.name(),
-                        "HP", hero.HP(),
-                        "Damage", hero.Damage(),
-                        "type", hero.type(),
-                        "extra", hero.extra()
-                )).collect(Collectors.toList()),
-                "firstAttack", game.firstAttack(),
-                "PHP", game.playerHP(),
-                "CHP", game.computerHP()
-        ));
     }
+
+
 
     //===============================================HELPING METHODS===============================================\\
 
-
-    public boolean checkGames(String username){
-        return games.containsKey(username);
-    }
-
-    public void removeGameAndSave(String username){
-        games.remove(username);
-        saveGame();
-    }
-
-    public void putGame(String username, Game game) {
-        games.put(username, game);
-    }
-
-    public Game removeGame(String username){
-        return games.remove(username);
-    }
-
-
-    //===============================================FILE MANAGEMENT===============================================\\
-
-    public void loadGame() {
-        try {
-            File file = new File(GAME_FILE_PATH);
-            if (file.exists()) {
-                JsonNode rootNode = mapper.readTree(file);
-
-                rootNode.fields().forEachRemaining(entry -> {
-                    String username = entry.getKey();
-                    JsonNode gameData = entry.getValue();
-
-                    List<Hero> playerCards = mapper.convertValue(gameData.get("playerCards"), new TypeReference<>() {
-                    });
-                    List<Hero> computerCards = mapper.convertValue(gameData.get("computerCards"), new TypeReference<>() {
-                    });
-                    String firstAttack = gameData.get("firstAttack").asText();
-                    int playerHP = gameData.get("playerHP").asInt();
-                    int computerHP = gameData.get("computerHP").asInt();
-                    Game game = new Game(playerCards, computerCards, firstAttack, playerHP, computerHP);
-                    games.put(username, game);
-                });
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void saveGame() {
-        try {
-            mapper.writeValue(new File(GAME_FILE_PATH), games);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    private List<Map<String, Object>> toHeroMap(List<Hero> heroes) {
+        return heroes.stream().map(hero -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", hero.id());
+            map.put("name", hero.name());
+            map.put("HP", hero.HP());
+            map.put("Damage", hero.Damage());
+            map.put("type", hero.type());
+            map.put("extra", hero.extra());
+            return map;
+        }).collect(Collectors.toList());
     }
 }

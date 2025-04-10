@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.classes.Hero;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class HeroController {
     }
 
     @PostMapping("/hero")
-    public ResponseEntity<HeroService.Hero> createHero(@RequestBody HeroService.Hero hero) {
+    public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
         return heroService.createHero(hero);
     }
 
@@ -29,17 +30,17 @@ public class HeroController {
     }
 
     @PutMapping("/heroedit")
-    public String editHero(@RequestBody HeroService.Hero heroe) {
+    public String editHero(@RequestBody Hero heroe) {
         return heroService.editHero(heroe);
     }
 
     @DeleteMapping("/herodelete")
-    public String delhero(@RequestBody(required = false) HeroService.Hero herodel, @RequestParam(value = "id", required = false) Integer id) {
+    public String delhero(@RequestBody(required = false) Hero herodel, @RequestParam(value = "id", required = false) Integer id) {
         return heroService.delhero(herodel, id);
     }
 
     @GetMapping("/heroshow")
-    public List<HeroService.Hero> showHero() {
+    public List<Hero> showHero() {
         return heroService.showHero();
     }
 

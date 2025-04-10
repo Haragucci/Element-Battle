@@ -3,59 +3,90 @@ package com.example.demo.repositories;
 import com.example.demo.classes.Account;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 @Service
 public class AccountRepository {
 
-
-    //===============================================VARIABLES===============================================\\
-
     public static final String ACCOUNTS_FILE_PATH = "files/acc.json";
-    private Map<String, Account> accounts = new HashMap<>();
+    private Map<Integer, Account> accounts = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
+    private int counter = 1;
 
-    //===============================================HELPING METHODS===============================================\\
 
-    public Account getAccount(String username) {
-        return accounts.get(username);
+    public AccountRepository() {
+        loadAccounts();
     }
 
-    public void removeAccountAndSave(String username) {
-        if (userExistsByUsername(username)) {
-            accounts.remove(username);
+    public Account deleteAccount(int id) {
+        if (accountExistsById(id)) {
+            Account account = getAccountById(id);
+            accounts.remove(id);
             saveAccounts();
+            return account;
+        } else {
+            throw new IllegalArgumentException("Account with id " + id + " does not exist");
         }
-        else throw new IllegalArgumentException("Username " + username + " does not exist");
-
     }
 
-    public void updateAccount(String username, Account account) {
-        if(userExistsByUsername(username)) {
-            accounts.put(username, account);
+    public Account updateAccount(Account account) {
+        int id = account.id();
+        if (accountExistsById(id)) {
+            accounts.put(id, account);
             saveAccounts();
+            return account;
+        } else {
+            throw new IllegalArgumentException("Account with id " + id + " does not exist");
         }
-        else throw new IllegalArgumentException("Username " + username + " does not exist");
     }
 
-    public boolean userExistsByUsername(String username) {
-        return accounts.containsKey(username);
+    public Account createAccount(Account account) {
+        if (!accountExistsByUsername(account.username())) {
+            int id = counter++;
+            Account account1 = new Account(id, account.username(), account.password(), account.coins());
+            accounts.put(account1.id(), account1);
+            saveAccounts();
+            return account1;
+        } else {
+            throw new IllegalArgumentException("Account with id " + account.username() + " already exist");
+        }
     }
 
-    //===============================================FILE MANAGEMENT===============================================\\
+    public boolean accountExistsByUsername(String username) {
+        return accounts.values().stream()
+                .anyMatch(account -> account.username().equals(username));
+    }
 
+    public Account getAccountById(int id) {
+        return accounts.values().stream()
+                .filter(account -> account.id() == id)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Account with id "+ id + " does not exist"));
+    }
 
-    public void loadAccounts() {
+    public boolean accountExistsById(int id) {
+        return accounts.containsKey(id);
+    }
+
+    public Account getAccountByUsername(String username) {
+        return accounts.values().stream()
+                .filter(account -> account.username().equals(username))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Account with name " + username + " does not exist"));
+    }
+
+    private void loadAccounts() {
         try {
             File file = new File(ACCOUNTS_FILE_PATH);
             if (file.exists()) {
                 accounts = mapper.readValue(file, new TypeReference<>() {});
+                counter = accounts.values().stream().mapToInt(Account::id).max().orElse(0) + 1;
             } else {
                 System.out.println("acc.json Datei existiert nicht.");
             }
@@ -64,11 +95,12 @@ public class AccountRepository {
         }
     }
 
-    public void saveAccounts() {
+    @PreDestroy
+    private void saveAccounts() {
         try {
-            mapper.writeValue(new File(ACCOUNTS_FILE_PATH), accounts);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(ACCOUNTS_FILE_PATH), accounts);
         } catch (IOException e) {
-            System.out.println("Fehler beim speichern der Accounts");
+            System.out.println("Fehler beim Speichern der Accounts");
         }
     }
 }

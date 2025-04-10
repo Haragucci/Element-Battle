@@ -1,1 +1,236 @@
-{"Tilljan":{"playerCards":[{"id":5,"name":"Helios Sonnentänzer","HP":13,"Damage":14,"type":"Feuer","extra":"Herrscht über Vulkan und Flamme!"},{"id":18,"name":"Raiden Donnerfaust","HP":11,"Damage":11,"type":"Elektro","extra":"Blitze zucken durch die Luft!"},{"id":30,"name":"Blizzara Frostfeuer","HP":9,"Damage":9,"type":"Eis","extra":"Frostbeulen und gefrorene Schicksale!"},{"id":13,"name":"Gaia Grünhüter","HP":12,"Damage":9,"type":"Pflanze","extra":"Blütenzauber und Fruchtbarkeitsernte!"},{"id":29,"name":"Chillara Frosthauch","HP":11,"Damage":13,"type":"Eis","extra":"Glitzerndes Eis und kristalline Eleganz!"}],"computerCards":[{"id":1,"name":"Ignis Flammenherz","HP":12,"Damage":12,"type":"Feuer","extra":"Entfesselt ein feuriges Inferno!"},{"id":19,"name":"Jolt Elektrosturm","HP":10,"Damage":10,"type":"Elektro","extra":"Ladung, die die Luft zum Zerreißen bringt!"},{"id":4,"name":"Inferno Feuerschlag","HP":9,"Damage":13,"type":"Feuer","extra":"Tanzt um Feuerstürme herum!"},{"id":5,"name":"Helios Sonnentänzer","HP":13,"Damage":14,"type":"Feuer","extra":"Herrscht über Vulkan und Flamme!"},{"id":27,"name":"Frostius Eisessturm","HP":12,"Damage":10,"type":"Eis","extra":"Frostiger Sturm!"}],"firstAttack":"Spieler","playerHP":25,"computerHP":25},"Tilljan2":{"playerCards":[{"id":35,"name":"Caelus Wolke","HP":12,"Damage":12,"type":"Luft","extra":"Sphärenklänge und Windgesang!"},{"id":15,"name":"Arborea Waldwisperer","HP":11,"Damage":13,"type":"Pflanze","extra":"Beherrscht den Wald in seiner ganzen Pracht!"},{"id":18,"name":"Raiden Donnerfaust","HP":11,"Damage":11,"type":"Elektro","extra":"Blitze zucken durch die Luft!"},{"id":20,"name":"Thor Donnergroll","HP":14,"Damage":8,"type":"Elektro","extra":"Donnerhall und elektrische Eruption!"},{"id":23,"name":"Atlas Felsenfaust","HP":10,"Damage":8,"type":"Erde","extra":"Erdbeben und Steinschatten!"}],"computerCards":[{"id":2,"name":"Pyra Glutsturm","HP":11,"Damage":10,"type":"Feuer","extra":"Brennt mit der Hitze von tausend Sonnen!"},{"id":29,"name":"Chillara Frosthauch","HP":11,"Damage":13,"type":"Eis","extra":"Glitzerndes Eis und kristalline Eleganz!"},{"id":18,"name":"Raiden Donnerfaust","HP":11,"Damage":11,"type":"Elektro","extra":"Blitze zucken durch die Luft!"},{"id":28,"name":"Tundrus Eisbann","HP":14,"Damage":14,"type":"Eis","extra":"Schneesturm und gefrorene Stille!"},{"id":7,"name":"Nerina Wellenweber","HP":10,"Damage":9,"type":"Wasser","extra":"Beruhigt und kontrolliert die Gezeiten."}],"firstAttack":"Spieler","playerHP":25,"computerHP":25}}
+{
+  "1" : {
+    "playerCards" : [ {
+      "id" : 7,
+      "name" : "Nerina Wellenweber",
+      "HP" : 10,
+      "Damage" : 9,
+      "type" : "Wasser",
+      "extra" : "Beruhigt und kontrolliert die Gezeiten."
+    }, {
+      "id" : 3,
+      "name" : "Vulcan Feuerschild",
+      "HP" : 14,
+      "Damage" : 8,
+      "type" : "Feuer",
+      "extra" : "Schmiedet Schwerter aus flüssiger Lava!"
+    }, {
+      "id" : 5,
+      "name" : "Helios Sonnentänzer",
+      "HP" : 13,
+      "Damage" : 14,
+      "type" : "Feuer",
+      "extra" : "Herrscht über Vulkan und Flamme!"
+    }, {
+      "id" : 20,
+      "name" : "Thor Donnergroll",
+      "HP" : 14,
+      "Damage" : 8,
+      "type" : "Elektro",
+      "extra" : "Donnerhall und elektrische Eruption!"
+    }, {
+      "id" : 19,
+      "name" : "Jolt Elektrosturm",
+      "HP" : 10,
+      "Damage" : 10,
+      "type" : "Elektro",
+      "extra" : "Ladung, die die Luft zum Zerreißen bringt!"
+    } ],
+    "computerCards" : [ {
+      "id" : 2,
+      "name" : "Pyra Glutsturm",
+      "HP" : 11,
+      "Damage" : 10,
+      "type" : "Feuer",
+      "extra" : "Brennt mit der Hitze von tausend Sonnen!"
+    }, {
+      "id" : 6,
+      "name" : "Aqualis Meeresrufer",
+      "HP" : 11,
+      "Damage" : 11,
+      "type" : "Wasser",
+      "extra" : "Beherrscht die Wellen und Meerestiere."
+    }, {
+      "id" : 16,
+      "name" : "Voltaris Donnerklinge",
+      "HP" : 9,
+      "Damage" : 13,
+      "type" : "Elektro",
+      "extra" : "Schlägt mit der Kraft eines Gewitters zu."
+    }, {
+      "id" : 25,
+      "name" : "Golem Felsensturm",
+      "HP" : 11,
+      "Damage" : 14,
+      "type" : "Erde",
+      "extra" : "Wurzeln, die sich tief in die Erde graben!"
+    }, {
+      "id" : 13,
+      "name" : "Gaia Grünhüter",
+      "HP" : 12,
+      "Damage" : 9,
+      "type" : "Pflanze",
+      "extra" : "Blütenzauber und Fruchtbarkeitsernte!"
+    } ],
+    "firstAttack" : "Computer",
+    "playerHP" : 25,
+    "computerHP" : 13,
+    "totalDamageDealt" : 66,
+    "totalDirectDamageDealt" : 12,
+    "battlelogs" : [ {
+      "attackerCard" : {
+        "id" : 10,
+        "name" : "Poseidon Meereswoge",
+        "HP" : 9,
+        "Damage" : 13,
+        "type" : "Wasser",
+        "extra" : "Wasserwirbel und Strudelmeisterschaft!"
+      },
+      "defenderCard" : {
+        "id" : 25,
+        "name" : "Golem Felsensturm",
+        "HP" : 11,
+        "Damage" : 14,
+        "type" : "Erde",
+        "extra" : "Wurzeln, die sich tief in die Erde graben!"
+      },
+      "damage" : 13,
+      "directDamage" : 2,
+      "attacker" : "Spieler",
+      "roundNumber" : 1,
+      "isEffectiv" : 1
+    }, {
+      "attackerCard" : {
+        "id" : 15,
+        "name" : "Arborea Waldwisperer",
+        "HP" : 11,
+        "Damage" : 13,
+        "type" : "Pflanze",
+        "extra" : "Beherrscht den Wald in seiner ganzen Pracht!"
+      },
+      "defenderCard" : {
+        "id" : 1,
+        "name" : "Ignis Flammenherz",
+        "HP" : 12,
+        "Damage" : 12,
+        "type" : "Feuer",
+        "extra" : "Entfesselt ein feuriges Inferno!"
+      },
+      "damage" : 7,
+      "directDamage" : 0,
+      "attacker" : "Computer",
+      "roundNumber" : 2,
+      "isEffectiv" : 0
+    }, {
+      "attackerCard" : {
+        "id" : 1,
+        "name" : "Ignis Flammenherz",
+        "HP" : 5,
+        "Damage" : 12,
+        "type" : "Feuer",
+        "extra" : "Entfesselt ein feuriges Inferno!"
+      },
+      "defenderCard" : {
+        "id" : 15,
+        "name" : "Arborea Waldwisperer",
+        "HP" : 11,
+        "Damage" : 13,
+        "type" : "Pflanze",
+        "extra" : "Beherrscht den Wald in seiner ganzen Pracht!"
+      },
+      "damage" : 18,
+      "directDamage" : 7,
+      "attacker" : "Spieler",
+      "roundNumber" : 2,
+      "isEffectiv" : 1
+    }, {
+      "attackerCard" : {
+        "id" : 2,
+        "name" : "Pyra Glutsturm",
+        "HP" : 11,
+        "Damage" : 10,
+        "type" : "Feuer",
+        "extra" : "Brennt mit der Hitze von tausend Sonnen!"
+      },
+      "defenderCard" : {
+        "id" : 26,
+        "name" : "Glacies Frostschild",
+        "HP" : 10,
+        "Damage" : 12,
+        "type" : "Eis",
+        "extra" : "Eisige Kältepeitsche!"
+      },
+      "damage" : 10,
+      "directDamage" : 0,
+      "attacker" : "Spieler",
+      "roundNumber" : 3,
+      "isEffectiv" : 1
+    }, {
+      "attackerCard" : {
+        "id" : 19,
+        "name" : "Jolt Elektrosturm",
+        "HP" : 10,
+        "Damage" : 10,
+        "type" : "Elektro",
+        "extra" : "Ladung, die die Luft zum Zerreißen bringt!"
+      },
+      "defenderCard" : {
+        "id" : 23,
+        "name" : "Atlas Felsenfaust",
+        "HP" : 10,
+        "Damage" : 8,
+        "type" : "Erde",
+        "extra" : "Erdbeben und Steinschatten!"
+      },
+      "damage" : 5,
+      "directDamage" : 0,
+      "attacker" : "Computer",
+      "roundNumber" : 4,
+      "isEffectiv" : 0
+    }, {
+      "attackerCard" : {
+        "id" : 23,
+        "name" : "Atlas Felsenfaust",
+        "HP" : 5,
+        "Damage" : 8,
+        "type" : "Erde",
+        "extra" : "Erdbeben und Steinschatten!"
+      },
+      "defenderCard" : {
+        "id" : 19,
+        "name" : "Jolt Elektrosturm",
+        "HP" : 10,
+        "Damage" : 10,
+        "type" : "Elektro",
+        "extra" : "Ladung, die die Luft zum Zerreißen bringt!"
+      },
+      "damage" : 12,
+      "directDamage" : 2,
+      "attacker" : "Spieler",
+      "roundNumber" : 4,
+      "isEffectiv" : 1
+    }, {
+      "attackerCard" : {
+        "id" : 15,
+        "name" : "Arborea Waldwisperer",
+        "HP" : 11,
+        "Damage" : 13,
+        "type" : "Pflanze",
+        "extra" : "Beherrscht den Wald in seiner ganzen Pracht!"
+      },
+      "defenderCard" : {
+        "id" : 13,
+        "name" : "Gaia Grünhüter",
+        "HP" : 12,
+        "Damage" : 9,
+        "type" : "Pflanze",
+        "extra" : "Blütenzauber und Fruchtbarkeitsernte!"
+      },
+      "damage" : 13,
+      "directDamage" : 1,
+      "attacker" : "Spieler",
+      "roundNumber" : 5,
+      "isEffectiv" : 1
+    } ]
+  }
+}

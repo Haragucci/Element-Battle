@@ -83,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 alert(data);
                 if (data === 'User deleted successfully'){
-                    window.location.href = 'login.html';
+                    localStorage.clear();
+                    window.location.href = '../login/login.html';
                 }
             })
             .catch(error => {
@@ -230,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    createConfetti();
 
                     originalUsername = newUsername;
                     if (newPassword !== '' && newPassword !== '*'.repeat(actualPassword.length)) {

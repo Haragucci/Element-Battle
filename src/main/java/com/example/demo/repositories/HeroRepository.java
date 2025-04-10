@@ -1,106 +1,113 @@
 package com.example.demo.repositories;
 
-import com.example.demo.services.HeroService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.example.demo.classes.Hero;
+import jakarta.annotation.PreDestroy;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import com.example.demo.classes.Hero;
+import java.util.NoSuchElementException;
 
+@Service
 public class HeroRepository {
 
-    public static final String HEROES_FILE_PATH = "files/heros.json";
-    public final ObjectMapper mapper = new ObjectMapper();
-    public static List<Hero> heroes = new ArrayList<>();
-    public static AtomicInteger counter = new AtomicInteger(1);
+    private static final String HEROES_FILE_PATH = "files/heros.json";
+    private List<Hero> heroes;
+    public static int nextId = 1;
+    private final ObjectMapper objectMapper;
 
-    private static final List<String> heroNames = List.of("Ignis Flammenherz", "Pyra Glutsturm", "Vulcan Feuerschild", "Inferno Feuerschlag", "Helios Sonnentänzer", "Aqualis Meeresrufer", "Nerina Wellenweber", "Aquara Wasserschild", "Hydra Aquadonner", "Poseidon Meereswoge", "Flora Rankengriff", "Sylva Blattwerk", "Gaia Grünhüter", "Verdura Blattsturm", "Arborea Waldwisperer", "Voltaris Donnerklinge", "Electra Blitzschlag", "Raiden Donnerfaust", "Jolt Elektrosturm", "Thor Donnergroll", "Terran Steinschmied", "Gaia Erdenwächter", "Atlas Felsenfaust", "Terra Erdenschild", "Golem Felsensturm", "Glacies Frostschild", "Frostius Eisessturm", "Tundrus Eisbann", "Chillara Frosthauch", "Blizzara Frostfeuer", "Zephyrus Windrufer", "Aeris Luftklinge", "Aeolus Sturmbote", "Galea Windesflügel", "Caelus Wolke");
-    private static final List<String> heroTypes = List.of("Feuer", "Feuer", "Feuer", "Feuer", "Feuer", "Wasser", "Wasser", "Wasser", "Wasser", "Wasser", "Pflanze", "Pflanze", "Pflanze", "Pflanze", "Pflanze", "Elektro", "Elektro", "Elektro", "Elektro", "Elektro", "Erde", "Erde", "Erde", "Erde", "Erde", "Eis", "Eis", "Eis", "Eis", "Eis", "Luft", "Luft", "Luft", "Luft", "Luft");
-    private static final List<Integer> hpValues = List.of(12, 11, 14, 9, 13, 11, 10, 13, 12, 9, 10, 9, 12, 13, 11, 9, 8, 11, 10, 14, 15, 13, 10, 12, 11, 10, 12, 14, 11, 9, 9, 11, 13, 10, 12);
-    private static final List<Integer> damageValues = List.of(12, 10, 8, 13, 14, 11, 9, 14, 12, 13, 10, 12, 9, 14, 13, 13, 14, 11, 10, 8, 9, 13, 8, 12, 14, 12, 10, 14, 13, 9, 14, 13, 10, 9, 12);
-    private static final List<String> extras = List.of("Entfesselt ein feuriges Inferno!", "Brennt mit der Hitze von tausend Sonnen!", "Schmiedet Schwerter aus flüssiger Lava!", "Tanzt um Feuerstürme herum!", "Herrscht über Vulkan und Flamme!", "Beherrscht die Wellen und Meerestiere.", "Beruhigt und kontrolliert die Gezeiten.", "Tiefseeabenteuer und Ozeansymphonie!", "Ruft die Meeresgötter zu Hilfe!", "Wasserwirbel und Strudelmeisterschaft!", "Umschlingt Gegner mit Ranken!", "Meister der Photosynthese und des Waldwachstums.", "Blütenzauber und Fruchtbarkeitsernte!", "Wurzeln, die bis in die Tiefen reichen!", "Beherrscht den Wald in seiner ganzen Pracht!", "Schlägt mit der Kraft eines Gewitters zu.", "Elektrisiert das Schlachtfeld mit einem Funken.", "Blitze zucken durch die Luft!", "Ladung, die die Luft zum Zerreißen bringt!", "Donnerhall und elektrische Eruption!", "Fest wie ein Berg, unnachgiebig.", "Mutter der Erde und der Natur.", "Erdbeben und Steinschatten!", "Felsen, die wie Wasser fließen!", "Wurzeln, die sich tief in die Erde graben!", "Eisige Kältepeitsche!", "Frostiger Sturm!", "Schneesturm und gefrorene Stille!", "Glitzerndes Eis und kristalline Eleganz!", "Frostbeulen und gefrorene Schicksale!", "Ruft die Winde und Stürme herbei!", "Tanzt mit den Lüften!", "Flügel aus Wolken und federleichter Tanz!", "Sturmfänger und Wolkenwanderer!", "Sphärenklänge und Windgesang!");
-
-    public List<Hero> showHero(){
-        return heroes;
+    public HeroRepository() {
+        objectMapper = new ObjectMapper();
+        loadData();
     }
 
-    public ResponseEntity<Hero> createHero(@RequestBody HeroService.Hero hero) {
-        if (!heroTypes.contains(hero.type())) {
-            return ResponseEntity.badRequest().build();
+    private void loadData() {
+        File file = new File(HEROES_FILE_PATH);
+        if (file.exists()) {
+            try {
+                heroes = objectMapper.readValue(file, new TypeReference<>() {
+                });
+                nextId = heroes.stream().mapToInt(Hero::id).max().orElse(0) + 1;
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                heroes = new ArrayList<>();
+            }
+        } else {
+            heroes = new ArrayList<>();
         }
-        else {
-            Hero newHero = new Hero(counter.getAndIncrement(), hero.name(), hero.HP(), hero.Damage(), hero.type(), hero.extra());
+    }
+
+    @PreDestroy
+    private void saveData() {
+        try {
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(HEROES_FILE_PATH), heroes);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public Hero add(Hero hero) {
+        try {
+            Hero newHero = new Hero(nextId++, hero.name(), hero.HP(), hero.Damage(), hero.type(), hero.extra());
             heroes.add(newHero);
-            return ResponseEntity.ok(newHero);
+            saveData();
+            return newHero;
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to add hero: " + e.getMessage(), e);
         }
     }
 
-    public String editHero(@RequestBody Hero heroe) {
-        if (heroe.HP() < 0 || heroe.HP() > 100 || heroe.Damage() < 0 || heroe.Damage() > 100 || heroe.type() == null) {
-            return "Fehlgeschlagen!";
-        }
-
-        if (heroe.id() >= 0) {
-            for (int i = 0; i < heroes.size(); i++) {
-                Hero hero = heroes.get(i);
-                if (hero.id() == heroe.id()) {
-                    heroes.set(i, heroe);
-                    return "Erfolgreich!";
-                }
-            }
-        }
-
-        return "Fehlgeschlagen!";
-    }
-
-    public String delhero(@RequestBody(required = false) Hero herodel, @RequestParam(value = "id", required = false) Integer id) {
-        if (herodel != null && herodel.id() >= 0) {
-            for (int i = 0; i < heroes.size(); i++) {
-                Hero hero = heroes.get(i);
-                if (hero.id() == herodel.id()) {
-                    heroes.remove(i);
-                    return "Passt!";
-                }
-            }
-        } else if (id != null && id >= 0) {
-            for (int i = 0; i < heroes.size(); i++) {
-                Hero hero = heroes.get(i);
-                if (hero.id() == id) {
-                    heroes.remove(i);
-                    return "Passt!";
-                }
-            }
-        }
-        return "Passt nicht!";
-    }
-
-    public void loadHeroes() {
+    public List<Hero> getAll() {
         try {
-            File file = new File(HEROES_FILE_PATH);
-            if (file.exists()) {
-                heroes = mapper.readValue(file, new TypeReference<>() {});
-                if (!heroes.isEmpty()) {
-                    counter.set(heroes.stream().mapToInt(Hero::id).max().getAsInt() + 1);
-                }
+            return new ArrayList<>(heroes);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to retrieve hero list: " + e.getMessage(), e);
+        }
+    }
+
+    public Hero update(Hero updatedHero) {
+        for (int i = 0; i < heroes.size(); i++) {
+            if (heroes.get(i).id() == updatedHero.id()) {
+                heroes.set(i, updatedHero);
+                saveData();
+                return updatedHero;
             }
-        } catch (IOException e) {
-            System.out.println("Fehler beim laden der Helden!");
         }
+        throw new NoSuchElementException("Hero not found with id: " + updatedHero.id());
     }
 
-    public void saveHeroes() {
+    public Hero findById(int id) {
+        return heroes.stream()
+                .filter(hero -> hero.id() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Hero not found with id: " + id));
+    }
+
+    public Hero delete(int id) {
+        Hero heroToDelete = findById(id);
         try {
-            mapper.writeValue(new File(HEROES_FILE_PATH), heroes);
-        } catch (IOException e) {
-            System.out.println("Fehler beim speichern der Helden!");
+            heroes.remove(heroToDelete);
+            saveData();
+            return heroToDelete;
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to delete hero with id: " + id, e);
         }
     }
 
+    public boolean deleteAll() {
+        heroes.clear();
+        saveData();
+        return true;
+    }
+
+    public boolean resetId() {
+        if (nextId != 1) {
+            nextId = 1;
+        }
+        return true;
+    }
 }
