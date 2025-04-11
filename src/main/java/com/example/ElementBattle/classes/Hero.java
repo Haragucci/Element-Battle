@@ -1,4 +1,4 @@
-package com.example.demo.classes;
+package com.example.ElementBattle.classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

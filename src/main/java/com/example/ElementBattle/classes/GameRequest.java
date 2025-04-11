@@ -1,4 +1,4 @@
-package com.example.demo.classes;
+package com.example.ElementBattle.classes;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;

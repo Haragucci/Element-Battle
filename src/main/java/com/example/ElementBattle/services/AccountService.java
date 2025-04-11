@@ -1,7 +1,7 @@
-package com.example.demo.services;
+package com.example.ElementBattle.services;
 
-import com.example.demo.classes.Account;
-import com.example.demo.repositories.*;
+import com.example.ElementBattle.classes.Account;
+import com.example.ElementBattle.repositories.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;

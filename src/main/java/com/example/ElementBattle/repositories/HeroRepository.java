@@ -1,8 +1,8 @@
-package com.example.demo.repositories;
+package com.example.ElementBattle.repositories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.demo.classes.Hero;
+import com.example.ElementBattle.classes.Hero;
 import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 

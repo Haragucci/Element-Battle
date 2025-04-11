@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.ElementBattle;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebMvcTest(InitialController.class)
+@WebMvcTest
 public class TestController {
 
     @Autowired

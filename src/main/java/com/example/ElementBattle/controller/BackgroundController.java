@@ -1,6 +1,6 @@
-package com.example.demo.controller;
+package com.example.ElementBattle.controller;
 
-import com.example.demo.services.BackgroundService;
+import com.example.ElementBattle.services.BackgroundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
