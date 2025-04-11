@@ -1,6 +1,6 @@
-package com.example.demo.repositories;
+package com.example.ElementBattle.repositories;
 
-import com.example.demo.classes.Account;
+import com.example.ElementBattle.classes.Account;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PreDestroy;

@@ -1,8 +1,8 @@
-package com.example.demo.repositories;
+package com.example.ElementBattle.repositories;
 
-import com.example.demo.classes.Battlelog;
-import com.example.demo.classes.Game;
-import com.example.demo.classes.Hero;
+import com.example.ElementBattle.classes.Battlelog;
+import com.example.ElementBattle.classes.Game;
+import com.example.ElementBattle.classes.Hero;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

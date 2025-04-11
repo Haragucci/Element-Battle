@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.ElementBattle.controller;
 
-import com.example.demo.classes.GameRequest;
-import com.example.demo.services.GameService;
+import com.example.ElementBattle.classes.GameRequest;
+import com.example.ElementBattle.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

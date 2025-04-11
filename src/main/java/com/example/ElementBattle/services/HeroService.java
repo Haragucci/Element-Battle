@@ -1,13 +1,13 @@
-package com.example.demo.services;
+package com.example.ElementBattle.services;
 
-import com.example.demo.repositories.HeroRepository;
+import com.example.ElementBattle.repositories.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.demo.classes.Hero;
+import com.example.ElementBattle.classes.Hero;
 import java.util.NoSuchElementException;
 
 @Service

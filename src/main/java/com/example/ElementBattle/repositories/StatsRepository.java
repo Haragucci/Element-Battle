@@ -1,4 +1,4 @@
-package com.example.demo.repositories;
+package com.example.ElementBattle.repositories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

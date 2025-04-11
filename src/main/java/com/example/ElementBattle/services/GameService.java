@@ -1,11 +1,11 @@
-package com.example.demo.services;
+package com.example.ElementBattle.services;
 
-import com.example.demo.classes.Account;
-import com.example.demo.classes.Game;
-import com.example.demo.classes.GameRequest;
-import com.example.demo.classes.Hero;
-import com.example.demo.repositories.AccountRepository;
-import com.example.demo.repositories.GameRepository;
+import com.example.ElementBattle.classes.Account;
+import com.example.ElementBattle.classes.Game;
+import com.example.ElementBattle.classes.GameRequest;
+import com.example.ElementBattle.classes.Hero;
+import com.example.ElementBattle.repositories.AccountRepository;
+import com.example.ElementBattle.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
