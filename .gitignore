@@ -1,3 +1,8 @@
 /build
 /.gradle
 /.idea
+/files/acc.json
+/files/back.json
+/files/cards.json
+/files/saved-games.json
+/files/stats.json

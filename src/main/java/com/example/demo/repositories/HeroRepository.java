@@ -20,12 +20,12 @@ public class HeroRepository {
     public static int nextId = 1;
     private final ObjectMapper objectMapper;
 
-    public HeroRepository() {
+    public HeroRepository() throws IOException {
         objectMapper = new ObjectMapper();
         loadData();
     }
 
-    private void loadData() {
+    private void loadData() throws IOException {
         File file = new File(HEROES_FILE_PATH);
         if (file.exists()) {
             try {
@@ -37,7 +37,14 @@ public class HeroRepository {
                 heroes = new ArrayList<>();
             }
         } else {
-            heroes = new ArrayList<>();
+            if(file.createNewFile()){
+                heroes = new ArrayList<>();
+                saveData();
+                loadData();
+            }
+            else {
+                System.out.println("Error creating file");
+            }
         }
     }
 

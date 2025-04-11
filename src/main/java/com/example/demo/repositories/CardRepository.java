@@ -73,6 +73,15 @@ public class CardRepository {
                 Map<String, String> temp = mapper.readValue(file, new TypeReference<>() {});
                 temp.forEach((key, value) -> cardDesigns.put(Integer.parseInt(key), value));
             }
+            else {
+                if(file.createNewFile()){
+                    saveCardDesigns();
+                    loadCardDesigns();
+                }
+                else {
+                    System.out.println("Error creating file");
+                }
+            }
         } catch (IOException e) {
             System.out.println("Fehler beim Laden der Kartendesigns");
         }

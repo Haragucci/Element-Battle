@@ -17,7 +17,8 @@ public class StatsRepository {
     private final ObjectMapper mapper = new ObjectMapper();
     private Map<Integer, Map<String, Object>> stats = new HashMap<>();
 
-    public StatsRepository() {
+    public StatsRepository() throws IOException {
+        saveStats();
         loadStats();
     }
 
@@ -81,7 +82,7 @@ public class StatsRepository {
     }
 
 
-    private void loadStats() {
+    private void loadStats() throws IOException {
         File file = new File(STATS_FILE_PATH);
         if (file.exists()) {
             try {
@@ -90,7 +91,12 @@ public class StatsRepository {
                 stats = new HashMap<>();
             }
         } else {
-            stats = new HashMap<>();
+            if(file.createNewFile()){
+            loadStats();
+        }
+        else {
+            System.out.println("Error creating file");
+        }
         }
     }
 }

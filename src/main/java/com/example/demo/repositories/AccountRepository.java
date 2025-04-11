@@ -89,7 +89,13 @@ public class AccountRepository {
                 accounts = mapper.readValue(file, new TypeReference<>() {});
                 counter = accounts.values().stream().mapToInt(Account::id).max().orElse(0) + 1;
             } else {
-                System.out.println("acc.json Datei existiert nicht.");
+                if(file.createNewFile()){
+                    saveAccounts();
+                    loadAccounts();
+                }
+                else {
+                    System.out.println("Error creating file");
+                }
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
