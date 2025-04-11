@@ -35,7 +35,15 @@ public class BackgroundRepository {
         try {
             File file = new File(BACKGROUNDS_FILE_PATH);
             if (file.exists()) {
-                backgrounds.putAll(mapper.readValue(file, new TypeReference<>() {}));
+                backgrounds.putAll(mapper.readValue(file, new TypeReference<>() {
+                }));
+            } else {
+                if (file.createNewFile()) {
+                    save();
+                    loadBackgrounds();
+                } else {
+                    System.out.println("Error creating file");
+                }
             }
         } catch (IOException e) {
             System.out.println("Fehler beim Laden der Hintergründe!");
@@ -43,10 +51,9 @@ public class BackgroundRepository {
     }
 
     public String updateBackground(int userId, String background) {
-        if(!backgrounds.containsKey(userId)) {
+        if (!backgrounds.containsKey(userId)) {
             throw new IllegalArgumentException("User already Exists!");
-        }
-        else {
+        } else {
             backgrounds.put(userId, background);
             save();
             return background;
@@ -56,8 +63,7 @@ public class BackgroundRepository {
     public String createBackground(int userId, String background) {
         if (backgrounds.containsKey(userId)) {
             throw new IllegalArgumentException("User " + userId + " already exists");
-        }
-        else {
+        } else {
             backgrounds.put(userId, background);
             save();
             return background;
@@ -65,10 +71,9 @@ public class BackgroundRepository {
     }
 
     public String getBackground(int userId) {
-        if(!backgrounds.containsKey(userId)) {
+        if (!backgrounds.containsKey(userId)) {
             throw new IllegalArgumentException("User does not exist");
-        }
-        else {
+        } else {
             return backgrounds.get(userId);
         }
     }
@@ -78,10 +83,9 @@ public class BackgroundRepository {
     }
 
     public String deleteBackground(int userId) {
-        if(!backgroundExistsById(userId)) {
+        if (!backgroundExistsById(userId)) {
             return "User " + userId + " does not exist";
-        }
-        else {
+        } else {
             String background = backgrounds.remove(userId);
             save();
             return background;

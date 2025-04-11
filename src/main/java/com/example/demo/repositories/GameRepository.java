@@ -74,7 +74,15 @@ public class GameRepository {
         Map<Integer, Game> games = new HashMap<>();
         try {
             File file = new File(GAME_FILE_PATH);
-            if (!file.exists()) return games;
+            if (!file.exists()){
+                if(file.createNewFile()){
+                    saveAllGames();
+                    loadAllGames();
+                }
+                else {
+                    System.out.println("Error creating file");
+                }
+            };
 
             JsonNode rootNode = mapper.readTree(file);
             rootNode.fields().forEachRemaining(entry -> {
