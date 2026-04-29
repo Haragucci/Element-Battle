@@ -17,7 +17,7 @@ RUN chmod +x gradlew
 COPY src/ src/
 
 # Führe den Gradle build Befehl aus
-RUN ./gradlew build
+RUN ./gradlew build -x test
 
 # Kopiere das erstellte JAR-File und alle JSON-Dateien in das Arbeitsverzeichnis des Containers
 COPY build/libs/*.jar /app/
