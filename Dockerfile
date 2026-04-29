@@ -1,5 +1,5 @@
 # Verwende das offizielle OpenJDK 21-Image als Basis
-FROM openjdk:21-jdk-jammy
+FROM eclipse-temurin:21-jdk-jammy
 
 # Setze das Arbeitsverzeichnis im Container
 WORKDIR /app
